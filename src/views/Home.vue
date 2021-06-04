@@ -1,5 +1,9 @@
 <template>
   <div class="columns is-multiline">
+    <div class="column is-12">
+      <p class="title is-2">Voter tool</p>
+      <p>Fake data for DEM</p>
+    </div>
     <div class="column is-4"
       v-for="challenge in challenges"
       :key="challenge.id">
