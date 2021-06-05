@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Challenge from '../views/Challenge.vue'
 import Proposal from '../views/Proposal.vue'
+import Picked from '../views/Picked.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/:fund/picked',
+    name: 'picked',
+    component: Picked
   },
   {
     path: '/fund/:fund/challenge/:challenge',

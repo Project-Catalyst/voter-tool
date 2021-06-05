@@ -8,6 +8,10 @@ $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
 $twitter: #4099ff;
 $twitter-invert: findColorInvert($twitter);
+$radius-small: 0;
+$radius: 0;
+$radius-large: 0;
+$radius-rounded: 0;
 
 // Lists and maps
 $custom-colors: null !default;

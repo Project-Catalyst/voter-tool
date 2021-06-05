@@ -69,7 +69,6 @@ export default {
     CatalystAPI.proposals(this.fund, this.challengeId).then((r) => {
       this.proposals = r.data
     })
-    console.log(this.$route.params)
   },
   computed: {
     fund() {

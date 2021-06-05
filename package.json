@@ -14,7 +14,10 @@
     "v-video-embed": "^1.0.8",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vuedraggable": "^2.24.3",
+    "vuex": "^3.6.2",
+    "vuex-localstorage": "^1.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

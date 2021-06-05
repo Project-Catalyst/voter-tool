@@ -13,7 +13,7 @@
         <p>{{ proposal.description }}</p>
         <p>{{ proposal.solution }}</p>
         <p><b>Funds requested:</b> ${{ proposal.amount }}</p>
-        <b-rate v-model="proposal.rating" disabled /> ~ {{ (proposal.no_assessments / 3).toFixed(2) }} reviews by Community Advisors
+        <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} reviews by Community Advisors
       </div>
     </div>
     </router-link>

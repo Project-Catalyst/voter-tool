@@ -1,13 +1,13 @@
 {
-  "id":355448,
+  "id":352830,
   "category":25868,
-  "title":"Test proposal",
+  "title":"Demo",
   "description":"Community Advisors could use refresher on how to navigate Ideascale to make reviews.",
   "url":"http://ideascale.com/t/UM5UZBjhB",
   "solution":"This proposal will help us navigate how Community Advisors use Ideascale to review individual proposals. Hope this is helpful.",
   "no_assessments": 10,
   "rating": 2.5,
-  "amount": 20000,
+  "amount": 30000,
   "assessments": [
     {
       "question": 1,

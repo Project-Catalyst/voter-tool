@@ -21,25 +21,35 @@
           {{ proposal.solution }}
         </p>
         <div class="columns">
-          <div class="column is-6">
+          <div class="column">
             <p class="mb-3"><b>Funds requested:</b> ${{ proposal.amount }}</p>
-            <b-progress :value="percentOfChallenge" size="is-medium" show-value>
-              {{percentOfChallenge}}% if available funds in challenge
-            </b-progress>
+            <div class="my-progress">
+              <b-progress :value="percentOfChallenge" size="is-medium" show-value>
+                {{percentOfChallenge}}% of available funds in challenge
+              </b-progress>
+            </div>
           </div>
           <div class="column is-narrow">
-            <b-rate v-model="proposal.rating" disabled />
-            ~ {{ (proposal.no_assessments / 3).toFixed(2) }} reviews by Community Advisors
+            <b-rate size="is-large" v-model="proposal.rating" disabled />
+            ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> reviews by Community Advisors
           </div>
         </div>
-        <b-button
-          tag="a"
-          :href="proposal.url"
-          icon-left="eye"
-          type="is-primary"
-          target="blank">
-          View full proposal in IdeaScale
-        </b-button>
+        <div class="buttons">
+          <b-button
+            tag="a"
+            :href="proposal.url"
+            icon-left="eye"
+            type="is-primary"
+            target="blank">
+            View full proposal in IdeaScale
+          </b-button>
+          <b-button
+            @click="handlePickList"
+            :icon-left="(isProposalPicked) ? 'bookmark-remove' : 'bookmark-plus'"
+            type="is-primary-light">
+            {{ pickMsg }}
+          </b-button>
+        </div>
       </div>
       <div class="box" v-if="proposal.videos && (proposal.videos.length > 0)">
         <p class="title is-4">Videos</p>
@@ -88,6 +98,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import questions from "@/assets/data/questions.json";
 import CatalystAPI from '@/api/catalyst.js'
 import groupBy from '@/utils/group.js'
@@ -110,6 +121,10 @@ export default {
     })
   },
   computed: {
+    ...mapGetters("proposals", ["isPicked"]),
+    isProposalPicked() {
+      return this.isPicked(this.proposal)
+    },
     fund() {
       if (this.$route) {
         return this.$route.params.fund
@@ -144,6 +159,34 @@ export default {
         }
       }
       return []
+    },
+    pickMsg() {
+      return (this.isProposalPicked) ? `Unpick proposal` : `Add to Vote pick List`
+    }
+  },
+  methods: {
+    handlePickList() {
+      const pickListLink = this.$router.resolve({
+        name: 'picked',
+        params: { fund: this.fund }
+      })
+      if (this.isProposalPicked) {
+        this.$store.commit("proposals/removeProposal", this.proposal);
+        this.$buefy.notification.open({
+          message: `<b>${this.proposal.title}</b> removed from the Vote Pick List<br />
+          <a href="${pickListLink.href}">Open the Vote Pick List</>`,
+          type: 'is-primary',
+          position: 'is-bottom-right'
+        })
+      } else {
+        this.$store.commit("proposals/addProposal", this.proposal);
+        this.$buefy.notification.open({
+          message: `<b>${this.proposal.title}</b> added to the Vote Pick List<br />
+          <a href="${pickListLink.href}">Open the Vote Pick List</>`,
+          type: 'is-primary',
+          position: 'is-bottom-right'
+        })
+      }
     }
   }
 }
@@ -176,5 +219,11 @@ export default {
       height: 100%;
       border: 0
     }
+  }
+  .my-progress {
+    max-width: 450px;
+  }
+  .notices .notification {
+    pointer-events: initial;
   }
 </style>

@@ -6,6 +6,13 @@
           <img src="@/assets/images/catalyst.png" alt="Project Catalyst" />
         </b-navbar-item>
       </template>
+      <template #end>
+        <b-navbar-dropdown label="Voter Tool">
+          <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
+            F4 Picked Proposals
+          </b-navbar-item>
+        </b-navbar-dropdown>
+      </template>
     </b-navbar>
     <div class="section container">
       <div class="content-wrapper">
