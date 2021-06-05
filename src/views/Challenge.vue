@@ -26,7 +26,8 @@
                 icon-clickable
                 v-model="keyword">
             </b-input>
-        </b-field>      </div>
+        </b-field>
+      </div>
       <proposal-preview
         :proposal="proposal"
         :key="proposal.id"
@@ -56,6 +57,7 @@ export default {
       sortingOptions: [
         { k: 'amount', l: 'Amount' },
         { k: 'rating', l: 'Review Score' },
+        { k: 'title', l: 'A-Z' },
         { k: 'no_assessments', l: 'No. reviews' },
         { k: 'random', l: 'Random' },
       ]
@@ -100,9 +102,17 @@ export default {
           )
         }
         if (this.sortBy === 'random') {
-          return shuffle(proposals);
+          return shuffle(proposals)
         } else {
-          return proposals.sort((a, b) => b[this.sortBy] - a[this.sortBy])
+          if (this.sortBy === 'title') {
+            return proposals.sort((a, b) => {
+              var textA = a.title.toUpperCase()
+              var textB = b.title.toUpperCase()
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+            })
+          } else {
+            return proposals.sort((a, b) => b[this.sortBy] - a[this.sortBy])
+          }
         }
       }
       return []

@@ -2,7 +2,7 @@
   <div class="card mb-4"  :key="proposal.id">
     <router-link :to="{ name: 'proposal', params: {
         fund: fund,
-        challenge: challenge.id,
+        challenge: proposal.category,
         id: proposal.id
       }}">
     <div class="card-content">
@@ -23,7 +23,7 @@
 <script>
 
 export default {
-  props: ['proposal', 'fund', 'challenge']
+  props: ['proposal', 'fund']
 }
 
 </script>

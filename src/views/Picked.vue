@@ -2,13 +2,16 @@
   <div v-if="challenges.length > 0">
     <div class="hero mb-6">
       <p class="title is-4">
-        Picked Proposals
+        Voter Pick List
       </p>
       <p>
         In this page you can see a projection of your voting choices.<br />
         For each challenge you can see the progressive amount of fund remaining
-        for each proposal funded.<br />
-        You can drag/drop the elements in the list.
+        for each proposal you added to the pick list.<br />
+        You can drag/drop the elements in the list.<br />
+        Your pick list is stored on your browser (using localStorage and cookies), no info will be shared with
+        thirdy parties (or us).<br />
+        If you're using a setup where cookies are cleared at every browser launch, be careful because you may lose your choices!
       </p>
     </div>
     <div class="proposals-list">
@@ -27,6 +30,7 @@
           @dragleave="dragleave">
           <b-table-column field="title" label="Title" v-slot="props">
             {{ props.row.title }}
+            <a class="is-size-7" :href="props.row.url" target="blank">(Open in IdeaScale)</a>
           </b-table-column>
           <b-table-column field="amount" numeric label="Funds requested" v-slot="props">
             {{ props.row.amount }}

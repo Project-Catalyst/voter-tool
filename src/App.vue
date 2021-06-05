@@ -22,6 +22,19 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>Made by Catalyst Community for the Catalyst Community</p>
+        <p>
+          If you want to support the development of the voter tool you can donate some ADA to:
+          <br />
+          <span class="is-ellipsis">
+            addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu
+          </span>
+          <b-button
+            @click="copy"
+            type="is-primary"
+            size="is-small"
+            icon-left="content-copy">
+          </b-button>
+        </p>
         <b-button
           label="Feedback"
           type="is-primary"
@@ -35,8 +48,34 @@
   </div>
 </template>
 
+<script>
+export default {
+  data(){
+    return {
+      challenges: []
+    }
+  },
+
+  methods: {
+    copy() {
+      this.$clipboard('addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu')
+      this.$buefy.notification.open({
+        message: "Address copied to clipboard!",
+        type: 'is-primary',
+        position: 'is-bottom-right'
+      })
+    }
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
+.is-ellipsis {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 
 #nav {

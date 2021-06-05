@@ -1,46 +1,126 @@
 <template>
-  <div class="columns is-multiline">
-    <div class="column is-12">
-      <p class="title is-2">Voter tool</p>
-      <p>Fake data for DEM</p>
-    </div>
-    <div class="column is-4"
-      v-for="challenge in challenges"
-      :key="challenge.id">
-      <div class="card is-primary">
-        <router-link :to="{ name: 'challenge', params: {
-          fund: 'f4',
-          challenge: challenge.id
-          }}">
-        <div class="card-content">
-          <div class="content">
-            <p class="title is-4">
-              {{ challenge.title }}
-            </p>
-            <p>{{ challenge.description }}</p>
-            <p><b>Funds:</b> ${{ challenge.amount }}</p>
-          </div>
-        </div>
-        </router-link>
+  <div>
+    <div class="columns is-multiline">
+      <div class="column is-12">
+        <p class="title is-2">Project Catalyst Voter tool</p>
+        <p>This is a tool developed to help voters in Project Catalyst.</p>
+        <p>The tool, in addition to showing an overview of all the proposals and reviews received, allows you to create a pick list to see a projection of your voting choices based on the funds allocated for each challenge.</p>
+        <p class="is-vertical-centered">
+          <span>If you want to support the development of the Voter Tool you can donate some ADA to:</span>
+          <span class="is-ellipsis">
+            addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu
+          </span>
+          <b-button
+            @click="copy"
+            type="is-primary"
+            size="is-small"
+            icon-left="content-copy">
+          </b-button>
+        </p>
       </div>
+      <div class="filters columns column is-12 mb-4">
+        <b-field class="column">
+            <b-input placeholder="Search for proposals..."
+                type="search"
+                icon="magnify"
+                icon-clickable
+                v-model="keyword">
+            </b-input>
+        </b-field>
+      </div>
+    </div>
+    <div class="columns is-multiline" v-if="!searchResultsVisible">
+      <div class="column is-4"
+        v-for="challenge in challenges"
+        :key="challenge.id">
+        <div class="card is-primary">
+          <router-link :to="{ name: 'challenge', params: {
+            fund: 'f4',
+            challenge: challenge.id
+            }}">
+          <div class="card-content">
+            <div class="content">
+              <p class="title is-4">
+                {{ challenge.title }}
+              </p>
+              <p>{{ challenge.description }}</p>
+              <p><b>Funds:</b> ${{ challenge.amount }}</p>
+            </div>
+          </div>
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <div class="proposals-list" v-if="searchResultsVisible">
+      <proposal-preview
+        :proposal="proposal"
+        :key="proposal.id"
+        :fund="fund"
+        v-for="proposal in filteredProposals"
+        />
     </div>
   </div>
 </template>
 
 <script>
 import CatalystAPI from '@/api/catalyst.js';
+import ProposalPreview from '@/components/ProposalPreview';
 
 export default {
+  components: {
+    ProposalPreview
+  },
   data(){
     return {
-      challenges: []
+      challenges: [],
+      proposals: [],
+      fund: 'f4',
+      keyword: ''
+    }
+  },
+
+  methods: {
+    copy() {
+      this.$clipboard('addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu')
+      this.$buefy.notification.open({
+        message: "Address copied to clipboard!",
+        type: 'is-primary',
+        position: 'is-bottom-right'
+      })
+    }
+  },
+
+  computed: {
+    searchResultsVisible() {
+      return (this.keyword.trim() !== '')
+    },
+    filteredProposals() {
+      return this.proposals.filter(
+        (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase())
+      )
     }
   },
 
   mounted(){
     CatalystAPI.challenges('f4').then((r) => {
       this.challenges = r.data
+      this.challenges.forEach((c) => {
+        CatalystAPI.proposals('f4', c.id).then((res) => {
+          if (res.data.length) {
+            this.proposals = this.proposals.concat(...res.data)
+          }
+        })
+      })
     })
   }
 }
 </script>
+
+<style lang="scss">
+  .is-vertical-centered {
+    span {
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+</style>

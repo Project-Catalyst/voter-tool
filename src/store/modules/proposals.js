@@ -39,10 +39,14 @@ const mutations = {
   },
   addProposal(state, proposal) {
     const present = Object.prototype.hasOwnProperty.call(state.challenges, proposal.category)
+    const challengeId = proposal.category
     if (present) {
-      state.challenges[proposal.category].push(proposal)
+      state.challenges[challengeId].push(proposal)
     } else {
-      state.challenges[proposal.category] = [proposal]
+      state.challenges = {
+        ...state.challenges,
+        [challengeId]: [{...proposal}]
+      }
     }
     this.commit('proposals/calcAmounts')
   },
@@ -57,7 +61,10 @@ const mutations = {
   },
   moveProposal(state, {proposal, from, to}) {
     const challenge = proposal.category
-    state.challenges[challenge] = move(state.challenges[challenge], from, to)
+    state.challenges = {
+      ...state.challenges,
+      [challenge]: move(state.challenges[challenge], from, to)
+    }
     this.commit('proposals/calcAmounts')
   }
 }

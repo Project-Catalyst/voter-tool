@@ -60,20 +60,42 @@
             <video-embed css="video is-16by9" :src="video"></video-embed>
           </div>
         </div>
+        <div class="buttons">
+          <b-button
+            tag="a"
+            :href="formLink"
+            icon-left="video-plus"
+            type="is-primary"
+            target="blank">
+            Suggest other videos
+          </b-button>
+        </div>
       </div>
       <div class="box" v-if="proposal.media && (proposal.media.length > 0)">
         <p class="title is-4">Links / Media</p>
-        <div
-            :key="`media-${i}`"
-            v-for="(media, i) in proposal.media">
-          <a :href="media.url" target="_blank">
-            {{media.title}}
-          </a>
+        <div class="content">
+          <div
+              :key="`media-${i}`"
+              v-for="(media, i) in proposal.media">
+            <a :href="media.url" target="_blank">
+              {{media.title}}
+            </a>
+          </div>
+        </div>
+        <div class="buttons">
+          <b-button
+            tag="a"
+            :href="formLink"
+            icon-left="text-box-plus"
+            type="is-primary"
+            target="blank">
+            Suggest other videos
+          </b-button>
         </div>
       </div>
     </div>
     <section class="reviews-list">
-      <p class="title is-4">Assessments</p>
+      <p class="title is-4">Reviews</p>
       <div class=""
         v-for="(assessments, question) in assessmentsByQuestion"
         :key="question">
@@ -161,7 +183,12 @@ export default {
       return []
     },
     pickMsg() {
-      return (this.isProposalPicked) ? `Unpick proposal` : `Add to Vote pick List`
+      return (this.isProposalPicked) ? `Remove from Voter Pick List` : `Add to Voter Pick List`
+    },
+    formLink() {
+      const proposalId = this.proposal.id
+      const proposalTitle = encodeURI(this.proposal.title)
+      return `https://docs.google.com/forms/d/e/1FAIpQLSdnL1Dgnp_IrWc-ZiRYVXt4WxVLrxad-1T_fF9Jczeh0q9pGA/viewform?usp=pp_url&entry.1253257562=${proposalId}&entry.1906290995=${proposalTitle}`
     }
   },
   methods: {
