@@ -18,7 +18,7 @@
       <div class="box"
         v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
         <p class="title is-3">
-          {{ objChallenges[k].title }}
+          {{ objChallenges[k].title }} <span class="subtitle is-6">(Total funds: {{ objChallenges[k].amount }})</span>        
         </p>
         <b-table
           :data="proposals"

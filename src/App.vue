@@ -7,14 +7,17 @@
         </b-navbar-item>
       </template>
       <template #end>
-        <b-navbar-dropdown label="Voter Tool">
-          <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
-            F4 Picked Proposals
-          </b-navbar-item>
-        </b-navbar-dropdown>
+        <b-navbar-item tag="div">
+          <b-button tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
+            F4 Voter Picked Proposals
+          </b-button>
+        </b-navbar-item>
       </template>
     </b-navbar>
     <div class="section container">
+      <b-message title="Warning" type="is-warning" aria-close-label="Close message">
+        DEMO mode: the data are provisional and not verified.
+      </b-message>
       <div class="content-wrapper">
         <router-view/>
       </div>

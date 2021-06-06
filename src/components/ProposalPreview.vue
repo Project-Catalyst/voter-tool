@@ -11,7 +11,6 @@
           {{ proposal.title }}
         </p>
         <p>{{ proposal.description }}</p>
-        <p>{{ proposal.solution }}</p>
         <p><b>Funds requested:</b> ${{ proposal.amount }}</p>
         <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} reviews by Community Advisors
       </div>

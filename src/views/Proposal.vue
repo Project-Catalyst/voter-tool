@@ -8,17 +8,29 @@
         {{ proposal.title }}
       </p>
       <div class="box">
-        <p class="mb-2">
+        <p class="mb-2" v-if="proposal.solution">
           <b>Problem statement</b><br />
           {{ proposal.description }}
         </p>
-        <p class="mb-4">
+        <p class="mb-2" v-if="proposal.importance">
+          <b>Challenge question</b><br />
+          {{ proposal.description }}
+        </p>
+        <p class="mb-4" v-if="proposal.solution">
           <b>Problem solution</b><br />
           {{ proposal.solution }}
         </p>
-        <p class="mb-4">
-          <b>Experience</b><br />
-          {{ proposal.solution }}
+        <p class="mb-4" v-if="proposal.importance">
+          <b>Why is it important?</b><br />
+          {{ proposal.importance }}
+        </p>
+        <p class="mb-4" v-if="proposal.experience">
+          <b>Relevant experience</b><br />
+          {{ proposal.experience }}
+        </p>
+        <p class="mb-4" v-if="proposal.success">
+          <b>How does success look like?</b><br />
+          {{ proposal.success }}
         </p>
         <div class="columns">
           <div class="column">
