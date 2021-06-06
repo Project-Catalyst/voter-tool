@@ -62,6 +62,13 @@
             {{ pickMsg }}
           </b-button>
         </div>
+        <div class="content" v-if="(proposal.videos.length === 0) && (proposal.media.length === 0)">
+          <p class="buttons">
+            <a :href="formLink" target="_blank">
+              Do you want to suggest video or media for this proposal? Click here!
+            </a>
+          </p>
+        </div>
       </div>
       <div class="box" v-if="proposal.videos && (proposal.videos.length > 0)">
         <p class="title is-4">Videos</p>
