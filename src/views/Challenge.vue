@@ -51,11 +51,11 @@ export default {
   data(){
     return {
       keyword: '',
-      sortBy: 'rating',
+      sortBy: 'random',
       challenges: [],
       proposals: [],
       sortingOptions: [
-        { k: 'amount', l: 'Amount' },
+        { k: 'amount', l: 'Requested Budget' },
         { k: 'rating', l: 'Review Score' },
         { k: 'title', l: 'A-Z' },
         { k: 'no_assessments', l: 'No. reviews' },

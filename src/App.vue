@@ -1,16 +1,14 @@
 <template>
   <div id="app">
-    <b-navbar class="is-primary" :mobile-burger="false">
+    <b-navbar class="is-primary" :mobile-burger="true">
       <template #brand>
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
           <img src="@/assets/images/catalyst.png" alt="Project Catalyst" />
         </b-navbar-item>
       </template>
       <template #end>
-        <b-navbar-item tag="div">
-          <b-button tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
-            F4 Voter Picked Proposals
-          </b-button>
+        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
+          My Vote Pick List
         </b-navbar-item>
       </template>
     </b-navbar>
@@ -44,7 +42,7 @@
           icon-left="message-reply-text"
           tag="a"
           target="_blank"
-          href="#">
+          href="https://forms.gle/7R79GhM2vpoGyFfa9">
         </b-button>
       </div>
     </footer>

@@ -62,7 +62,7 @@
             {{ pickMsg }}
           </b-button>
         </div>
-        <div class="content" v-if="(proposal.videos && (proposal.videos.length === 0)) && (proposal.media && (proposal.media.length === 0))">
+        <div class="content" v-if="(proposal.videos && (proposal.videos.length === 0)) || (proposal.media && (proposal.media.length === 0))">
           <p class="buttons">
             <a :href="formLink" target="_blank">
               Do you want to suggest video or media for this proposal? Click here!
@@ -79,16 +79,6 @@
             <video-embed css="video is-16by9" :src="video"></video-embed>
           </div>
         </div>
-        <div class="buttons">
-          <b-button
-            tag="a"
-            :href="formLink"
-            icon-left="video-plus"
-            type="is-primary"
-            target="blank">
-            Suggest other videos
-          </b-button>
-        </div>
       </div>
       <div class="box" v-if="proposal.media && (proposal.media.length > 0)">
         <p class="title is-4">Links / Media</p>
@@ -100,16 +90,6 @@
               {{media.title}}
             </a>
           </div>
-        </div>
-        <div class="buttons">
-          <b-button
-            tag="a"
-            :href="formLink"
-            icon-left="text-box-plus"
-            type="is-primary"
-            target="blank">
-            Suggest other videos
-          </b-button>
         </div>
       </div>
     </div>
@@ -202,7 +182,7 @@ export default {
       return []
     },
     pickMsg() {
-      return (this.isProposalPicked) ? `Remove from Voter Pick List` : `Add to Voter Pick List`
+      return (this.isProposalPicked) ? `Remove from My Pick List` : `Add to My Pick List`
     },
     formLink() {
       const proposalId = this.proposal.id
