@@ -44,7 +44,7 @@
                 {{ challenge.title }}
               </p>
               <p>{{ challenge.description }}</p>
-              <p><b>Funds:</b> ${{ challenge.amount }}</p>
+              <p><b>Funds:</b> {{ challenge.amount | currency}}</p>
             </div>
           </div>
           </router-link>
