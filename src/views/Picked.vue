@@ -8,7 +8,7 @@
         In this page you can see a projection of your voting choices.<br />
         For each challenge you can see the progressive amount of fund remaining
         for each proposal you added to the pick list.<br />
-        You can drag/drop the elements in the list.<br />
+        You can drag/drop the elements in the list (unfortunately not on mobile devices).<br />
         Your pick list is stored on your browser (using localStorage and cookies), no info will be shared with
         thirdy parties (or us).<br />
         If you're using a setup where cookies are cleared at every browser launch, be careful because you may lose your choices!

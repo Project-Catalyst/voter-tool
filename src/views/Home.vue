@@ -2,20 +2,8 @@
   <div>
     <div class="columns is-multiline">
       <div class="column is-12">
-        <p class="title is-2">Project Catalyst Voter tool</p>
-        <p>This is a tool developed to help voters in Project Catalyst.</p>
-        <p>The tool, in addition to showing an overview of all the proposals and reviews received, allows you to create a pick list to see a projection of your voting choices based on the funds allocated for each challenge.</p>
-        <p class="is-vertical-centered">
-          <span>If you want to support the development of the Voter Tool you can donate some ADA to:</span>
-          <span class="is-ellipsis">
-            addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu
-          </span>
-          <b-button
-            @click="copy"
-            type="is-primary"
-            size="is-small"
-            icon-left="content-copy">
-          </b-button>
+        <p class="title is-3">Project Catalyst Voter tool</p>
+        <p><b>Voter-tool</b> is a part of the <b>AIM Community Tool</b> series developed by the community for the community. It is designed to assist you in your analysis of Cardano Project Catalyst proposals and create a voting guide. In the future we hope to induce features that will assist with discoverability and sharing of your voting advice.
         </p>
       </div>
       <div class="filters columns column is-12 mb-4">
@@ -120,7 +108,7 @@ export default {
     if (!this.dialogAccepted) {
       this.$buefy.dialog.alert({
         title: 'Voter Tool',
-        message: 'Introduction message',
+        message: 'IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 4 voting information is available on <a target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">Reddit from u/danny_cryptofay</a>',
         confirmText: 'Cool!',
         onConfirm: () => {
           this.$store.commit('user/setDialog', true)

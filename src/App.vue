@@ -10,6 +10,9 @@
         <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">
           Voting Guide
         </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
+          Challenge Picker
+        </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
           My Vote Pick List
         </b-navbar-item>
@@ -26,7 +29,7 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>Made by Catalyst Community for the Catalyst Community</p>
-        <p>
+        <p class="has-text-weight-bold">
           If you want to support the development of the voter tool you can donate some ADA to:
           <br />
           <span class="is-ellipsis">
