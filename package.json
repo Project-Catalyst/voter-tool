@@ -15,6 +15,7 @@
     "v-video-embed": "^1.0.8",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
+    "vue-currency-filter": "^5.2.0",
     "vue-router": "^3.2.0",
     "vuex": "^3.6.2",
     "vuex-localstorage": "^1.0.0"

@@ -7,34 +7,37 @@
       <p class="title is-3">
         {{ proposal.title }}
       </p>
+      <p class="subtitle is-6">
+        {{ proposal.author }}
+      </p>
       <div class="box">
-        <p class="mb-2" v-if="proposal.solution">
-          <b>Problem statement</b><br />
-          {{ proposal.description }}
-        </p>
-        <p class="mb-2" v-if="proposal.importance">
-          <b>Challenge question</b><br />
-          {{ proposal.description }}
-        </p>
-        <p class="mb-4" v-if="proposal.solution">
-          <b>Problem solution</b><br />
-          {{ proposal.solution }}
-        </p>
-        <p class="mb-4" v-if="proposal.importance">
-          <b>Why is it important?</b><br />
-          {{ proposal.importance }}
-        </p>
-        <p class="mb-4" v-if="proposal.experience">
-          <b>Relevant experience</b><br />
-          {{ proposal.experience }}
-        </p>
-        <p class="mb-4" v-if="proposal.success">
-          <b>How does success look like?</b><br />
-          {{ proposal.success }}
-        </p>
         <div class="columns">
           <div class="column">
-            <p class="mb-3"><b>Funds requested:</b> ${{ proposal.amount }}</p>
+            <p class="mb-2" v-if="proposal.solution">
+              <b>Problem statement</b><br />
+              {{ proposal.description }}
+            </p>
+            <p class="mb-2" v-if="proposal.importance">
+              <b>Challenge question</b><br />
+              {{ proposal.description }}
+            </p>
+            <p class="mb-4" v-if="proposal.solution">
+              <b>Problem solution</b><br />
+              {{ proposal.solution }}
+            </p>
+            <p class="mb-4" v-if="proposal.importance">
+              <b>Why is it important?</b><br />
+              {{ proposal.importance }}
+            </p>
+            <p class="mb-4" v-if="proposal.experience">
+              <b>Relevant experience</b><br />
+              {{ proposal.experience }}
+            </p>
+            <p class="mb-4" v-if="proposal.success">
+              <b>How does success look like?</b><br />
+              {{ proposal.success }}
+            </p>
+            <p class="mb-3"><b>Funds requested:</b> {{ proposal.amount | currency }}</p>
             <div class="my-progress">
               <b-progress :value="percentOfChallenge" size="is-medium" show-value>
                 {{percentOfChallenge}}% of available funds in challenge
@@ -42,8 +45,15 @@
             </div>
           </div>
           <div class="column is-narrow">
-            <b-rate size="is-large" v-model="proposal.rating" disabled />
-            ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> reviews by Community Advisors
+            <div class="mb-6">
+              <b-rate size="is-large" v-model="proposal.rating" disabled />
+              ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> reviews by Community Advisors
+            </div>
+            <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
+              <b-field class="inline" :label="questions[question].title">
+                <b-rate size="is-small" v-model="avgByQuestion[question]" disabled />
+              </b-field>
+            </div>
           </div>
         </div>
         <div class="buttons">
@@ -98,7 +108,7 @@
       <div class=""
         v-for="(assessments, question) in assessmentsByQuestion"
         :key="question">
-        <p class="title is-5">{{questions[question]}}</p>
+        <p class="title is-5">{{questions[question].full}}</p>
         <div class="card mb-4"
           v-for="assessment in assessments"
           :key="assessment.id">
@@ -181,6 +191,15 @@ export default {
       }
       return []
     },
+    avgByQuestion() {
+      let avgs = {}
+      Object.keys(this.assessmentsByQuestion).forEach((key) => {
+        const el = this.assessmentsByQuestion[key]
+        let avg = (el.reduce((n, {rating}) => n + rating, 0)) / el.length
+        avgs[key] = avg
+      })
+      return avgs
+    },
     pickMsg() {
       return (this.isProposalPicked) ? `Remove from My Pick List` : `Add to My Pick List`
     },
@@ -251,5 +270,9 @@ export default {
   }
   .notices .notification {
     pointer-events: initial;
+  }
+  .inline {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

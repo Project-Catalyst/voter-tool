@@ -5,7 +5,7 @@
         {{ challenge.title }}
       </p>
       <p>{{ challenge.description }}</p>
-      <p><b>Funds:</b> ${{ challenge.amount }}</p>
+      <p><b>Funds:</b> {{ challenge.amount | currency }}</p>
     </div>
     <div class="proposals-list">
       <div class="filters columns mb-4">
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import CatalystAPI from '@/api/catalyst.js';
 import shuffle from "@/utils/shuffle";
 import ProposalPreview from '@/components/ProposalPreview';
@@ -50,8 +51,6 @@ export default {
   },
   data(){
     return {
-      keyword: '',
-      sortBy: 'random',
       challenges: [],
       proposals: [],
       sortingOptions: [
@@ -73,6 +72,48 @@ export default {
     })
   },
   computed: {
+    ...mapGetters("user", ["challengeSeed"]),
+    seed() {
+      return this.challengeSeed(this.challengeId)
+    },
+    sortBy: {
+      get () {
+        if (this.challenge) {
+          if (this.$store.state.user.challengeOrder[this.challenge.id]) {
+            return this.$store.state.user.challengeOrder[this.challenge.id]
+          }
+        }
+        return 'random'
+      },
+      set (value) {
+        this.$store.commit('user/setOrder', {
+          challenge: this.challenge.id,
+          order: value
+        })
+        if (value === 'random') {
+          this.$store.commit('user/setSeed', {
+            challenge: this.challenge.id,
+            seed: Math.random() * 10000
+          })
+        }
+      }
+    },
+    keyword: {
+      get () {
+        if (this.challenge) {
+          if (this.$store.state.user.challengeSearch[this.challenge.id]) {
+            return this.$store.state.user.challengeSearch[this.challenge.id]
+          }
+        }
+        return ''
+      },
+      set (value) {
+        this.$store.commit('user/setSearch', {
+          challenge: this.challenge.id,
+          search: value
+        })
+      }
+    },
     fund() {
       if (this.$route) {
         return this.$route.params.fund
@@ -102,7 +143,13 @@ export default {
           )
         }
         if (this.sortBy === 'random') {
-          return shuffle(proposals)
+          if (!this.seed) {
+            this.$store.commit('user/setSeed', {
+              challenge: this.challenge.id,
+              seed: Math.random() * 10000
+            })
+          }
+          return shuffle(proposals, this.seed)
         } else {
           if (this.sortBy === 'title') {
             return proposals.sort((a, b) => {

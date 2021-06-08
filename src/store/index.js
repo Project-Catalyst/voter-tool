@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersist from 'vuex-localstorage'
 import proposals from './modules/proposals'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ let localStorage = createPersist({
 export default new Vuex.Store({
   modules: {
     proposals,
+    user
   },
   strict: debug,
   plugins: [localStorage]

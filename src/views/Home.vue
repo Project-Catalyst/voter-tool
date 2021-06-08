@@ -92,12 +92,15 @@ export default {
 
   computed: {
     searchResultsVisible() {
-      return (this.keyword.trim() !== '')
+      return (this.keyword.trim().length > 3)
     },
     filteredProposals() {
-      return this.proposals.filter(
-        (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase())
-      )
+      if (this.keyword.trim().length > 3) {
+        return this.proposals.filter(
+          (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase())
+        )
+      }
+      return this.proposals
     }
   },
 

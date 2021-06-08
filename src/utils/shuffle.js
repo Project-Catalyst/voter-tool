@@ -1,22 +1,21 @@
-function shuffle (t){
-  let last = t.length
-  let clone = [...t]
-  let n
-  while (last > 0) {
-    n = rand(last)
-    swap(clone, n, --last)
+function shuffle(array, seed) {
+  let currentIndex = array.length, temporaryValue, randomIndex;
+  seed = seed || 1;
+  let random = function() {
+    var x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+  };
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
-  return clone
-}
-
-const rand = n =>
-  Math.floor(Math.random() * n)
-
-function swap (t, i, j) {
-  let q = t[i]
-  t[i] = t[j]
-  t[j] = q
-  return t
+  return array;
 }
 
 export default shuffle
