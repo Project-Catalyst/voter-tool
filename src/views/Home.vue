@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import CatalystAPI from '@/api/catalyst.js';
 import ProposalPreview from '@/components/ProposalPreview';
 
@@ -91,6 +92,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters("user", ["dialogAccepted"]),
     searchResultsVisible() {
       return (this.keyword.trim().length > 3)
     },
@@ -115,6 +117,16 @@ export default {
         })
       })
     })
+    if (!this.dialogAccepted) {
+      this.$buefy.dialog.alert({
+        title: 'Voter Tool',
+        message: 'Introduction message',
+        confirmText: 'Cool!',
+        onConfirm: () => {
+          this.$store.commit('user/setDialog', true)
+        }
+      })
+    }
   }
 }
 </script>

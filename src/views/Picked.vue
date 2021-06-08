@@ -2,7 +2,7 @@
   <div v-if="challenges.length > 0">
     <div class="hero mb-6">
       <p class="title is-4">
-        Voter Pick List
+        My Vote Pick List
       </p>
       <p>
         In this page you can see a projection of your voting choices.<br />
@@ -14,11 +14,12 @@
         If you're using a setup where cookies are cleared at every browser launch, be careful because you may lose your choices!
       </p>
     </div>
-    <div class="proposals-list">
+
+    <div class="proposals-list" v-if="vChallenges">
       <div class="box"
         v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
         <p class="title is-3">
-          {{ objChallenges[k].title }} <span class="subtitle is-6">(Total funds: {{ objChallenges[k].amount }})</span>        
+          {{ objChallenges[k].title }} <span class="subtitle is-6">(Total funds: {{ objChallenges[k].amount | currency }})</span>
         </p>
         <b-table
           :data="proposals"
@@ -33,10 +34,10 @@
             <a class="is-size-7" :href="props.row.url" target="blank">(Open in IdeaScale)</a>
           </b-table-column>
           <b-table-column field="amount" numeric label="Funds requested" v-slot="props">
-            {{ props.row.amount }}
+            {{ props.row.amount | currency }}
           </b-table-column>
           <b-table-column field="remaining" numeric label="Funds remaining" v-slot="props">
-            {{ props.row.remaining }}
+            {{ props.row.remaining | currency }}
           </b-table-column>
           <b-table-column field="inBudget" label="" v-slot="props">
             {{ props.row.inBudget}}
@@ -49,6 +50,11 @@
         </b-table>
       </div>
     </div>
+    <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
+      <p class="subtitle is-4">
+        You don't have any proposals in your Vote Pick List yet. Browse through the proposals and add them to see the projection of your choice of vote!
+      </p>
+    </b-message>
   </div>
 </template>
 

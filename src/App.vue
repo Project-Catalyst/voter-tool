@@ -7,6 +7,9 @@
         </b-navbar-item>
       </template>
       <template #end>
+        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">
+          Voting Guide
+        </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
           My Vote Pick List
         </b-navbar-item>

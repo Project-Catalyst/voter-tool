@@ -3,6 +3,7 @@ const getDefaultState = () => ({
   challengeOrder: {},
   challengeSearch: {},
   challengeSeed: {},
+  dialogAccepted: false
 })
 
 const state = getDefaultState()
@@ -17,7 +18,8 @@ const getters = {
   },
   challengeSeed: (state) => (challenge) => {
     return state.challengeSeed[challenge]
-  }
+  },
+  dialogAccepted: (state) => state.dialogAccepted
 }
 
 // actions
@@ -43,6 +45,9 @@ const mutations = {
       ...state.challengeSeed,
       [challenge]: seed
     }
+  },
+  setDialog(state, val) {
+    state.dialogAccepted = val
   }
 }
 
