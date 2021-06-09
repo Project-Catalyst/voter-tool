@@ -6,6 +6,7 @@ import router from './router'
 import store from "./store"
 import Clipboard from 'v-clipboard'
 import VueCurrencyFilter from 'vue-currency-filter'
+import VueMixpanel from 'vue-mixpanel'
 import './plugins/axios'
 
 import "./plugins/buefy"
@@ -22,6 +23,10 @@ Vue.use(VueCurrencyFilter, {
   symbolPosition: 'front',
   symbolSpacing: false,
   avoidEmptyDecimals: undefined,
+})
+
+Vue.use(VueMixpanel, {
+  token: 'de2b810978910f43259b13c23f39abe1'
 })
 
 new Vue({
