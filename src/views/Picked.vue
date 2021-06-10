@@ -116,7 +116,7 @@ export default {
           challenges[k] = this.pchallenges[k].map((p) => {
             let cp = {...p}
             cp.remaining = tot - p.pAmount
-            cp.inBudget = (cp.remaining > 0) ? '' : 'Out of budget'
+            cp.inBudget = (cp.remaining >= 0) ? '' : 'Out of budget'
             return cp
           })
         })

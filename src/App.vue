@@ -20,7 +20,7 @@
     </b-navbar>
     <div class="section container">
       <b-message title="Warning" type="is-warning" aria-close-label="Close message">
-        DEMO mode: the data are provisional and not verified.
+        IMPORTANT!: The tool does not cast votes, use the official voting app. This is a non-official community made tool: all the info presented is not supported by IOHK, if you find an error please report it to us using <a href="https://forms.gle/ongBz2k8NfiosFz69" target="_blank">this form</a>!
       </b-message>
       <div class="content-wrapper">
         <router-view/>
