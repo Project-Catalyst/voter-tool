@@ -7,6 +7,9 @@
         </b-navbar-item>
       </template>
       <template #end>
+        <b-navbar-item @click="scrollToSupport">
+          Support us
+        </b-navbar-item>
         <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">
           Voting Guide
         </b-navbar-item>
@@ -24,6 +27,14 @@
       </b-message>
       <div class="content-wrapper">
         <router-view/>
+      </div>
+    </div>
+    <div class="hero has-background-light" ref="supportus">
+      <div class="section container is-flex is-justify-content-center support-us">
+        <a href="https://www.drunkendragon.games/community-tools/" target="_blank">
+          <img src="@/assets/images/support.png" alt="Support us with CNFTs" />
+          <img class="hover" src="@/assets/images/support-hover.png" alt="Support us with CNFTs" />
+        </a>
       </div>
     </div>
     <footer class="footer">
@@ -52,6 +63,9 @@
         </b-button>
       </div>
     </footer>
+    <div class="floating-button is-hidden-mobile" @click="scrollToSupport">
+      <img src="@/assets/images/support-button.png" alt="Support us with CNFTs" />
+    </div>
   </div>
 </template>
 
@@ -71,6 +85,18 @@ export default {
         type: 'is-primary',
         position: 'is-bottom-right'
       })
+    },
+    scrollToSupport() {
+      var element = this.$refs.supportus;
+      var top = element.offsetTop;
+      if (window.innerWidth < 768) {
+        top = top - 176;
+      }
+      window.scrollTo({
+        left:0,
+        top: top,
+        behavior: 'smooth'
+      });
     }
   }
 }
@@ -87,4 +113,35 @@ export default {
 
 #nav {
 }
+
+.support-us {
+  position: relative;
+  a, a:visited {
+    position: relative;
+    z-index: 1;
+  }
+  .hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+  }
+  &:hover {
+    .hover {
+      opacity: 1;
+    }
+  }
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 180px;
+  cursor: pointer;
+  z-index: 10;
+}
+
 </style>
