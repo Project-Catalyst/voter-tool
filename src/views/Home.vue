@@ -3,7 +3,7 @@
     <div class="columns is-multiline">
       <div class="column is-12">
         <p class="title is-3">Project Catalyst Voter tool</p>
-        <p><b>Voter-tool</b> is a part of the <b>AIM Community Tool</b> series developed by the community for the community. It is designed to assist you in your analysis of Cardano Project Catalyst proposals and create a voting guide. In the future we hope to induce features that will assist with discoverability and sharing of your voting advice.
+        <p><b>Voter-tool</b> is a part of the <b>AIM Community Tool</b> series developed by the community for the community. It is designed to assist you in your analysis of Cardano Project Catalyst proposals and create a voting guide. In the future we hope to include features that will assist with discoverability and sharing of your voting advice.
         </p>
       </div>
       <div class="filters columns column is-12 mb-4">
