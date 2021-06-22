@@ -82,7 +82,7 @@
       </div>
       <div class="box" v-if="proposal.videos && (proposal.videos.length > 0)">
         <p class="title is-4">Videos</p>
-        <div class="columns">
+        <div class="columns is-multiline">
           <div class="column is-4"
             :key="`video-${i}`"
             v-for="(video, i) in proposal.videos">
