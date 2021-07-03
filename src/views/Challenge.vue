@@ -12,9 +12,9 @@
         <b-field class="column is-narrow">
           <b-select placeholder="Order by" v-model="sortBy">
             <option
-                v-for="option in sortingOptions"
+                v-for="(option, i) in sortingOptions"
                 :value="option.k"
-                :key="option.k">
+                :key="`${option.k}-${i}`">
                 {{ option.l }}
             </option>
           </b-select>
@@ -54,11 +54,15 @@ export default {
       challenges: [],
       proposals: [],
       sortingOptions: [
-        { k: 'amount', l: 'Requested Budget' },
-        { k: 'rating', l: 'Review Score' },
-        { k: 'title', l: 'A-Z' },
-        { k: 'no_assessments', l: 'No. reviews' },
-        { k: 'random', l: 'Random' },
+        { k: { v: 'amount', r: false}, l: 'Requested Budget (DESC)'},
+        { k: { v: 'amount', r: true}, l: 'Requested Budget (ASC)'},
+        { k: { v: 'rating', r: false}, l: 'Review Score (DESC)' },
+        { k: { v: 'rating', r: true}, l: 'Review Score (ASC)' },
+        { k: { v: 'title', r: false}, l: 'A-Z' },
+        { k: { v: 'title', r: true}, l: 'Z-A' },
+        { k: { v: 'no_assessments', r: false}, l: 'No. reviews (DESC)' },
+        { k: { v: 'no_assessments', r: true}, l: 'No. reviews (ASC)' },
+        { k: { v: 'random', r: false}, l: 'Random' },
       ]
     }
   },
@@ -142,7 +146,7 @@ export default {
             (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase())
           )
         }
-        if (this.sortBy === 'random') {
+        if (this.sortBy.v === 'random') {
           if (!this.seed) {
             this.$store.commit('user/setSeed', {
               challenge: this.challenge.id,
@@ -151,14 +155,22 @@ export default {
           }
           return shuffle(proposals, this.seed)
         } else {
-          if (this.sortBy === 'title') {
-            return proposals.sort((a, b) => {
+          if (this.sortBy.v === 'title') {
+            let sorted = proposals.sort((a, b) => {
               var textA = a.title.toUpperCase()
               var textB = b.title.toUpperCase()
               return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
             })
+            if (this.sortBy.r) {
+              sorted.reverse()
+            }
+            return sorted
           } else {
-            return proposals.sort((a, b) => b[this.sortBy] - a[this.sortBy])
+            let sorted = proposals.sort((a, b) => b[this.sortBy.v] - a[this.sortBy.v])
+            if (this.sortBy.r) {
+              sorted.reverse()
+            }
+            return sorted
           }
         }
       }
