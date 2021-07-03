@@ -2,13 +2,12 @@
   <div>
     <div class="columns is-multiline">
       <div class="column is-12">
-        <p class="title is-3">Project Catalyst Voter tool</p>
-        <p><b>Voter-tool</b> is a part of the <b>AIM Community Tool</b> series developed by the community for the community. It is designed to assist you in your analysis of Cardano Project Catalyst proposals and create a voting guide. In the future we hope to include features that will assist with discoverability and sharing of your voting advice.
-        </p>
+        <p class="title is-3">{{ $t('home.toolTitle') }}</p>
+        <p v-html="$t('home.toolDescription')"></p>
       </div>
       <div class="filters columns column is-12 mb-4">
         <b-field class="column">
-            <b-input placeholder="Search for proposals..."
+            <b-input :placeholder="$t('general.searchFor')"
                 type="search"
                 icon="magnify"
                 icon-clickable
@@ -32,8 +31,8 @@
                 {{ challenge.title }}
               </p>
               <p>{{ challenge.description }}</p>
-              <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> proposals submitted</p>
-              <p>Funds: <b>{{ challenge.amount | currency}}</b></p>
+              <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> {{$t('home.proposalsSubmitted')}}</p>
+              <p>{{$t('home.funds')}} <b>{{ challenge.amount | currency}}</b></p>
             </div>
           </div>
           </router-link>
@@ -73,7 +72,7 @@ export default {
     copy() {
       this.$clipboard('addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu')
       this.$buefy.notification.open({
-        message: "Address copied to clipboard!",
+        message: this.$t('general.addressCopied'),
         type: 'is-primary',
         position: 'is-bottom-right'
       })
@@ -109,8 +108,8 @@ export default {
     if (!this.dialogAccepted) {
       this.$buefy.dialog.alert({
         title: 'Voter Tool',
-        message: 'IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 4 voting information is available on <a target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">Reddit from u/danny_cryptofay</a>',
-        confirmText: 'Cool!',
+        message: this.$t('general.warningPopup'),
+        confirmText: this.$t('general.confirmPopup'),
         onConfirm: () => {
           this.$store.commit('user/setDialog', true)
         }

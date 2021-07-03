@@ -16,6 +16,7 @@
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-currency-filter": "^5.2.0",
+    "vue-i18n": "^8.24.5",
     "vue-mixpanel": "^1.0.7",
     "vue-router": "^3.2.0",
     "vuex": "^3.6.2",

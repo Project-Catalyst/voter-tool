@@ -14,40 +14,40 @@
         <div class="columns">
           <div class="column">
             <p class="mb-2" v-if="proposal.solution">
-              <b>Problem statement</b><br />
+              <b>{{ $t('proposal.PROBLEM_STATEMENT')}}</b><br />
               {{ proposal.description }}
             </p>
             <p class="mb-2" v-if="proposal.importance">
-              <b>Challenge question</b><br />
+              <b>{{ $t('proposal.CHALLENGE_QUESTION')}}</b><br />
               {{ proposal.description }}
             </p>
             <p class="mb-4" v-if="proposal.solution">
-              <b>Problem solution</b><br />
+              <b>{{ $t('proposal.PROBLEM_SOLUTION')}}</b><br />
               {{ proposal.solution }}
             </p>
             <p class="mb-4" v-if="proposal.importance">
-              <b>Why is it important?</b><br />
+              <b>{{ $t('proposal.IMPORTANCE')}}</b><br />
               {{ proposal.importance }}
             </p>
             <p class="mb-4" v-if="proposal.experience">
-              <b>Relevant experience</b><br />
+              <b>{{ $t('proposal.EXPERIENCE')}}</b><br />
               {{ proposal.experience }}
             </p>
             <p class="mb-4" v-if="proposal.success">
-              <b>How does success look like?</b><br />
+              <b>{{ $t('proposal.SUCCESS')}}</b><br />
               {{ proposal.success }}
             </p>
-            <p class="mb-3"><b>Funds requested:</b> {{ proposal.amount | currency }}</p>
+            <p class="mb-3"><b>{{ $t('proposal.FUNDS_REQUEST')}}</b> {{ proposal.amount | currency }}</p>
             <div class="my-progress">
               <b-progress :value="percentOfChallenge" size="is-medium" show-value>
-                {{percentOfChallenge}}% of available funds in challenge
+                {{percentOfChallenge}}% {{ $t('proposal.AVAILABLE_FUNDS')}}
               </b-progress>
             </div>
           </div>
           <div class="column is-narrow">
             <div class="mb-6">
               <b-rate size="is-large" v-model="proposal.rating" disabled />
-              ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> reviews by Community Advisors
+              ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
             </div>
             <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
               <b-field class="inline" :label="questions[question].title">
@@ -63,7 +63,7 @@
             icon-left="eye"
             type="is-primary"
             target="blank">
-            View full proposal in IdeaScale
+            {{ $t('proposal.VIEW_FULL_PROPOSAL')}}
           </b-button>
           <b-button
             @click="handlePickList"
@@ -75,13 +75,13 @@
         <div class="content" v-if="(proposal.videos && (proposal.videos.length === 0)) || (proposal.media && (proposal.media.length === 0))">
           <p class="buttons">
             <a :href="formLink" target="_blank">
-              Do you want to suggest video or media for this proposal? Click here!
+              {{ $t('proposal.SUGGEST_VIDEO_MEDIA')}}
             </a>
           </p>
         </div>
       </div>
       <div class="box" v-if="proposal.videos && (proposal.videos.length > 0)">
-        <p class="title is-4">Videos</p>
+        <p class="title is-4">{{ $t('proposal.VIDEOS')}}</p>
         <div class="columns is-multiline">
           <div class="column is-4"
             :key="`video-${i}`"
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="box" v-if="proposal.media && (proposal.media.length > 0)">
-        <p class="title is-4">Links / Media</p>
+        <p class="title is-4">{{ $t('proposal.LINKS_MEDIA')}}</p>
         <div class="content">
           <div
               :key="`media-${i}`"
@@ -104,7 +104,7 @@
       </div>
     </div>
     <section class="reviews-list">
-      <p class="title is-4">Reviews</p>
+      <p class="title is-4">{{ $t('proposal.REVIEWS')}}</p>
       <div class=""
         v-for="(assessments, question) in assessmentsByQuestion"
         :key="question">

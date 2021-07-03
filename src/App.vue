@@ -7,23 +7,31 @@
         </b-navbar-item>
       </template>
       <template #end>
+        <b-navbar-dropdown :label="$t('general.language')">
+          <b-navbar-item
+            @click="changeLocale(lang)"
+            v-for="(name, lang) in langs"
+            :key="`lang-${lang}`">
+            {{ name }}
+          </b-navbar-item>
+        </b-navbar-dropdown>
         <b-navbar-item @click="scrollToSupport">
-          Support us
+          {{ $t('general.support') }}
         </b-navbar-item>
         <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">
-          Voting Guide
+          {{ $t('general.votingGuide') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
-          Challenge Picker
+          {{ $t('general.challengePicker') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
-          My Vote Pick List
+          {{ $t('general.myVotePickList') }}
         </b-navbar-item>
       </template>
     </b-navbar>
     <div class="section container">
-      <b-message title="Warning" type="is-warning" aria-close-label="Close message">
-        IMPORTANT!: The tool does not cast votes, use the official voting app. This is a non-official community made tool: all the info presented is not supported by IOHK, if you find an error please report it to us using <a href="https://forms.gle/ongBz2k8NfiosFz69" target="_blank">this form</a>!
+      <b-message :title="$t('general.warning')" type="is-warning" aria-close-label="Close message">
+        <span v-html="$t('general.warningMessage')" />
       </b-message>
       <div class="content-wrapper">
         <router-view/>
@@ -32,16 +40,16 @@
     <div class="hero has-background-light" ref="supportus">
       <div class="section container is-flex is-justify-content-center support-us">
         <a href="https://www.drunkendragon.games/community-tools/" target="_blank">
-          <img src="@/assets/images/support.png" alt="Support us with CNFTs" />
-          <img class="hover" src="@/assets/images/support-hover.png" alt="Support us with CNFTs" />
+          <img src="@/assets/images/support.png" :alt="$t('general.supportUsWithCNFT')" />
+          <img class="hover" src="@/assets/images/support-hover.png" :alt="$t('general.supportUsWithCNFT')" />
         </a>
       </div>
     </div>
     <footer class="footer">
       <div class="content has-text-centered">
-        <p>Made by Catalyst Community for the Catalyst Community</p>
+        <p>{{$t('general.madeBy')}}</p>
         <p class="has-text-weight-bold">
-          If you want to support the development of the voter tool you can donate some ADA to:
+          {{$t('general.donate')}}
           <br />
           <span class="is-ellipsis">
             addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu
@@ -54,7 +62,7 @@
           </b-button>
         </p>
         <b-button
-          label="Feedback"
+          :label="$t('general.feedback')"
           type="is-primary"
           icon-left="message-reply-text"
           tag="a"
@@ -64,16 +72,19 @@
       </div>
     </footer>
     <div class="floating-button is-hidden-mobile" @click="scrollToSupport">
-      <img src="@/assets/images/support-button.png" alt="Support us with CNFTs" />
+      <img src="@/assets/images/support-button.png" :alt="$t('general.supportUsWithCNFT')" />
     </div>
   </div>
 </template>
 
 <script>
+
+import langs from "@/locales/locales";
 export default {
   data(){
     return {
-      challenges: []
+      challenges: [],
+      langs: langs
     }
   },
 
@@ -81,7 +92,7 @@ export default {
     copy() {
       this.$clipboard('addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu')
       this.$buefy.notification.open({
-        message: "Address copied to clipboard!",
+        message: this.$t('general.addressCopied'),
         type: 'is-primary',
         position: 'is-bottom-right'
       })
@@ -97,6 +108,9 @@ export default {
         top: top,
         behavior: 'smooth'
       });
+    },
+    changeLocale(locale) {
+      this.$i18n.locale = locale
     }
   }
 }

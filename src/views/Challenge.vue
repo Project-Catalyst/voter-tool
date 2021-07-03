@@ -5,7 +5,7 @@
         {{ challenge.title }}
       </p>
       <p>{{ challenge.description }}</p>
-      <p><b>Funds:</b> {{ challenge.amount | currency }}</p>
+      <p><b>{{$t('home.funds')}}</b> {{ challenge.amount | currency }}</p>
     </div>
     <div class="proposals-list">
       <div class="filters columns mb-4">
@@ -20,7 +20,7 @@
           </b-select>
         </b-field>
         <b-field class="column">
-            <b-input placeholder="Search..."
+            <b-input :placeholder="$t('challenge.search')"
                 type="search"
                 icon="magnify"
                 icon-clickable
@@ -54,15 +54,15 @@ export default {
       challenges: [],
       proposals: [],
       sortingOptions: [
-        { k: { v: 'amount', r: false}, l: 'Requested Budget (DESC)'},
-        { k: { v: 'amount', r: true}, l: 'Requested Budget (ASC)'},
-        { k: { v: 'rating', r: false}, l: 'Review Score (DESC)' },
-        { k: { v: 'rating', r: true}, l: 'Review Score (ASC)' },
-        { k: { v: 'title', r: false}, l: 'A-Z' },
-        { k: { v: 'title', r: true}, l: 'Z-A' },
-        { k: { v: 'no_assessments', r: false}, l: 'No. reviews (DESC)' },
-        { k: { v: 'no_assessments', r: true}, l: 'No. reviews (ASC)' },
-        { k: { v: 'random', r: false}, l: 'Random' },
+        { k: { v: 'amount', r: false}, l: this.$t('challenge.requestedBudgetDesc')},
+        { k: { v: 'amount', r: true}, l: this.$t('challenge.requestedBudgetAsc')},
+        { k: { v: 'rating', r: false}, l: this.$t('challenge.reviewScoreDesc')},
+        { k: { v: 'rating', r: true}, l: this.$t('challenge.reviewScoreAsc') },
+        { k: { v: 'title', r: false}, l: this.$t('challenge.aZ') },
+        { k: { v: 'title', r: true}, l: this.$t('challenge.Za') },
+        { k: { v: 'no_assessments', r: false}, l: this.$t('challenge.noReviewsDesc') },
+        { k: { v: 'no_assessments', r: true}, l: this.$t('challenge.noReviewsAsc') },
+        { k: { v: 'random', r: false}, l: this.$t('challenge.random') },
       ]
     }
   },
@@ -87,14 +87,14 @@ export default {
             return this.$store.state.user.challengeOrder[this.challenge.id]
           }
         }
-        return 'random'
+        return {v: 'random', r: false}
       },
       set (value) {
         this.$store.commit('user/setOrder', {
           challenge: this.challenge.id,
           order: value
         })
-        if (value === 'random') {
+        if (value.v === 'random') {
           this.$store.commit('user/setSeed', {
             challenge: this.challenge.id,
             seed: Math.random() * 10000

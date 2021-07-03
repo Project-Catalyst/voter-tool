@@ -2,24 +2,16 @@
   <div v-if="challenges.length > 0">
     <div class="hero mb-6">
       <p class="title is-4">
-        My Vote Pick List
+        {{ $t('pickList.MY_VOTE_PICK_LIST')}}
       </p>
-      <p>
-        In this page you can see a projection of your voting choices.<br />
-        For each challenge you can see the progressive amount of fund remaining
-        for each proposal you added to the pick list.<br />
-        You can drag/drop the elements in the list (unfortunately not on mobile devices).<br />
-        Your pick list is stored on your browser (using localStorage and cookies), no info will be shared with
-        thirdy parties (or us).<br />
-        If you're using a setup where cookies are cleared at every browser launch, be careful because you may lose your choices!
-      </p>
+      <p v-html="$t('pickList.PICK_LIST_DESC')"></p>
     </div>
 
     <div class="proposals-list" v-if="vChallenges">
       <div class="box"
         v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
         <p class="title is-3">
-          {{ objChallenges[k].title }} <span class="subtitle is-6">(Total funds: {{ objChallenges[k].amount | currency }})</span>
+          {{ objChallenges[k].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[k].amount | currency }})</span>
         </p>
         <b-table
           :data="proposals"
@@ -29,14 +21,14 @@
           @drop="drop"
           @dragover="dragover"
           @dragleave="dragleave">
-          <b-table-column field="title" label="Title" v-slot="props">
+          <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
             {{ props.row.title }}
-            <a class="is-size-7" :href="props.row.url" target="blank">(Open in IdeaScale)</a>
+            <a class="is-size-7" :href="props.row.url" target="blank">({{$t('pickList.OPEN_IN_IDEASCALE')}})</a>
           </b-table-column>
-          <b-table-column field="amount" numeric label="Funds requested" v-slot="props">
+          <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
             {{ props.row.amount | currency }}
           </b-table-column>
-          <b-table-column field="remaining" numeric label="Funds remaining" v-slot="props">
+          <b-table-column field="remaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
             {{ props.row.remaining | currency }}
           </b-table-column>
           <b-table-column field="inBudget" label="" v-slot="props">
@@ -52,7 +44,7 @@
     </div>
     <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
       <p class="subtitle is-4">
-        You don't have any proposals in your Vote Pick List yet. Browse through the proposals and add them to see the projection of your choice of vote!
+        {{ $t('pickList.NO_PROPOSALS_TEXT')}}
       </p>
     </b-message>
   </div>
@@ -68,27 +60,7 @@ export default {
     return {
       challenges: [],
       draggingRow: null,
-      draggingRowIndex: null,
-      columns: [
-        {
-          field: 'title',
-          label: 'Title'
-        },
-        {
-          field: 'amount',
-          label: 'Funds requested',
-          numeric: true
-        },
-        {
-          field: 'remaining',
-          label: 'Funds remaining',
-          numeric: true
-        },
-        {
-          field: 'inBudget',
-          label: '',
-        }
-      ]
+      draggingRowIndex: null
     }
   },
   computed: {
@@ -116,7 +88,7 @@ export default {
           challenges[k] = this.pchallenges[k].map((p) => {
             let cp = {...p}
             cp.remaining = tot - p.pAmount
-            cp.inBudget = (cp.remaining >= 0) ? '' : 'Out of budget'
+            cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
             return cp
           })
         })

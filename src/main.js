@@ -4,6 +4,7 @@ import Embed from 'v-video-embed'
 import App from './App.vue'
 import router from './router'
 import store from "./store"
+import { i18n } from './plugins/i18n';
 import Clipboard from 'v-clipboard'
 import VueCurrencyFilter from 'vue-currency-filter'
 import VueMixpanel from 'vue-mixpanel'
@@ -31,6 +32,7 @@ Vue.use(VueMixpanel, {
 
 new Vue({
   router,
+  i18n,
   store,
   render: h => h(App),
 }).$mount('#app')
