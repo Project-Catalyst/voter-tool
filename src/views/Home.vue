@@ -32,7 +32,8 @@
                 {{ challenge.title }}
               </p>
               <p>{{ challenge.description }}</p>
-              <p><b>Funds:</b> {{ challenge.amount | currency}}</p>
+              <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> proposals submitted</p>
+              <p>Funds: <b>{{ challenge.amount | currency}}</b></p>
             </div>
           </div>
           </router-link>
