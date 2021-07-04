@@ -5,7 +5,7 @@
         {{ challenge.title }}
       </p>
       <p>{{ challenge.description }}</p>
-      <p><b>{{$t('home.funds')}}</b> {{ challenge.amount | currency }}</p>
+      <p><b>{{$t('home.FUNDS')}}</b> {{ challenge.amount | currency }}</p>
     </div>
     <div class="proposals-list">
       <div class="filters columns mb-4">
