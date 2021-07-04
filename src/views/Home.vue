@@ -16,26 +16,34 @@
         </b-field>
       </div>
     </div>
-    <div class="columns is-multiline" v-if="!searchResultsVisible">
-      <div class="column is-4"
-        v-for="challenge in challenges"
-        :key="challenge.id">
-        <div class="card is-primary">
-          <router-link :to="{ name: 'challenge', params: {
-            fund: 'f4',
-            challenge: challenge.id
-            }}">
-          <div class="card-content">
-            <div class="content">
-              <p class="title is-4">
-                {{ challenge.title }}
-              </p>
-              <p>{{ challenge.description }}</p>
-              <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> {{$t('home.PROPOSALS_SUBMITTED')}}</p>
-              <p>{{$t('home.FUNDS')}} <b>{{ challenge.amount | currency}}</b></p>
+    <div v-if="!searchResultsVisible">
+      <div class="columns is-multiline mb-6"
+        v-for="localFund in fundsKeys"
+        :key="`f-${localFund}`"
+        >
+        <div class="column is-12">
+          <p class="title is-3">{{funds[localFund].title}}</p>
+        </div>
+        <div class="column is-4"
+          v-for="challenge in funds[localFund].challenges"
+          :key="challenge.id">
+          <div class="card is-primary">
+            <router-link :to="{ name: 'challenge', params: {
+              fund: localFund,
+              challenge: challenge.id
+              }}">
+            <div class="card-content">
+              <div class="content">
+                <p class="title is-4">
+                  {{ challenge.title }}
+                </p>
+                <p>{{ challenge.description }}</p>
+                <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> {{$t('home.PROPOSALS_SUBMITTED')}}</p>
+                <p>{{$t('home.FUNDS')}} <b>{{ challenge.amount | currency}}</b></p>
+              </div>
             </div>
+            </router-link>
           </div>
-          </router-link>
         </div>
       </div>
     </div>
@@ -64,7 +72,17 @@ export default {
       challenges: [],
       proposals: [],
       fund: 'f4',
-      keyword: ''
+      keyword: '',
+      funds: {
+        'f5': {
+          title: "Fund 5",
+          challenges: []
+        },
+        'f4': {
+          title: "Fund 4",
+          challenges: []
+        }
+      }
     }
   },
 
@@ -73,6 +91,9 @@ export default {
 
   computed: {
     ...mapGetters("user", ["dialogAccepted"]),
+    fundsKeys() {
+      return Object.keys(this.funds)
+    },
     searchResultsVisible() {
       return (this.keyword.trim().length > 3)
     },
@@ -87,13 +108,15 @@ export default {
   },
 
   mounted(){
-    CatalystAPI.challenges('f4').then((r) => {
-      this.challenges = r.data
-      this.challenges.forEach((c) => {
-        CatalystAPI.proposals('f4', c.id).then((res) => {
-          if (res.data.length) {
-            this.proposals = this.proposals.concat(...res.data)
-          }
+    this.fundsKeys.forEach((el) => {
+      CatalystAPI.challenges(el).then((r) => {
+        this.funds[el].challenges = r.data
+        this.funds[el].challenges.forEach((c) => {
+          CatalystAPI.proposals(el, c.id).then((res) => {
+            if (res.data.length) {
+              this.proposals = this.proposals.concat(...res.data)
+            }
+          })
         })
       })
     })
