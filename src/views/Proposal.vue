@@ -178,7 +178,7 @@ export default {
     },
     percentOfChallenge() {
       if (this.proposal && this.challenge) {
-        return (this.proposal.amount * 100) / this.challenge.amount
+        return ((this.proposal.amount * 100) / this.challenge.amount).toFixed(3)
       }
       return false
     },
