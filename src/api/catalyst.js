@@ -4,7 +4,7 @@ import { i18n } from '@/plugins/i18n';
 // 'en' is the base path
 const fundsTranslations = {
   'f4': [],
-  'f5': ['ja']
+  'f5': ['it']
 }
 
 const getLocalizedPath = (fund) => {
