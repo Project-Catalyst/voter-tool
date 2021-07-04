@@ -20,7 +20,7 @@
           </b-select>
         </b-field>
         <b-field class="column">
-            <b-input :placeholder="$t('challenge.search')"
+            <b-input :placeholder="$t('challenge.SEARCH')"
                 type="search"
                 icon="magnify"
                 icon-clickable
@@ -54,15 +54,15 @@ export default {
       challenges: [],
       proposals: [],
       sortingOptions: [
-        { k: { v: 'amount', r: false}, l: this.$t('challenge.requestedBudgetDesc')},
-        { k: { v: 'amount', r: true}, l: this.$t('challenge.requestedBudgetAsc')},
-        { k: { v: 'rating', r: false}, l: this.$t('challenge.reviewScoreDesc')},
-        { k: { v: 'rating', r: true}, l: this.$t('challenge.reviewScoreAsc') },
-        { k: { v: 'title', r: false}, l: this.$t('challenge.aZ') },
-        { k: { v: 'title', r: true}, l: this.$t('challenge.Za') },
-        { k: { v: 'no_assessments', r: false}, l: this.$t('challenge.noReviewsDesc') },
-        { k: { v: 'no_assessments', r: true}, l: this.$t('challenge.noReviewsAsc') },
-        { k: { v: 'random', r: false}, l: this.$t('challenge.random') },
+        { k: { v: 'amount', r: false}, l: this.$t('challenge.REQUESTED_BUDGET_DESC')},
+        { k: { v: 'amount', r: true}, l: this.$t('challenge.REQUESTED_BUDGET_ASC')},
+        { k: { v: 'rating', r: false}, l: this.$t('challenge.REVIEW_SCORE_DESC')},
+        { k: { v: 'rating', r: true}, l: this.$t('challenge.REVIEW_SCORE_ASC') },
+        { k: { v: 'title', r: false}, l: this.$t('challenge.AZ') },
+        { k: { v: 'title', r: true}, l: this.$t('challenge.ZA') },
+        { k: { v: 'no_assessments', r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
+        { k: { v: 'no_assessments', r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') },
+        { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') },
       ]
     }
   },

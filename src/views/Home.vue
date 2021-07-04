@@ -2,12 +2,12 @@
   <div>
     <div class="columns is-multiline">
       <div class="column is-12">
-        <p class="title is-3">{{ $t('home.toolTitle') }}</p>
-        <p v-html="$t('home.toolDescription')"></p>
+        <p class="title is-3">{{ $t('home.TOOL_TITLE') }}</p>
+        <p v-html="$t('home.TOOL_DESCRIPTION')"></p>
       </div>
       <div class="filters columns column is-12 mb-4">
         <b-field class="column">
-            <b-input :placeholder="$t('general.searchFor')"
+            <b-input :placeholder="$t('general.SEARCH_FOR')"
                 type="search"
                 icon="magnify"
                 icon-clickable
@@ -31,8 +31,8 @@
                 {{ challenge.title }}
               </p>
               <p>{{ challenge.description }}</p>
-              <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> {{$t('home.proposalsSubmitted')}}</p>
-              <p>{{$t('home.funds')}} <b>{{ challenge.amount | currency}}</b></p>
+              <p v-if="challenge.nr_proposals"><b>{{ challenge.nr_proposals }}</b> {{$t('home.PROPOSALS_SUBMITTED')}}</p>
+              <p>{{$t('home.FUNDS')}} <b>{{ challenge.amount | currency}}</b></p>
             </div>
           </div>
           </router-link>
@@ -69,14 +69,6 @@ export default {
   },
 
   methods: {
-    copy() {
-      this.$clipboard('addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu')
-      this.$buefy.notification.open({
-        message: this.$t('general.addressCopied'),
-        type: 'is-primary',
-        position: 'is-bottom-right'
-      })
-    }
   },
 
   computed: {
@@ -108,8 +100,8 @@ export default {
     if (!this.dialogAccepted) {
       this.$buefy.dialog.alert({
         title: 'Voter Tool',
-        message: this.$t('general.warningPopup'),
-        confirmText: this.$t('general.confirmPopup'),
+        message: this.$t('general.WARNING_POPUP'),
+        confirmText: this.$t('general.CONFIRM_POPUP'),
         onConfirm: () => {
           this.$store.commit('user/setDialog', true)
         }

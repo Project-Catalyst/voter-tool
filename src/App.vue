@@ -16,22 +16,22 @@
           </b-navbar-item>
         </b-navbar-dropdown>
         <b-navbar-item @click="scrollToSupport">
-          {{ $t('general.support') }}
+          {{ $t('general.SUPPORT') }}
         </b-navbar-item>
         <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">
-          {{ $t('general.votingGuide') }}
+          {{ $t('general.VOTING_GUIDE') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
-          {{ $t('general.challengePicker') }}
+          {{ $t('general.CHALLENGE_PICKER') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
-          {{ $t('general.myVotePickList') }}
+          {{ $t('general.MY_VOTE_PICK_LIST') }}
         </b-navbar-item>
       </template>
     </b-navbar>
     <div class="section container">
-      <b-message :title="$t('general.warning')" type="is-warning" aria-close-label="Close message">
-        <span v-html="$t('general.warningMessage')" />
+      <b-message :title="$t('general.WARNING')" type="is-warning" aria-close-label="Close message">
+        <span v-html="$t('general.WARNING_MESSAGE')" />
       </b-message>
       <div class="content-wrapper">
         <router-view/>
@@ -40,16 +40,16 @@
     <div class="hero has-background-light" ref="supportus">
       <div class="section container is-flex is-justify-content-center support-us">
         <a href="https://www.drunkendragon.games/community-tools/" target="_blank">
-          <img src="@/assets/images/support.png" :alt="$t('general.supportUsWithCNFT')" />
-          <img class="hover" src="@/assets/images/support-hover.png" :alt="$t('general.supportUsWithCNFT')" />
+          <img src="@/assets/images/support.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
+          <img class="hover" src="@/assets/images/support-hover.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
         </a>
       </div>
     </div>
     <footer class="footer">
       <div class="content has-text-centered">
-        <p>{{$t('general.madeBy')}}</p>
+        <p>{{$t('general.MADE_BY')}}</p>
         <p class="has-text-weight-bold">
-          {{$t('general.donate')}}
+          {{$t('general.DONATE')}}
           <br />
           <span class="is-ellipsis">
             addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu
@@ -62,7 +62,7 @@
           </b-button>
         </p>
         <b-button
-          :label="$t('general.feedback')"
+          :label="$t('general.FEEDBACK')"
           type="is-primary"
           icon-left="message-reply-text"
           tag="a"
@@ -72,7 +72,7 @@
       </div>
     </footer>
     <div class="floating-button is-hidden-mobile" @click="scrollToSupport">
-      <img src="@/assets/images/support-button.png" :alt="$t('general.supportUsWithCNFT')" />
+      <img src="@/assets/images/support-button.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
     </div>
   </div>
 </template>
@@ -92,7 +92,7 @@ export default {
     copy() {
       this.$clipboard('addr1q9hh7nqmantwkd5upsamc6p54ckseksmngh858ng788hwfa99jp2g3s20g7k2hvj6rtl00l647hxvw3a5a84m3mzzlmqvartlu')
       this.$buefy.notification.open({
-        message: this.$t('general.addressCopied'),
+        message: this.$t('general.ADDRESS_COPIED'),
         type: 'is-primary',
         position: 'is-bottom-right'
       })
