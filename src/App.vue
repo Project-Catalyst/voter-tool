@@ -7,7 +7,7 @@
         </b-navbar-item>
       </template>
       <template #end>
-        <b-navbar-dropdown :label="$t('general.language')">
+        <b-navbar-dropdown :label="langs[$i18n.locale]">
           <b-navbar-item
             @click="changeLocale(lang)"
             v-for="(name, lang) in langs"
@@ -110,8 +110,12 @@ export default {
       });
     },
     changeLocale(locale) {
+      this.$store.commit('user/setLocale', locale)
       this.$i18n.locale = locale
     }
+  },
+  created() {
+    this.$i18n.locale = this.$store.state.user.locale
   }
 }
 </script>

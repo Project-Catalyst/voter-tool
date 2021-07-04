@@ -3,7 +3,8 @@ const getDefaultState = () => ({
   challengeOrder: {},
   challengeSearch: {},
   challengeSeed: {},
-  dialogAccepted: false
+  dialogAccepted: false,
+  locale: 'en'
 })
 
 const state = getDefaultState()
@@ -19,7 +20,8 @@ const getters = {
   challengeSeed: (state) => (challenge) => {
     return state.challengeSeed[challenge]
   },
-  dialogAccepted: (state) => state.dialogAccepted
+  dialogAccepted: (state) => state.dialogAccepted,
+  locale: (state) => state.locale
 }
 
 // actions
@@ -48,6 +50,9 @@ const mutations = {
   },
   setDialog(state, val) {
     state.dialogAccepted = val
+  },
+  setLocale(state, val) {
+    state.locale = val
   }
 }
 
