@@ -1,13 +1,31 @@
 import axios from 'axios';
+import { i18n } from '@/plugins/i18n';
+
+// 'en' is the base path
+const fundsTranslations = {
+  'f4': [],
+  'f5': ['ja']
+}
+
+const getLocalizedPath = (fund) => {
+  let localizedFund = fund
+  if (fundsTranslations[fund].includes(i18n.locale)) {
+    localizedFund = `${fund}/${i18n.locale}`
+  }
+  return localizedFund
+}
 
 export default {
   challenges(fund){
-    return axios.get(`data/${fund}/challenges.json`, { responseType: 'json' })
+    const localizedPath = getLocalizedPath(fund)
+    return axios.get(`data/${localizedPath}/challenges.json`, { responseType: 'json' })
   },
   proposals(fund, challenge){
-    return axios.get(`data/${fund}/${challenge}/proposals.json`)
+    const localizedPath = getLocalizedPath(fund)
+    return axios.get(`data/${localizedPath}/${challenge}/proposals.json`)
   },
   proposal(fund, challenge, id){
-    return axios.get(`data/${fund}/${challenge}/proposals/${id}.json`)
+    const localizedPath = getLocalizedPath(fund)
+    return axios.get(`data/${localizedPath}/${challenge}/proposals/${id}.json`)
   }
 }
