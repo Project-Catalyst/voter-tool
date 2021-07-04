@@ -112,6 +112,7 @@ export default {
     changeLocale(locale) {
       this.$store.commit('user/setLocale', locale)
       this.$i18n.locale = locale
+      this.$router.go()
     }
   },
   created() {
