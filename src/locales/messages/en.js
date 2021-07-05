@@ -47,7 +47,9 @@ export default {
     SUGGEST_VIDEO_MEDIA: 'Do you want to suggest video or media for this proposal? Click here!',
     VIDEOS: 'Videos',
     LINKS_MEDIA: 'Links / Media',
-    REVIEWS: 'Reviews'
+    REVIEWS: 'Reviews',
+    FUNDED: 'Funded',
+    OVER_BUDGET: 'Not Funded<br />Over Budget'
   },
   pickList: {
     MY_VOTE_PICK_LIST: 'My Vote Pick List',

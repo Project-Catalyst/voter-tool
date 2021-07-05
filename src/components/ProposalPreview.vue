@@ -19,13 +19,19 @@
       </div>
     </div>
     </router-link>
+    <funded-widget :proposal="proposal" :fund="fund" />
   </div>
 </template>
 
 <script>
 
+import FundedWidget from '@/components/FundedWidget';
+
 export default {
-  props: ['proposal', 'fund']
+  props: ['proposal', 'fund'],
+  components: {
+    FundedWidget
+  }
 }
 
 </script>

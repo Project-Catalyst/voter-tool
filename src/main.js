@@ -16,15 +16,26 @@ Vue.config.productionTip = false
 Vue.use(Buefy);
 Vue.use(Embed);
 Vue.use(Clipboard)
-Vue.use(VueCurrencyFilter, {
+Vue.use(VueCurrencyFilter, [{
   symbol : '$',
-  thousandsSeparator: '.',
+  thousandsSeparator: ',',
   fractionCount: 0,
-  fractionSeparator: ',',
+  fractionSeparator: '.',
   symbolPosition: 'front',
   symbolSpacing: false,
   avoidEmptyDecimals: undefined,
-})
+},
+{ // default name 'currency_2'
+   name: 'currency_ada',
+   symbol: '₳',
+   thousandsSeparator: ',',
+   fractionCount: 0,
+   fractionSeparator: '.',
+   symbolPosition: 'front',
+   symbolSpacing: true,
+   avoidEmptyDecimals: undefined,
+ }
+])
 
 Vue.use(VueMixpanel, {
   token: 'de2b810978910f43259b13c23f39abe1'
