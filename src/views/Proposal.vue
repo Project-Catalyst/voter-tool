@@ -67,9 +67,15 @@
           </b-button>
           <b-button
             @click="handlePickList"
-            :icon-left="(isProposalPicked) ? 'bookmark-remove' : 'bookmark-plus'"
+            :icon-left="(isProposalPicked) ? 'thumb-up' : 'thumb-up-outline'"
             type="is-primary-light">
             {{ pickMsg }}
+          </b-button>
+          <b-button
+            @click="handleDownPickList"
+            :icon-left="(isProposalDownPicked) ? 'thumb-down' : 'thumb-down-outline'"
+            type="is-primary-light">
+            {{ pickDownMsg }}
           </b-button>
         </div>
         <div class="content" v-if="(proposal.videos && (proposal.videos.length === 0)) || (proposal.media && (proposal.media.length === 0))">
@@ -152,9 +158,12 @@ export default {
     })
   },
   computed: {
-    ...mapGetters("proposals", ["isPicked"]),
+    ...mapGetters("proposals", ["isPicked", "isDownPicked"]),
     isProposalPicked() {
       return this.isPicked(this.proposal)
+    },
+    isProposalDownPicked() {
+      return this.isDownPicked(this.proposal)
     },
     fund() {
       if (this.$route) {
@@ -178,7 +187,7 @@ export default {
     },
     percentOfChallenge() {
       if (this.proposal && this.challenge) {
-        return ((this.proposal.amount * 100) / this.challenge.amount).toFixed(3)
+        return +((this.proposal.amount * 100) / this.challenge.amount).toFixed(3)
       }
       return false
     },
@@ -201,7 +210,10 @@ export default {
       return avgs
     },
     pickMsg() {
-      return (this.isProposalPicked) ? `Remove from My Pick List` : `Add to My Pick List`
+      return (this.isProposalPicked) ? `Remove from My Upvote Pick List` : `Add to My Upvote Pick List`
+    },
+    pickDownMsg() {
+      return (this.isProposalDownPicked) ? `Remove from My Downvote Pick List` : `Add to My Downvote Pick List`
     },
     formLink() {
       const proposalId = this.proposal.id
@@ -227,6 +239,29 @@ export default {
         this.$store.commit("proposals/addProposal", this.proposal);
         this.$buefy.notification.open({
           message: `<b>${this.proposal.title}</b> added to the Vote Pick List<br />
+          <a href="${pickListLink.href}">Open the Vote Pick List</>`,
+          type: 'is-primary',
+          position: 'is-bottom-right'
+        })
+      }
+    },
+    handleDownPickList() {
+      const pickListLink = this.$router.resolve({
+        name: 'picked',
+        params: { fund: this.fund }
+      })
+      if (this.isProposalDownPicked) {
+        this.$store.commit("proposals/downRemoveProposal", this.proposal);
+        this.$buefy.notification.open({
+          message: `<b>${this.proposal.title}</b> removed from the DownVote Pick List<br />
+          <a href="${pickListLink.href}">Open the Vote Pick List</>`,
+          type: 'is-primary',
+          position: 'is-bottom-right'
+        })
+      } else {
+        this.$store.commit("proposals/downAddProposal", this.proposal);
+        this.$buefy.notification.open({
+          message: `<b>${this.proposal.title}</b> added to the DownVote Pick List<br />
           <a href="${pickListLink.href}">Open the Vote Pick List</>`,
           type: 'is-primary',
           position: 'is-bottom-right'

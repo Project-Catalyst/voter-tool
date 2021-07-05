@@ -1,6 +1,7 @@
 // initial state
 const getDefaultState = () => ({
-  challenges: {}
+  challenges: {},
+  downChallenges: {},
 })
 
 const move = function(array, from, to, on = 1) {
@@ -9,15 +10,22 @@ const move = function(array, from, to, on = 1) {
 
 const state = getDefaultState()
 
+const checkPicked = function(localState, proposal) {
+  const present = Object.prototype.hasOwnProperty.call(localState, proposal.category)
+  if (present) {
+    const found = localState[proposal.category].find(p => p.id === proposal.id)
+    return (found)
+  }
+  return false
+}
+
 // getters
 const getters = {
   isPicked: (state) => (proposal) => {
-    const present = Object.prototype.hasOwnProperty.call(state.challenges, proposal.category)
-    if (present) {
-      const found = state.challenges[proposal.category].find(p => p.id === proposal.id)
-      return (found)
-    }
-    return false
+    return checkPicked(state.challenges, proposal)
+  },
+  isDownPicked: (state) => (proposal) => {
+    return checkPicked(state.downChallenges, proposal)
   }
 }
 
@@ -49,6 +57,9 @@ const mutations = {
       }
     }
     this.commit('proposals/calcAmounts')
+    if (checkPicked(state.downChallenges, proposal)) {
+      this.commit("proposals/downRemoveProposal", proposal);
+    }
   },
   removeProposal(state, proposal) {
     state.challenges[proposal.category] = state.challenges[proposal.category].filter(
@@ -58,6 +69,29 @@ const mutations = {
       delete state.challenges[proposal.category]
     }
     this.commit('proposals/calcAmounts')
+  },
+  downAddProposal(state, proposal) {
+    const present = Object.prototype.hasOwnProperty.call(state.downChallenges, proposal.category)
+    const challengeId = proposal.category
+    if (present) {
+      state.downChallenges[challengeId].push(proposal)
+    } else {
+      state.downChallenges = {
+        ...state.downChallenges,
+        [challengeId]: [{...proposal}]
+      }
+    }
+    if (checkPicked(state.challenges, proposal)) {
+      this.commit("proposals/removeProposal", proposal);
+    }
+  },
+  downRemoveProposal(state, proposal) {
+    state.downChallenges[proposal.category] = state.downChallenges[proposal.category].filter(
+      (p) => p.id !== proposal.id
+    )
+    if (state.downChallenges[proposal.category].length === 0) {
+      delete state.downChallenges[proposal.category]
+    }
   },
   moveProposal(state, {proposal, from, to}) {
     const challenge = proposal.category

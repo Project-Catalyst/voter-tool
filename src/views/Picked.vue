@@ -14,6 +14,7 @@
           {{ objChallenges[k].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[k].amount | currency }})</span>
         </p>
         <b-table
+          v-if="(proposals.length)"
           :data="proposals"
           :row-class="(row, index) => row.remaining < 0 && 'is-warning'"
           draggable
@@ -22,7 +23,13 @@
           @dragover="dragover"
           @dragleave="dragleave">
           <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
+            <router-link :to="{ name: 'proposal', params: {
+                fund: fund,
+                challenge: props.row.category,
+                id: props.row.id
+              }}">
             {{ props.row.title }}
+            </router-link>
             <a class="is-size-7" :href="props.row.url" target="blank">({{$t('pickList.OPEN_IN_IDEASCALE')}})</a>
           </b-table-column>
           <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
@@ -40,6 +47,33 @@
             </button>
           </b-table-column>
         </b-table>
+        <div class="downvote-wrapper" v-if="downChallenges[k] && downChallenges[k].length">
+          <p class="title is-6 mb-0 mt-6">
+            <span class="subtitle is-4">{{$t('pickList.DOWNVOTE')}}</span>
+          </p>
+          <b-table
+            class="downvote-list"
+            :data="downChallenges[k]">
+            <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
+              <router-link :to="{ name: 'proposal', params: {
+                  fund: fund,
+                  challenge: props.row.category,
+                  id: props.row.id
+                }}">
+              {{ props.row.title }}
+              </router-link>
+              <a class="is-size-7" :href="props.row.url" target="blank">({{$t('pickList.OPEN_IN_IDEASCALE')}})</a>
+            </b-table-column>
+            <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
+              {{ props.row.amount | currency }}
+            </b-table-column>
+            <b-table-column label="" width="40" v-slot="props" >
+              <button class="button is-small is-light" @click="deleteDownRow(props.row)">
+                <b-icon icon="delete"></b-icon>
+              </button>
+            </b-table-column>
+          </b-table>
+        </div>
       </div>
     </div>
     <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
@@ -66,6 +100,7 @@ export default {
   computed: {
     ...mapState({
       pchallenges: (state) => state.proposals.challenges,
+      downChallenges: (state) => state.proposals.downChallenges,
     }),
     fund() {
       if (this.$route) {
@@ -83,14 +118,21 @@ export default {
     vChallenges() {
       if (this.objChallenges) {
         let challenges = {}
-        Object.keys(this.pchallenges).forEach((k) => {
+        let keys = [...Object.keys(this.pchallenges), ...Object.keys(this.downChallenges)]
+        keys.forEach((k) => {
           const tot = this.objChallenges[k].amount
-          challenges[k] = this.pchallenges[k].map((p) => {
-            let cp = {...p}
-            cp.remaining = tot - p.pAmount
-            cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
-            return cp
-          })
+          if (this.pchallenges[k]) {
+            challenges[k] = this.pchallenges[k].map((p) => {
+              let cp = {...p}
+              cp.remaining = tot - p.pAmount
+              cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
+              return cp
+            })
+          } else {
+            if (this.downChallenges[k]) {
+              challenges[k] = []
+            }
+          }
         })
         return challenges
       }
@@ -128,6 +170,9 @@ export default {
     },
     deleteRow(row) {
       this.$store.commit("proposals/removeProposal", row);
+    },
+    deleteDownRow(row) {
+      this.$store.commit("proposals/downRemoveProposal", row);
     }
   },
   mounted(){
@@ -140,5 +185,14 @@ export default {
 <style lang="scss">
   tr.is-warning {
     background: hsl(44, 100%, 77%);
+  }
+  .downvote-list {
+    tbody tr {
+      background: #feecf0;
+      color: #f14668;
+      a, a:visited {
+        color: #f14668;
+      }
+    }
   }
 </style>

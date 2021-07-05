@@ -58,6 +58,7 @@ export default {
     FUNDS_REQUESTED: 'Funds requested',
     FUNDS_REMAINING: 'Funds remaining',
     NO_PROPOSALS_TEXT: "You don't have any proposals in your Vote Pick List yet. Browse through the proposals and add them to see the projection of your choice of vote!",
-    OUT_OF_BUDGET: 'Out of budget'
+    OUT_OF_BUDGET: 'Out of budget',
+    DOWNVOTE: 'Downvote'
   }
 }

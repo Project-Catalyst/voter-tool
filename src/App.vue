@@ -24,7 +24,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
           {{ $t('general.CHALLENGE_PICKER') }}
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f4'}}">
+        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f5'}}">
           {{ $t('general.MY_VOTE_PICK_LIST') }}
         </b-navbar-item>
       </template>
