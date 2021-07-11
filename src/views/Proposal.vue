@@ -129,7 +129,7 @@
               </div>
             </div>
             <div class="content columns is-multiline"
-              v-if="assessment.reply || assessment.pc_fb || (assessment.no_vca > 0 && (assessment.c_fb / assessment.no_vca) > 0.5)">
+              v-if="assessment.reply || assessment.pc_fb || (assessment.no_vca >= 4 && (assessment.c_fb / assessment.no_vca) > 0.5)">
               <blockquote class="column is-12">
                 <p class="title is-6">{{ $t('proposal.QA') }}</p>
                 <div class="block" v-if="assessment.reply">
@@ -145,7 +145,7 @@
                   </b-icon>
                   {{ $t('proposal.PROPOSER_MARKED_CF') }}
                 </div>
-                <div class="" v-if="assessment.no_vca > 0 && (assessment.c_fb / assessment.no_vca) > 0.5">
+                <div class="" v-if="assessment.no_vca >= 4 && (assessment.c_fb / assessment.no_vca) > 0.5">
                   <b-icon
                     type="is-primary"
                     icon="checkbox-marked">
