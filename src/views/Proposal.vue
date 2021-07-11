@@ -10,7 +10,7 @@
       <p class="subtitle is-6">
         {{ proposal.author }}
       </p>
-      <div class="box">
+      <div class="box proposal-content">
         <div class="columns">
           <div class="column">
             <p class="mb-2" v-if="proposal.solution">
@@ -54,6 +54,7 @@
                 <b-rate size="is-small" v-model="avgByQuestion[question]" disabled />
               </b-field>
             </div>
+            <funded-widget class="internal-funded-widget mt-3" :proposal="proposal" :fund="fund" />
           </div>
         </div>
         <div class="buttons">
@@ -111,7 +112,7 @@
     </div>
     <section class="reviews-list">
       <p class="title is-4">{{ $t('proposal.REVIEWS')}}</p>
-      <div class=""
+      <div class="block mb-6"
         v-for="(assessments, question) in assessmentsByQuestion"
         :key="question">
         <p class="title is-5">{{questions[question].full}}</p>
@@ -127,6 +128,32 @@
                 <b-rate v-model="assessment.rating" disabled />
               </div>
             </div>
+            <div class="content columns is-multiline"
+              v-if="assessment.reply || assessment.pc_fb || (assessment.no_vca > 0 && (assessment.c_fb / assessment.no_vca) > 0.5)">
+              <blockquote class="column is-12">
+                <p class="title is-6">{{ $t('proposal.QA') }}</p>
+                <div class="block" v-if="assessment.reply">
+                  <p>
+                    <b>{{ $t('proposal.PROPOSER_REPLY') }}</b><br />
+                    {{ assessment.reply }}
+                  </p>
+                </div>
+                <div class="" v-if="assessment.pc_fb">
+                  <b-icon
+                    type="is-primary"
+                    icon="checkbox-marked">
+                  </b-icon>
+                  {{ $t('proposal.PROPOSER_MARKED_CF') }}
+                </div>
+                <div class="" v-if="assessment.no_vca > 0 && (assessment.c_fb / assessment.no_vca) > 0.5">
+                  <b-icon
+                    type="is-primary"
+                    icon="checkbox-marked">
+                  </b-icon>
+                  {{ assessment.c_fb }} / {{ assessment.no_vca }} {{ $t('proposal.VCA_MARKED_CF') }}
+                </div>
+              </blockquote>
+            </div>
           </div>
         </div>
       </div>
@@ -140,6 +167,8 @@ import questions from "@/assets/data/questions.json";
 import CatalystAPI from '@/api/catalyst.js'
 import groupBy from '@/utils/group.js'
 
+import FundedWidget from '@/components/FundedWidget';
+
 export default {
   data(){
     return {
@@ -147,6 +176,10 @@ export default {
       challenges: [],
       proposal: []
     }
+  },
+
+  components: {
+    FundedWidget
   },
 
   mounted(){
@@ -272,6 +305,18 @@ export default {
 }
 </script>
 <style lang="scss">
+  @import 'bulma/sass/utilities/mixins';
+  .internal-funded-widget {
+    @include desktop {
+      top: initial;
+      bottom: -30px;
+    }
+  }
+  .proposal-content {
+    @include desktop {
+      position: relative;
+    }
+  }
   .video {
     position: relative;
     display: block;
