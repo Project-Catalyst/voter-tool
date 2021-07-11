@@ -1,45 +1,27 @@
 <template>
   <div v-if="challenges.length > 0">
     <div class="hero mb-6">
-      <p class="title is-4">
-        {{ $t('pickList.MY_VOTE_PICK_LIST')}}
+      <p class="title is-2">
+        {{ pickList.title }}
       </p>
-      <p v-html="$t('pickList.PICK_LIST_DESC')"></p>
     </div>
 
-    <div class="proposals-list" v-if="Object.keys(vChallenges).length > 0">
+    <div class="proposals-list" v-if="pickList">
 
-      <div class="columns">
-        <div class="column is-8">
-          <b-field :label="$t('pickList.SHARE_TITLE')">
-            <b-input v-model="title"></b-input>
-          </b-field>
-        </div>
-        <div class="column is-4">
-          <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
-        </div>
-      </div>
       <div class="box"
-        v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
+        v-for="proposals, k in pickList.rationales" :key="`challenge-${k}`">
         <p class="title is-3">
-          {{ objChallenges[k].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[k].amount | currency }})</span>
+          {{ objChallenges[proposals.challenge_id].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[proposals.challenge_id].amount | currency }})</span>
         </p>
-        <b-field :label="$t('pickList.CHALLENGE_RATIONALE')">
-          <b-input :value="rationales[k]" type="textarea"
-            @keyup.native.stop="updateRationale($event, k)"
-            @click="updateRationale($event, k)"
-            @change="updateRationale($event, k)"
-            ></b-input>
-        </b-field>
+        <div class="content">
+          <blockquote class="">
+            {{ proposals.rationale }}
+          </blockquote>
+        </div>
         <b-table
-          v-if="(proposals.length)"
-          :data="proposals"
-          :row-class="(row, index) => row.remaining < 0 && 'is-warning'"
-          draggable
-          @dragstart="dragstart"
-          @drop="drop"
-          @dragover="dragover"
-          @dragleave="dragleave">
+          v-if="(sharedProposals[proposals.challenge_id])"
+          :data="sharedProposals[proposals.challenge_id]"
+          :row-class="(row, index) => row.remaining < 0 && 'is-warning'">
           <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
             <router-link :to="{ name: 'proposal', params: {
                 fund: fund,
@@ -59,19 +41,14 @@
           <b-table-column field="inBudget" label="" v-slot="props">
             {{ props.row.inBudget}}
           </b-table-column>
-          <b-table-column label="" width="40" v-slot="props" >
-            <button class="button is-small is-light" @click="deleteRow(props.row)">
-              <b-icon icon="delete"></b-icon>
-            </button>
-          </b-table-column>
         </b-table>
-        <div class="downvote-wrapper" v-if="downChallenges[k] && downChallenges[k].length">
+        <div class="downvote-wrapper" v-if="sharedDownProposals[proposals.challenge_id] && sharedDownProposals[proposals.challenge_id].length">
           <p class="title is-6 mb-0 mt-6">
             <span class="subtitle is-4">{{$t('pickList.DOWNVOTE')}}</span>
           </p>
           <b-table
             class="downvote-list"
-            :data="downChallenges[k]">
+            :data="sharedDownProposals[proposals.challenge_id]">
             <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
               <router-link :to="{ name: 'proposal', params: {
                   fund: fund,
@@ -85,16 +62,8 @@
             <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
               {{ props.row.amount | currency }}
             </b-table-column>
-            <b-table-column label="" width="40" v-slot="props" >
-              <button class="button is-small is-light" @click="deleteDownRow(props.row)">
-                <b-icon icon="delete"></b-icon>
-              </button>
-            </b-table-column>
           </b-table>
         </div>
-      </div>
-      <div class="is-centered">
-        <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
       </div>
     </div>
     <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
@@ -118,8 +87,10 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapState } from "vuex";
 import CatalystAPI from '@/api/catalyst.js'
+import ShareAPI from '@/api/share.js';
 
 import Share from '@/components/Share';
 
@@ -128,6 +99,8 @@ export default {
   data() {
     return {
       challenges: [],
+      proposals: {},
+      pickList: {},
       draggingRow: null,
       draggingRowIndex: null,
       shareActive: false
@@ -156,12 +129,55 @@ export default {
       }
       return false
     },
+    uuid() {
+      if (this.$route) {
+        return this.$route.params.uuid
+      }
+      return false
+    },
     objChallenges() {
       const challenges = {}
       this.challenges.forEach((c) => {
         challenges[c.id] = c
       })
       return challenges
+    },
+    sharedProposals() {
+      let data = {}
+      if (this.objChallenges && this.pickList && Object.keys(this.proposals).length) {
+        if (this.pickList.rationales) {
+          this.pickList.rationales.forEach((ch) => {
+            const tot = this.objChallenges[ch.challenge_id].amount
+            if (ch.proposals) {
+              let proposals = ch.proposals.split(',').map((p_id) => {
+                let p = this.proposals[p_id]
+                let cp = {...p}
+                cp.remaining = tot - p.amount
+                cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
+                return cp
+              })
+              data[ch.challenge_id] = proposals
+            }
+          })
+        }
+      }
+      return data
+    },
+    sharedDownProposals() {
+      let data = {}
+      if (this.objChallenges && this.pickList && Object.keys(this.proposals).length) {
+        if (this.pickList.rationales) {
+          this.pickList.rationales.forEach((ch) => {
+            if (ch.downProposals) {
+              let downProposals = ch.downProposals.split(',').map((p_id) => {
+                return this.proposals[p_id]
+              })
+              data[ch.challenge_id] = downProposals
+            }
+          })
+        }
+      }
+      return data
     },
     vChallenges() {
       if (this.objChallenges) {
@@ -239,6 +255,26 @@ export default {
   mounted(){
     CatalystAPI.challenges(this.fund).then((r) => {
       this.challenges = r.data
+    })
+    ShareAPI.shared(this.uuid).then((r) => {
+      let localProposals = {}
+      this.pickList = r.data.pick_list
+      if (r.data.pick_list.rationales) {
+        let requests = []
+        r.data.pick_list.rationales.forEach((rationale) => {
+          requests.push(CatalystAPI.proposals(this.fund, rationale.challenge_id))
+        })
+        axios.all(requests).then(axios.spread((...responses) => {
+          responses.forEach((res) => {
+            if (res.data.length) {
+              res.data.forEach((p) => {
+                localProposals[p.id] = p
+              })
+              this.proposals = localProposals
+            }
+          })
+        }))
+      }
     })
   },
 }

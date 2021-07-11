@@ -2,6 +2,8 @@
 const getDefaultState = () => ({
   challenges: {},
   downChallenges: {},
+  rationales: {},
+  title: ''
 })
 
 const move = function(array, from, to, on = 1) {
@@ -17,6 +19,12 @@ const checkPicked = function(localState, proposal) {
     return (found)
   }
   return false
+}
+
+const challengePicked = function(state, challenge) {
+  const upPresent = Object.prototype.hasOwnProperty.call(state.challenges, challenge)
+  const downPresent = Object.prototype.hasOwnProperty.call(state.downChallenges, challenge)
+  return (upPresent || downPresent)
 }
 
 // getters
@@ -60,6 +68,12 @@ const mutations = {
     if (checkPicked(state.downChallenges, proposal)) {
       this.commit("proposals/downRemoveProposal", proposal);
     }
+    if (!challengePicked(state, proposal.category)) {
+      state.rationales = {
+        ...state.rationales,
+        challengeId: ''
+      }
+    }
   },
   removeProposal(state, proposal) {
     state.challenges[proposal.category] = state.challenges[proposal.category].filter(
@@ -69,6 +83,9 @@ const mutations = {
       delete state.challenges[proposal.category]
     }
     this.commit('proposals/calcAmounts')
+    if (!challengePicked(state, proposal.category)) {
+      delete state.rationales[proposal.category]
+    }
   },
   downAddProposal(state, proposal) {
     const present = Object.prototype.hasOwnProperty.call(state.downChallenges, proposal.category)
@@ -84,6 +101,12 @@ const mutations = {
     if (checkPicked(state.challenges, proposal)) {
       this.commit("proposals/removeProposal", proposal);
     }
+    if (!challengePicked(state, proposal.category)) {
+      state.rationales = {
+        ...state.rationales,
+        challengeId: ''
+      }
+    }
   },
   downRemoveProposal(state, proposal) {
     state.downChallenges[proposal.category] = state.downChallenges[proposal.category].filter(
@@ -91,6 +114,9 @@ const mutations = {
     )
     if (state.downChallenges[proposal.category].length === 0) {
       delete state.downChallenges[proposal.category]
+    }
+    if (!challengePicked(state, proposal.category)) {
+      delete state.rationales[proposal.category]
     }
   },
   moveProposal(state, {proposal, from, to}) {
@@ -100,6 +126,12 @@ const mutations = {
       [challenge]: move(state.challenges[challenge], from, to)
     }
     this.commit('proposals/calcAmounts')
+  },
+  updateTitle(state, title) {
+    state.title = title
+  },
+  updateRationale(state, {challenge, rationale}) {
+    state.rationales[challenge] = rationale
   }
 }
 
