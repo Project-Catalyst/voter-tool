@@ -8,7 +8,7 @@ export default {
     VOTING_GUIDE: "Voting Guide",
     CHALLENGE_PICKER: "Challenge Picker",
     MY_VOTE_PICK_LIST: "My Vote Pick List",
-    WARNING_MESSAGE: 'IMPORTANT!: The tool does not cast votes, use the official voting app. This is a non-official community made tool: all the info presented is not supported by IOHK, if you find an error please report it to us using <a href="https://forms.gle/ongBz2k8NfiosFz69" target="_blank">this form</a>!',
+    WARNING_MESSAGE: 'IMPORTANT!: The tool does not cast votes, use the official voting app. This is a non-official community made tool: not all info presented is provided by IOHK, if you find an error please report it to us using <a href="https://forms.gle/ongBz2k8NfiosFz69" target="_blank">this form</a>!',
     WARNING: "Warning",
     SUPPORT_US_WITH_CNFT: "Support us with CNFTs",
     MADE_BY: "Made by Catalyst Community for the Catalyst Community",
@@ -49,7 +49,11 @@ export default {
     LINKS_MEDIA: 'Links / Media',
     REVIEWS: 'Reviews',
     FUNDED: 'Funded',
-    OVER_BUDGET: 'Not Funded<br />Over Budget'
+    OVER_BUDGET: 'Not Funded<br />Over Budget',
+    QA: 'Assessment Quality Assurance:',
+    PROPOSER_REPLY: "Proposer's reply:",
+    PROPOSER_MARKED_CF: 'Proposer marked this assessment as "Constructive Feedback"',
+    VCA_MARKED_CF: 'Veteran Community Advisors marked this assessment as "Constructive Feedback"',
   },
   pickList: {
     MY_VOTE_PICK_LIST: 'My Vote Pick List',
@@ -61,6 +65,19 @@ export default {
     FUNDS_REMAINING: 'Funds remaining',
     NO_PROPOSALS_TEXT: "You don't have any proposals in your Vote Pick List yet. Browse through the proposals and add them to see the projection of your choice of vote!",
     OUT_OF_BUDGET: 'Out of budget',
-    DOWNVOTE: 'Downvote'
+    DOWNVOTE: 'Downvote',
+    SHARE: 'Share!',
+    SHARE_TITLE: 'Title for your Vote Pick List:',
+    CHALLENGE_RATIONALE: "Your rationale for your choices in this challenge:",
+    MODAL_TITLE: 'Share Vot Pick List'
+  },
+  share: {
+    SHARE_PICK_LIST: 'Share Vote Pick List',
+    SHARE_INTRO: "By clicking 'Share' you will create an URL with your vote pick list that you can share with other people.",
+    CHOOSE_COPY_PASSWORD: "To allow you to edit your Vote Pick List an automatic password was generated and can be used to edit your Vote Pick List in the future.<br /><br /><b>Copy and store this password in a safe place!</b><br /><br />",
+    SHARE: "Generate link for your pick list!",
+    CHOOSE_PASSWORD: "Choose a password",
+    PICK_LIST_SAVED: "Your Vote Pick List was saved!",
+    PICK_LIST_SAVED_MSG: "Your Vote Pick List was saved!<br />Share it using this link:"
   }
 }
