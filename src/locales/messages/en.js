@@ -17,7 +17,7 @@ export default {
   },
   home: {
     TOOL_TITLE: "Project Catalyst Voter tool",
-    TOOL_DESCRIPTION: "<b>Voter-tool</b> is a part of the <b>AIM Community Tool</b> series developed by the community for the community. It is designed to assist you in your analysis of Cardano Project Catalyst proposals and create a voting guide. In the future we hope to include features that will assist with discoverability and sharing of your voting advice.",
+    TOOL_DESCRIPTION: "<b>Voter-tool</b> is a part of the <b>AIM Community Tool</b> series developed by the community for the community. It is designed to assist you in your analysis of Cardano Project Catalyst proposals and create a voting guide.",
     PROPOSALS_SUBMITTED: "proposals submitted",
     FUNDS: "Funds:",
   },
