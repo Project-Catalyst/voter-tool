@@ -5,13 +5,13 @@ export default {
     return axios.post(
       `api/picklist`,
       data,
-      { baseURL: 'http://voter-tool-api' }
+      { baseURL: 'https://api.voter-tool.ze.lc/' }
     )
   },
   edit(id){
-    return axios.put(`api/picklist/${id}`, { baseURL: 'http://voter-tool-api' })
+    return axios.put(`api/picklist/${id}`, { baseURL: 'https://api.voter-tool.ze.lc/' })
   },
   shared(id){
-    return axios.get(`api/picklist/${id}`, { baseURL: 'http://voter-tool-api' })
+    return axios.get(`api/picklist/${id}`, { baseURL: 'https://api.voter-tool.ze.lc/' })
   }
 }
