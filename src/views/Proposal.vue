@@ -67,12 +67,14 @@
             {{ $t('proposal.VIEW_FULL_PROPOSAL')}}
           </b-button>
           <b-button
+            v-if="fund === currentFund"
             @click="handlePickList"
             :icon-left="(isProposalPicked) ? 'thumb-up' : 'thumb-up-outline'"
             type="is-primary-light">
             {{ pickMsg }}
           </b-button>
           <b-button
+            v-if="fund === currentFund"
             @click="handleDownPickList"
             :icon-left="(isProposalDownPicked) ? 'thumb-down' : 'thumb-down-outline'"
             type="is-primary-light">
@@ -174,7 +176,8 @@ export default {
     return {
       questions: questions,
       challenges: [],
-      proposal: []
+      proposal: [],
+      currentFund: 'f5'
     }
   },
 
