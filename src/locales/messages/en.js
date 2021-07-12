@@ -73,7 +73,7 @@ export default {
   },
   share: {
     SHARE_PICK_LIST: 'Share Vote Pick List',
-    SHARE_INTRO: "By clicking 'Share' you will create an URL with your vote pick list that you can share with other people.",
+    SHARE_INTRO: "By clicking 'Generate link for your pick list' you will create an URL with your vote pick list that you can share with other people.",
     CHOOSE_COPY_PASSWORD: "To allow you to edit your Vote Pick List an automatic password was generated and can be used to edit your Vote Pick List in the future.<br /><br /><b>Copy and store this password in a safe place!</b><br /><br />",
     SHARE: "Generate link for your pick list!",
     CHOOSE_PASSWORD: "Choose a password",
