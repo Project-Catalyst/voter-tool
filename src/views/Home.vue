@@ -51,7 +51,7 @@
       <proposal-preview
         :proposal="proposal"
         :key="proposal.id"
-        :fund="fund"
+        :fund="proposal.fund"
         v-for="proposal in filteredProposals"
         />
     </div>
@@ -114,7 +114,10 @@ export default {
         this.funds[el].challenges.forEach((c) => {
           CatalystAPI.proposals(el, c.id).then((res) => {
             if (res.data.length) {
-              this.proposals = this.proposals.concat(...res.data)
+              this.proposals = this.proposals.concat(...res.data.map((p) => {
+                p.fund = el
+                return p
+              }))
             }
           })
         })
