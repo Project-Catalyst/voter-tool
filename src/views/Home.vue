@@ -71,7 +71,7 @@ export default {
     return {
       challenges: [],
       proposals: [],
-      fund: 'f4',
+      fund: 'f5',
       keyword: '',
       funds: {
         'f5': {

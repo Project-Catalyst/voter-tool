@@ -5,6 +5,7 @@ import Challenge from '../views/Challenge.vue'
 import Proposal from '../views/Proposal.vue'
 import Picked from '../views/Picked.vue'
 import Shared from '../views/Shared.vue'
+import Support from '../views/Support.vue'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/support-us',
+    name: 'Support',
+    component: Support
   },
   {
     path: '/:fund/picked',

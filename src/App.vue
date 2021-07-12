@@ -15,10 +15,10 @@
             {{ name }}
           </b-navbar-item>
         </b-navbar-dropdown>
-        <b-navbar-item @click="scrollToSupport">
+        <b-navbar-item tag="router-link" :to="{ name: 'Support' }">
           {{ $t('general.SUPPORT') }}
         </b-navbar-item>
-        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">
+        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/ofo1bz/fund_5_register_to_vote_all_you_need_to_know/">
           {{ $t('general.VOTING_GUIDE') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
@@ -35,14 +35,6 @@
       </b-message>
       <div class="content-wrapper">
         <router-view/>
-      </div>
-    </div>
-    <div class="hero has-background-light" ref="supportus">
-      <div class="section container is-flex is-justify-content-center support-us">
-        <a href="https://www.drunkendragon.games/community-tools/" target="_blank">
-          <img src="@/assets/images/support.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
-          <img class="hover" src="@/assets/images/support-hover.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
-        </a>
       </div>
     </div>
     <footer class="footer">
@@ -71,8 +63,10 @@
         </b-button>
       </div>
     </footer>
-    <div class="floating-button is-hidden-mobile" @click="scrollToSupport">
-      <img src="@/assets/images/support-button.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
+    <div class="floating-button is-hidden-mobile">
+      <router-link :to="{ name: 'Support' }">
+        <img src="@/assets/images/support-button.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
+      </router-link>
     </div>
   </div>
 </template>
@@ -133,26 +127,6 @@ export default {
 #nav {
 }
 
-.support-us {
-  position: relative;
-  a, a:visited {
-    position: relative;
-    z-index: 1;
-  }
-  .hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-  }
-  &:hover {
-    .hover {
-      opacity: 1;
-    }
-  }
-}
 
 .floating-button {
   position: fixed;

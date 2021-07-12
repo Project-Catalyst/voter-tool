@@ -2,7 +2,7 @@ export default {
   general: {
     SEARCH_FOR: "Search for proposals...",
     ADDRESS_COPIED: "Address copied to clipboard!",
-    WARNING_POPUP: 'IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 4 voting information is available on <a target="_blank" href="https://www.reddit.com/r/cardano/comments/nqt6u0/all_you_need_to_know_fund4_voting/">Reddit from u/danny_cryptofay</a>',
+    WARNING_POPUP: 'IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 5 voting information is available on <a target="_blank" href="https://www.reddit.com/r/cardano/comments/ofo1bz/fund_5_register_to_vote_all_you_need_to_know/">Reddit from u/danny_cryptofay</a>',
     CONFIRM_POPUP: "Cool!",
     SUPPORT: "Support us",
     VOTING_GUIDE: "Voting Guide",
@@ -57,7 +57,7 @@ export default {
   },
   pickList: {
     MY_VOTE_PICK_LIST: 'My Vote Pick List',
-    PICK_LIST_DESC: "In this page you can see a projection of your voting choices.<br />For each challenge you can see the progressive amount of fund remaining for each proposal you added to the pick list.<br />You can drag/drop the elements in the list (unfortunately not on mobile devices).<br /> Your pick list is stored on your browser (using localStorage and cookies), no info will be shared with thirdy parties (or us).<br /> If you're using a setup where cookies are cleared at every browser launch, be careful because you may lose your choices!",
+    PICK_LIST_DESC: "In this page you can see the projection of your voting choices. For each challenge you can see the progressive amount of funds remaining for each proposal you added to the pick list. You are not limited to voting only for proposals within budget when you cast your ballot - consider this a measure should you wish to use it.<br/>You can drag/drop the elements in the list (unfortunately not currently on mobile devices).<br />Your pick list is stored on your browser (using localStorage and cookies), no info is collected or shared with third parties.<br />You may use the share feature to distribute your ballot choices with others. In this case your choices are stored with us and you can use the link provided to share your ballot.<br />If you're using a setup where cookies are cleared at every browser launch, be careful because this is likely to destroy your choices!",
     TOTAL_FUNDS: 'Total funds:',
     TITLE: 'Title',
     OPEN_IN_IDEASCALE: 'Open in IdeaScale',
@@ -68,7 +68,7 @@ export default {
     DOWNVOTE: 'Downvote',
     SHARE: 'Share!',
     SHARE_TITLE: 'Title for your Vote Pick List:',
-    CHALLENGE_RATIONALE: "Your rationale for your choices in this challenge:",
+    CHALLENGE_RATIONALE: "Rationale for your choices in this challenge:",
     MODAL_TITLE: 'Share Vot Pick List'
   },
   share: {
@@ -79,5 +79,11 @@ export default {
     CHOOSE_PASSWORD: "Choose a password",
     PICK_LIST_SAVED: "Your Vote Pick List was saved!",
     PICK_LIST_SAVED_MSG: "Your Vote Pick List was saved!<br />Share it using this link:"
+  },
+  support: {
+    SUPPORT_US: 'Support us',
+    SUPPORT_TEXT: '<p>This tool is from a range of tools imagined, designed and developed by the <b>AIM</b> (members of the Catalyst and Cardano community) for the Cardano Catalyst Community.</p><p>Tools currently available include:<br /><ul><li><a href="https://cardanocataly.st/ca-tool" target="_blank">CA-tool</a></li><li><a href="https://cardanocataly.st/vca-tool" target="_blank">vCA-tool</a></li><li><a href="https://cardanocataly.st/voter-tool" target="_blank">Voter-tool</a></li><li><a href="https://cardanocataly.st/" target="_blank">Community Landing Page</a></li></ul></p><p>If you like what we do and wish to support us we have a number of ways:</p><p>Directly via our tips jar wallet:</p>',
+    SUPPORT_TEXT_2: '<p>Through our cNFT (collectible NFT) partnership with Drunken Dragon.<br />Part of the sale directly benefits the development of these tool.</p>',
+    SUPPORT_TEXT_3: '<p>You can also support us with our various Project Catalyst funding proposals. Please look them over and consider commenting and supporting us in the ballot.</p><p>Current fund 5 proposals include:</p><ul><li><a href="https://cardano.ideascale.com/a/dtd/Catalyst-Community-Tools/350981-48088" target="_blank">Catalyst Community Tools</a></li><li><a href="https://cardano.ideascale.com/a/dtd/cardanocataly-st-Community-Page/350824-48088" target="_blank">cardanocataly.st Community Page</a></li><li><a href="https://cardano.ideascale.com/a/dtd/Visual-communication-for-community/351735-48088" target="_blank">Visual coomunication for community</a></li></ul>'
   }
 }

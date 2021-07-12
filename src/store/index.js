@@ -9,9 +9,9 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 let localStorage = createPersist({
-    namespace: 'voter-tool-f4',
+    namespace: 'voter-tool-f5',
     initialState: {},
-    expires: 30 * 24 * 60 * 60 * 1e3 // 30 days
+    expires: 60 * 24 * 60 * 60 * 1e3 // 30 days
 })
 
 export default new Vuex.Store({
