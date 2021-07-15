@@ -57,6 +57,7 @@ export default {
   },
   pickList: {
     MY_VOTE_PICK_LIST: 'My Vote Pick List',
+    VOTE_PICK_LIST: 'Vote Pick List',
     PICK_LIST_DESC: "In this page you can see the projection of your voting choices. For each challenge you can see the progressive amount of funds remaining for each proposal you added to the pick list. You are not limited to voting only for proposals within budget when you cast your ballot - consider this a measure should you wish to use it.<br/>You can drag/drop the elements in the list (unfortunately not currently on mobile devices).<br />Your pick list is stored on your browser (using localStorage and cookies), no info is collected or shared with third parties.<br />You may use the share feature to distribute your ballot choices with others. In this case your choices are stored with us and you can use the link provided to share your ballot.<br />If you're using a setup where cookies are cleared at every browser launch, be careful because this is likely to destroy your choices!",
     TOTAL_FUNDS: 'Total funds:',
     TITLE: 'Title',
@@ -69,7 +70,7 @@ export default {
     SHARE: 'Share!',
     SHARE_TITLE: 'Title for your Vote Pick List:',
     CHALLENGE_RATIONALE: "Rationale for your choices in this challenge:",
-    MODAL_TITLE: 'Share Vot Pick List'
+    MODAL_TITLE: 'Share Vote Pick List'
   },
   share: {
     SHARE_PICK_LIST: 'Share Vote Pick List',

@@ -15,7 +15,24 @@
         </p>
         <p>{{ proposal.description }}</p>
         <p><b>Funds requested:</b> {{ proposal.amount | currency}}</p>
-        <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} reviews by Community Advisors
+        <div class="columns">
+          <div class="column is-11">
+            <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} reviews by Community Advisors
+          </div>
+          <div class="column is-1 card has-text-centered" v-if="isProposalPicked || isProposalDownPicked">
+            <p class="subtitle is-7 mb-1">
+              {{ $t('pickList.VOTE_PICK_LIST') }}
+            </p>
+            <b-icon
+              icon="thumb-up"
+              type="is-success"
+              v-if="isProposalPicked" />
+            <b-icon
+              icon="thumb-down"
+              type="is-danger"
+              v-if="isProposalDownPicked" />
+          </div>
+        </div>
       </div>
     </div>
     </router-link>
@@ -25,12 +42,22 @@
 
 <script>
 
+import { mapGetters } from "vuex";
 import FundedWidget from '@/components/FundedWidget';
 
 export default {
   props: ['proposal', 'fund'],
   components: {
     FundedWidget
+  },
+  computed: {
+    ...mapGetters("proposals", ["isPicked", "isDownPicked"]),
+    isProposalPicked() {
+      return this.isPicked(this.proposal)
+    },
+    isProposalDownPicked() {
+      return this.isDownPicked(this.proposal)
+    },
   }
 }
 
