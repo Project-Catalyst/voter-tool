@@ -3,7 +3,8 @@ const getDefaultState = () => ({
   challenges: {},
   downChallenges: {},
   rationales: {},
-  title: ''
+  title: '',
+  version: ''
 })
 
 const move = function(array, from, to, on = 1) {
@@ -11,6 +12,16 @@ const move = function(array, from, to, on = 1) {
 }
 
 const state = getDefaultState()
+
+const getLightProposal = function(proposal) {
+  return {
+    id: proposal.id,
+    title: proposal.title,
+    category: proposal.category,
+    amount: proposal.amount,
+    url: proposal.url
+  }
+}
 
 const checkPicked = function(localState, proposal) {
   const present = Object.prototype.hasOwnProperty.call(localState, proposal.category)
@@ -56,12 +67,13 @@ const mutations = {
   addProposal(state, proposal) {
     const present = Object.prototype.hasOwnProperty.call(state.challenges, proposal.category)
     const challengeId = proposal.category
+    const lightProposal = getLightProposal(proposal)
     if (present) {
-      state.challenges[challengeId].push(proposal)
+      state.challenges[challengeId].push(lightProposal)
     } else {
       state.challenges = {
         ...state.challenges,
-        [challengeId]: [{...proposal}]
+        [challengeId]: [{...lightProposal}]
       }
     }
     this.commit('proposals/calcAmounts')
@@ -90,12 +102,13 @@ const mutations = {
   downAddProposal(state, proposal) {
     const present = Object.prototype.hasOwnProperty.call(state.downChallenges, proposal.category)
     const challengeId = proposal.category
+    const lightProposal = getLightProposal(proposal)
     if (present) {
-      state.downChallenges[challengeId].push(proposal)
+      state.downChallenges[challengeId].push(lightProposal)
     } else {
       state.downChallenges = {
         ...state.downChallenges,
-        [challengeId]: [{...proposal}]
+        [challengeId]: [{...lightProposal}]
       }
     }
     if (checkPicked(state.challenges, proposal)) {
@@ -132,6 +145,27 @@ const mutations = {
   },
   updateRationale(state, {challenge, rationale}) {
     state.rationales[challenge] = rationale
+  },
+  updateVersion(state) {
+    if ((!state.version) || (state.version < 1)) {
+      Object.keys(state.challenges).forEach((k) => {
+        let acc = 0
+        state.challenges[k] = state.challenges[k].map((p) => {
+          let lightP = getLightProposal(p)
+          lightP.pAmount = acc + lightP.amount
+          acc = lightP.pAmount
+          return lightP
+        })
+      })
+
+      Object.keys(state.downChallenges).forEach((k) => {
+        state.downChallenges[k] = state.downChallenges[k].map((p) => {
+          let lightP = getLightProposal(p)
+          return lightP
+        })
+      })
+      state.version = 1
+    }
   }
 }
 

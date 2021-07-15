@@ -111,6 +111,7 @@ export default {
   },
   created() {
     this.$i18n.locale = this.$store.state.user.locale
+    this.$store.commit('proposals/updateVersion')
   }
 }
 </script>
