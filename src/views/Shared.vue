@@ -14,7 +14,7 @@
           {{ objChallenges[proposals.challenge_id].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[proposals.challenge_id].amount | currency }})</span>
         </p>
         <div class="content">
-          <blockquote class="">
+          <blockquote class="shared-rationale" v-if="proposals.rationale">
             {{ proposals.rationale }}
           </blockquote>
         </div>
@@ -291,5 +291,8 @@ export default {
         color: #f14668;
       }
     }
+  }
+  .shared-rationale {
+    white-space: pre-wrap;
   }
 </style>
