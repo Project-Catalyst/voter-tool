@@ -319,6 +319,9 @@ export default {
     @include desktop {
       position: relative;
     }
+    p {
+      white-space: pre-line;
+    }
   }
   .video {
     position: relative;
