@@ -148,11 +148,13 @@ export default {
         if (this.pickList.rationales) {
           this.pickList.rationales.forEach((ch) => {
             const tot = this.objChallenges[ch.challenge_id].amount
+            let ptot = tot
             if (ch.proposals) {
               let proposals = ch.proposals.split(',').map((p_id) => {
                 let p = this.proposals[p_id]
                 let cp = {...p}
-                cp.remaining = tot - p.amount
+                cp.remaining = ptot - p.amount
+                ptot = cp.remaining
                 cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
                 return cp
               })
