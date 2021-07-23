@@ -95,7 +95,7 @@
           <div class="column is-4"
             :key="`video-${i}`"
             v-for="(video, i) in proposal.videos">
-            <video-embed css="video is-16by9" :src="video"></video-embed>
+            <video-embed :params="getVideoParams(video)" css="video is-16by9" :src="video"></video-embed>
           </div>
         </div>
       </div>
@@ -258,6 +258,21 @@ export default {
     }
   },
   methods: {
+    getVideoParams(video) {
+      let params = {
+        'picture-in-picture': 1,
+        accelerometer: 1,
+        gyroscope: 1
+      }
+      var url = new URLSearchParams(video)
+      if (url.has("start")) {
+        params.start = url.get("start")
+      }
+      if (url.has("end")) {
+        params.end = url.get("end")
+      }
+      return params
+    },
     handlePickList() {
       const pickListLink = this.$router.resolve({
         name: 'picked',
