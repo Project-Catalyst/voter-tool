@@ -13,13 +13,6 @@
           icon-left="content-copy">
         </b-button>
       </p>
-      <div v-html="$t('support.SUPPORT_TEXT_2')" />
-      <div class="section container is-flex is-justify-content-center support-us">
-        <a href="https://www.drunkendragon.games/community-tools/" target="_blank">
-          <img src="@/assets/images/support.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
-          <img class="hover" src="@/assets/images/support-hover.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
-        </a>
-      </div>
       <div v-html="$t('support.SUPPORT_TEXT_3')" />
       <p>&nbsp;</p>
     </div>

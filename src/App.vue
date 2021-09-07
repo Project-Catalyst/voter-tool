@@ -64,9 +64,10 @@
       </div>
     </footer>
     <div class="floating-button is-hidden-mobile">
-      <router-link :to="{ name: 'Support' }">
-        <img src="@/assets/images/support-button.png" :alt="$t('general.SUPPORT_US_WITH_CNFT')" />
-      </router-link>
+      <b-button
+        tag="router-link"
+        :to="{ name: 'Support' }"
+        type="is-primary" size="is-medium">{{$t('support.SUPPORT_US')}}</b-button>
     </div>
   </div>
 </template>
