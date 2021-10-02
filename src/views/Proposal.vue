@@ -139,7 +139,7 @@
     </section>
     <div class="victor" v-if="goodEasterEgg">
       <video width="500" autoplay muted playsinline @ended="goodEasterEgg = false">
-        <source src="../assets/images/victor-approves.mp4" type="video/mp4">
+        <source :src="`${publicPath}/victor-approves.mp4`" type="video/mp4">
       </video>
     </div>
   </div>
@@ -164,7 +164,8 @@ export default {
       proposal: [],
       currentFund: 'f6',
       goodEasterEgg: false,
-      fakeRating: 0
+      fakeRating: 0,
+      publicPath: process.env.BASE_URL
     }
   },
 

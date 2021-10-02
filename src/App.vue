@@ -121,7 +121,7 @@ export default {
         y: e.pageY
       })
       setTimeout(()=>{
-        //this.badEasterEgg = []
+        this.badEasterEgg = []
       }, 10000);
     }
   },
