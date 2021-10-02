@@ -10,14 +10,17 @@
         <p class="subtitle is-4 mb-1">
           {{ proposal.title }}
         </p>
-        <p class="subtitle is-6 mb-4">
+        <p class="subtitle is-6 mb-4" v-if="proposal.author">
           {{ proposal.author }}
         </p>
         <p>{{ proposal.description }}</p>
         <p><b>Funds requested:</b> {{ proposal.amount | currency}}</p>
         <div class="columns">
-          <div class="column is-11">
+          <div class="column is-11" v-if="proposal.rating">
             <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} reviews by Community Advisors
+          </div>
+          <div class="column is-11" v-if="proposal.f6_rating">
+            <b-rate v-model="proposal.f6_rating" disabled /> {{ proposal.f6_no_assessments }} reviews by Community Advisors
           </div>
           <div class="column is-1 card has-text-centered" v-if="isProposalPicked || isProposalDownPicked">
             <p class="subtitle is-7 mb-1">
