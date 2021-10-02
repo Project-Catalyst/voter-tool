@@ -70,16 +70,21 @@
         :to="{ name: 'Support' }"
         type="is-primary" size="is-medium">{{$t('support.SUPPORT_US')}}</b-button>
     </div>
+    <div class="glass" v-for="badEaster, idx in badEasterEgg"
+      :key="`glass-${idx}`"
+      :style="{'top': `${badEaster.y}px`, 'left': `${badEaster.x}px`}"></div>
   </div>
 </template>
 
 <script>
 
 import langs from "@/locales/locales";
+import { EventBus } from "./EventBus";
 export default {
   data(){
     return {
       challenges: [],
+      badEasterEgg: [],
       langs: langs
     }
   },
@@ -109,16 +114,34 @@ export default {
       this.$store.commit('user/setLocale', locale)
       this.$i18n.locale = locale
       this.$router.go()
+    },
+    activateBadEaster(e) {
+      this.badEasterEgg.push({
+        x: e.pageX,
+        y: e.pageY
+      })
+      setTimeout(()=>{
+        //this.badEasterEgg = []
+      }, 10000);
     }
   },
   created() {
     this.$i18n.locale = this.$store.state.user.locale
     this.$store.commit('proposals/updateVersion')
+  },
+  mounted() {
+    EventBus.$on("badEaster", this.activateBadEaster);
+  },
+  destroyed() {
+    EventBus.$off("badEaster");
   }
 }
 </script>
 
 <style lang="scss">
+body {
+  overflow-x: hidden;
+}
 .is-ellipsis {
   display: inline-block;
   max-width: 300px;
@@ -127,7 +150,8 @@ export default {
   vertical-align: middle;
 }
 
-#nav {
+#app {
+  position: relative;
 }
 
 .aim-logo {
@@ -144,4 +168,13 @@ export default {
   z-index: 10;
 }
 
+  .glass {
+    position: absolute;
+    z-index: 1000;
+    background: url('./assets/images/glass.png');
+    width: 768px;
+    height: 1098px;
+    transform: translateX(-57%) translateY(-43%);
+    pointer-events: none;
+  }
 </style>

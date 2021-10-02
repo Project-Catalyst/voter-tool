@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="proposal && challenge" :class="{'crash': badEasterEgg}">
+  <div class="container" v-if="proposal && challenge">
     <div class="hero mb-6">
       <p class="title is-6 mb-2">
         {{ challenge.title }}
@@ -52,6 +52,9 @@
             <div class="mb-6" v-if="proposal.f6_rating">
               <b-rate size="is-large" v-model="proposal.f6_rating" disabled />
               <b>{{ proposal.f6_no_assessments }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
+            </div>
+            <div class="mb-6" v-if="!proposal.f6_rating && !proposal.rating">
+              <b-rate size="is-large" v-model="fakeRating" disabled />
             </div>
             <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
               <b-field class="inline" :label="questions[question].title">
@@ -139,9 +142,6 @@
         <source src="../assets/images/victor-approves.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="glass" v-for="badEaster, idx in badEasterEgg"
-      :key="`glass-${idx}`"
-      :style="{'top': `${badEaster.y}px`, 'left': `${badEaster.x}px`}"></div>
   </div>
 </template>
 
@@ -151,6 +151,7 @@ import questions from "@/assets/data/questions.json";
 import CatalystAPI from '@/api/catalyst.js'
 import groupBy from '@/utils/group.js'
 
+import { EventBus } from "./../EventBus";
 import FundedWidget from '@/components/FundedWidget';
 import AssessmentPartial from '@/components/AssessmentPartial';
 import AssessmentFull from '@/components/AssessmentFull';
@@ -162,8 +163,8 @@ export default {
       challenges: [],
       proposal: [],
       currentFund: 'f6',
-      badEasterEgg: [],
-      goodEasterEgg: false
+      goodEasterEgg: false,
+      fakeRating: 0
     }
   },
 
@@ -326,13 +327,7 @@ export default {
         })
       } else {
         if (this.proposal.id === 368984) {
-          this.badEasterEgg.push({
-            x: e.pageX,
-            y: e.pageY
-          })
-          setTimeout(()=>{
-            this.badEasterEgg = []
-          }, 10000);
+          EventBus.$emit("badEaster", e);
         }
         this.$store.commit("proposals/downAddProposal", this.proposal);
         this.$buefy.notification.open({
@@ -348,15 +343,6 @@ export default {
 </script>
 <style lang="scss">
   @import 'bulma/sass/utilities/mixins';
-  .glass {
-    position: absolute;
-    z-index: 1000;
-    background: url('../assets/images/glass.png');
-    width: 768px;
-    height: 1098px;
-    transform: translateX(-100%) translateY(-65%);
-    pointer-events: none;
-  }
   .victor {
     position: fixed;
     z-index: 1000;
@@ -419,13 +405,4 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  @keyframes crash {
-    from {
-      transform: rotate(0);
-    }
-
-    to {
-      transform : rotate(360deg);
-    }
-}
 </style>

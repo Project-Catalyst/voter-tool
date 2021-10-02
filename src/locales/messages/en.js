@@ -8,7 +8,7 @@ export default {
     VOTING_GUIDE: "Voting Guide",
     CHALLENGE_PICKER: "Challenge Picker",
     MY_VOTE_PICK_LIST: "My Vote Pick List",
-    WARNING_MESSAGE: 'IMPORTANT!: The tool does not cast votes, use the official voting app. This is a non-official community made tool: not all info presented is provided by IOHK, if you find an error please report it to us using <a href="https://forms.gle/ongBz2k8NfiosFz69" target="_blank">this form</a>!',
+    WARNING_MESSAGE: 'IMPORTANT!: The tool does not cast votes, use the official voting app. This is a non-official community made tool: if you find an error please report it to us using <a href="https://forms.gle/ongBz2k8NfiosFz69" target="_blank">this form</a>!',
     WARNING: "Warning",
     SUPPORT_US_WITH_CNFT: "Support us with CNFTs",
     MADE_BY: "Made by Catalyst Community for the Catalyst Community",

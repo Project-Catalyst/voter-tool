@@ -22,6 +22,9 @@
           <div class="column is-11" v-if="proposal.f6_rating">
             <b-rate v-model="proposal.f6_rating" disabled /> {{ proposal.f6_no_assessments }} reviews by Community Advisors
           </div>
+          <div class="column is-11" v-if="!proposal.f6_rating && !proposal.rating">
+            <b-rate v-model="fakeRate" disabled />
+          </div>
           <div class="column is-1 card has-text-centered" v-if="isProposalPicked || isProposalDownPicked">
             <p class="subtitle is-7 mb-1">
               {{ $t('pickList.VOTE_PICK_LIST') }}
@@ -49,6 +52,11 @@ import { mapGetters } from "vuex";
 import FundedWidget from '@/components/FundedWidget';
 
 export default {
+  data() {
+    return {
+      fakeRate: 0
+    }
+  },
   props: ['proposal', 'fund'],
   components: {
     FundedWidget

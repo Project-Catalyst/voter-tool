@@ -47,14 +47,14 @@
                 type="is-primary"
                 icon="checkbox-marked">
               </b-icon>
-              {{ $t('proposal.VCA_GOOD') }} {{ $tc('proposal.VCA_GROUP', assessment.no_vca) }}) <a class="is-size-7" @click="details = !details">[{{ $t('proposal.DETAILS') }}]</a>
+              {{ $t('proposal.VCA_GOOD') }} ({{ $tc('proposal.VCA_GROUP', assessment.no_vca) }}) <a class="is-size-7" @click="details = !details">[{{ $t('proposal.DETAILS') }}]</a>
             </span>
             <span v-if="assessment.vca_o == 2">
               <b-icon
                 type="is-success"
                 icon="checkbox-marked">
               </b-icon>
-              {{ $t('proposal.VCA_EXCELLENT') }} {{ $tc('proposal.VCA_GROUP', assessment.no_vca) }}) <a class="is-size-7" @click="details = !details">[{{ $t('proposal.DETAILS') }}]</a>
+              {{ $t('proposal.VCA_EXCELLENT') }} ({{ $tc('proposal.VCA_GROUP', assessment.no_vca) }}) <a class="is-size-7" @click="details = !details">[{{ $t('proposal.DETAILS') }}]</a>
             </span>
             <div class="content" v-if="details">
               <p class="mt-4 mb-1"><b>QA Details</b></p>
