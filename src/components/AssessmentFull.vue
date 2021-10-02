@@ -1,0 +1,82 @@
+<template>
+  <div class="card mb-4">
+    <div class="card-content">
+      <div class="content columns">
+        <div class="column">
+          <b v-if="isChallengeSetting">{{ questions[4].full}}</b>
+          <b v-if="!isChallengeSetting">{{ questions[1].full}}</b>
+          <p>{{ assessment.q0 }}</p>
+        </div>
+        <div class="column is-narrow">
+          <b-rate v-model="assessment.q0r" disabled />
+        </div>
+      </div>
+      <div class="content columns">
+        <div class="column">
+          <b v-if="isChallengeSetting">{{ questions[5].full}}</b>
+          <b v-if="!isChallengeSetting">{{ questions[2].full}}</b>
+          <p>{{ assessment.q1 }}</p>
+        </div>
+        <div class="column is-narrow">
+          <b-rate v-model="assessment.q1r" disabled />
+        </div>
+      </div>
+      <div class="content columns">
+        <div class="column">
+          <b v-if="isChallengeSetting">{{ questions[6].full}}</b>
+          <b v-if="!isChallengeSetting">{{ questions[3].full}}</b>
+          <p>{{ assessment.q2 }}</p>
+        </div>
+        <div class="column is-narrow">
+          <b-rate v-model="assessment.q2r" disabled />
+        </div>
+      </div>
+      <div class="content columns is-multiline"
+        v-if="assessment.reply || assessment.vca_o">
+        <blockquote class="column is-12">
+          <p class="title is-6">{{ $t('proposal.QA') }}</p>
+          <div class="block" v-if="assessment.reply">
+            <p>
+              <b>{{ $t('proposal.PROPOSER_REPLY') }}</b><br />
+              {{ assessment.reply }}
+            </p>
+          </div>
+          <div class="" v-if="assessment.vca_o">
+            <span v-if="assessment.vca_o == 1">
+              <b-icon
+                type="is-primary"
+                icon="checkbox-marked">
+              </b-icon>
+              {{ $t('proposal.VCA_GOOD') }} (by <b>{{assessment.no_vca}}</b> {{ $t('proposal.VCA') }})
+            </span>
+            <span v-if="assessment.vca_o == 2">
+              <b-icon
+                type="is-success"
+                icon="checkbox-marked">
+              </b-icon>
+              {{ $t('proposal.VCA_EXCELLENT') }} (by <b>{{assessment.no_vca}}</b> {{ $t('proposal.VCA') }})
+            </span>
+          </div>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+import questions from "@/assets/data/questions.json";
+
+export default {
+  data(){
+    return {
+      questions: questions,
+    }
+  },
+  props: ['assessment', 'isChallengeSetting'],
+}
+
+</script>
+
+<style lang="scss">
+</style>

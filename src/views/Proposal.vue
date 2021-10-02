@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="proposal && challenge">
+  <div class="container" v-if="proposal && challenge" :class="{'crash': badEasterEgg}">
     <div class="hero mb-6">
       <p class="title is-6 mb-2">
         {{ challenge.title }}
@@ -45,9 +45,13 @@
             </div>
           </div>
           <div class="column is-narrow">
-            <div class="mb-6">
+            <div class="mb-6" v-if="proposal.rating">
               <b-rate size="is-large" v-model="proposal.rating" disabled />
               ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
+            </div>
+            <div class="mb-6" v-if="proposal.f6_rating">
+              <b-rate size="is-large" v-model="proposal.f6_rating" disabled />
+              <b>{{ proposal.f6_no_assessments }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
             </div>
             <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
               <b-field class="inline" :label="questions[question].title">
@@ -112,54 +116,32 @@
         </div>
       </div>
     </div>
-    <section class="reviews-list">
+    <section class="reviews-list" v-if="proposal.assessments">
       <p class="title is-4">{{ $t('proposal.REVIEWS')}}</p>
       <div class="block mb-6"
         v-for="(assessments, question) in assessmentsByQuestion"
         :key="question">
         <p class="title is-5">{{questions[question].full}}</p>
-        <div class="card mb-4"
-          v-for="assessment in assessments"
-          :key="assessment.id">
-          <div class="card-content">
-            <div class="content columns">
-              <div class="column">
-                <p>{{ assessment.note }}</p>
-              </div>
-              <div class="column is-narrow">
-                <b-rate v-model="assessment.rating" disabled />
-              </div>
-            </div>
-            <div class="content columns is-multiline"
-              v-if="assessment.reply || assessment.pc_fb || (assessment.no_vca >= 4 && (assessment.c_fb / assessment.no_vca) > 0.5)">
-              <blockquote class="column is-12">
-                <p class="title is-6">{{ $t('proposal.QA') }}</p>
-                <div class="block" v-if="assessment.reply">
-                  <p>
-                    <b>{{ $t('proposal.PROPOSER_REPLY') }}</b><br />
-                    {{ assessment.reply }}
-                  </p>
-                </div>
-                <div class="" v-if="assessment.pc_fb">
-                  <b-icon
-                    type="is-primary"
-                    icon="checkbox-marked">
-                  </b-icon>
-                  {{ $t('proposal.PROPOSER_MARKED_CF') }}
-                </div>
-                <div class="" v-if="assessment.no_vca >= 4 && (assessment.c_fb / assessment.no_vca) > 0.5">
-                  <b-icon
-                    type="is-primary"
-                    icon="checkbox-marked">
-                  </b-icon>
-                  {{ assessment.c_fb }} / {{ assessment.no_vca }} {{ $t('proposal.VCA_MARKED_CF') }}
-                </div>
-              </blockquote>
-            </div>
-          </div>
-        </div>
+        <assessment-partial v-for="assessment in assessments"
+          :assessment="assessment"
+          :key="assessment.id" />
       </div>
     </section>
+    <section class="reviews-list" v-if="proposal.f6_assessments">
+      <p class="title is-4">{{ $t('proposal.REVIEWS')}}</p>
+      <assessment-full v-for="assessment in proposal.f6_assessments"
+        :isChallengeSetting="(proposal.importance)"
+        :assessment="assessment"
+        :key="assessment.id" />
+    </section>
+    <div class="victor" v-if="goodEasterEgg">
+      <video width="500" autoplay muted playsinline @ended="goodEasterEgg = false">
+        <source src="../assets/images/victor-approves.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="glass" v-for="badEaster, idx in badEasterEgg"
+      :key="`glass-${idx}`"
+      :style="{'top': `${badEaster.y}px`, 'left': `${badEaster.x}px`}"></div>
   </div>
 </template>
 
@@ -170,6 +152,8 @@ import CatalystAPI from '@/api/catalyst.js'
 import groupBy from '@/utils/group.js'
 
 import FundedWidget from '@/components/FundedWidget';
+import AssessmentPartial from '@/components/AssessmentPartial';
+import AssessmentFull from '@/components/AssessmentFull';
 
 export default {
   data(){
@@ -177,12 +161,16 @@ export default {
       questions: questions,
       challenges: [],
       proposal: [],
-      currentFund: 'f5'
+      currentFund: 'f6',
+      badEasterEgg: [],
+      goodEasterEgg: false
     }
   },
 
   components: {
-    FundedWidget
+    FundedWidget,
+    AssessmentPartial,
+    AssessmentFull
   },
 
   mounted(){
@@ -238,11 +226,29 @@ export default {
     },
     avgByQuestion() {
       let avgs = {}
-      Object.keys(this.assessmentsByQuestion).forEach((key) => {
-        const el = this.assessmentsByQuestion[key]
-        let avg = (el.reduce((n, {rating}) => n + rating, 0)) / el.length
-        avgs[key] = avg
-      })
+      if (this.assessmentsByQuestion.length) {
+        Object.keys(this.assessmentsByQuestion).forEach((key) => {
+          const el = this.assessmentsByQuestion[key]
+          let avg = (el.reduce((n, {rating}) => n + rating, 0)) / el.length
+          avgs[key] = avg
+        })
+      } else {
+        if (this.proposal) {
+          if (this.proposal.f6_assessments) {
+            if (this.proposal.importance) {
+              // Challenge settings
+              avgs[4] = this.findAvgByKey(this.proposal.f6_assessments, 'q0r')
+              avgs[5] = this.findAvgByKey(this.proposal.f6_assessments, 'q1r')
+              avgs[6] = this.findAvgByKey(this.proposal.f6_assessments, 'q2r')
+            } else {
+              // Normal Challenge
+              avgs[1] = this.findAvgByKey(this.proposal.f6_assessments, 'q0r')
+              avgs[2] = this.findAvgByKey(this.proposal.f6_assessments, 'q1r')
+              avgs[3] = this.findAvgByKey(this.proposal.f6_assessments, 'q2r')
+            }
+          }
+        }
+      }
       return avgs
     },
     pickMsg() {
@@ -258,6 +264,12 @@ export default {
     }
   },
   methods: {
+    findAvgByKey(arr, key) {
+      const { length } = arr;
+      return arr.reduce((acc, val) => {
+        return acc + (val[key]/length);
+      }, 0);
+    },
     getVideoParams(video) {
       let params = {
         'picture-in-picture': 1,
@@ -287,6 +299,9 @@ export default {
           position: 'is-bottom-right'
         })
       } else {
+        if (this.proposal.id === 368984) {
+          this.goodEasterEgg = true
+        }
         this.$store.commit("proposals/addProposal", this.proposal);
         this.$buefy.notification.open({
           message: `<b>${this.proposal.title}</b> added to the Vote Pick List<br />
@@ -296,7 +311,7 @@ export default {
         })
       }
     },
-    handleDownPickList() {
+    handleDownPickList(e) {
       const pickListLink = this.$router.resolve({
         name: 'picked',
         params: { fund: this.fund }
@@ -310,6 +325,15 @@ export default {
           position: 'is-bottom-right'
         })
       } else {
+        if (this.proposal.id === 368984) {
+          this.badEasterEgg.push({
+            x: e.pageX,
+            y: e.pageY
+          })
+          setTimeout(()=>{
+            this.badEasterEgg = []
+          }, 10000);
+        }
         this.$store.commit("proposals/downAddProposal", this.proposal);
         this.$buefy.notification.open({
           message: `<b>${this.proposal.title}</b> added to the DownVote Pick List<br />
@@ -324,6 +348,25 @@ export default {
 </script>
 <style lang="scss">
   @import 'bulma/sass/utilities/mixins';
+  .glass {
+    position: absolute;
+    z-index: 1000;
+    background: url('../assets/images/glass.png');
+    width: 768px;
+    height: 1098px;
+    transform: translateX(-100%) translateY(-65%);
+    pointer-events: none;
+  }
+  .victor {
+    position: fixed;
+    z-index: 1000;
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    pointer-events: none;
+  }
   .internal-funded-widget {
     @include desktop {
       top: initial;
@@ -376,4 +419,13 @@ export default {
     display: flex;
     justify-content: space-between;
   }
+  @keyframes crash {
+    from {
+      transform: rotate(0);
+    }
+
+    to {
+      transform : rotate(360deg);
+    }
+}
 </style>
