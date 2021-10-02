@@ -47,15 +47,39 @@
                 type="is-primary"
                 icon="checkbox-marked">
               </b-icon>
-              {{ $t('proposal.VCA_GOOD') }} (by <b>{{assessment.no_vca}}</b> {{ $t('proposal.VCA') }})
+              {{ $t('proposal.VCA_GOOD') }} {{ $tc('proposal.VCA_GROUP', assessment.no_vca) }}) <a class="is-size-7" @click="details = !details">[{{ $t('proposal.DETAILS') }}]</a>
             </span>
             <span v-if="assessment.vca_o == 2">
               <b-icon
                 type="is-success"
                 icon="checkbox-marked">
               </b-icon>
-              {{ $t('proposal.VCA_EXCELLENT') }} (by <b>{{assessment.no_vca}}</b> {{ $t('proposal.VCA') }})
+              {{ $t('proposal.VCA_EXCELLENT') }} {{ $tc('proposal.VCA_GROUP', assessment.no_vca) }}) <a class="is-size-7" @click="details = !details">[{{ $t('proposal.DETAILS') }}]</a>
             </span>
+            <div class="content" v-if="details">
+              <p class="mt-4 mb-1"><b>QA Details</b></p>
+              <p class="mb-1">
+                <b-icon
+                  type="is-success"
+                  icon="checkbox-marked">
+                </b-icon>&nbsp;
+                <b>{{assessment.ne}} / {{assessment.no_vca}}</b> {{ $t('proposal.RATED_EXCELLENT') }}
+              </p>
+              <p class="mb-1">
+                <b-icon
+                  type="is-primary"
+                  icon="checkbox-marked">
+                </b-icon>&nbsp;
+                <b>{{assessment.ng}} / {{assessment.no_vca}}</b> {{ $t('proposal.RATED_GOOD') }}
+              </p>
+              <p class="mb-1">
+                <b-icon
+                  type="is-warning"
+                  icon="checkbox-marked">
+                </b-icon>&nbsp;
+                <b>{{assessment.nfo}} / {{assessment.no_vca}}</b> {{ $t('proposal.RATED_FILTERED_OUT') }}
+              </p>
+            </div>
           </div>
         </blockquote>
       </div>
@@ -71,6 +95,7 @@ export default {
   data(){
     return {
       questions: questions,
+      details: false
     }
   },
   props: ['assessment', 'isChallengeSetting'],

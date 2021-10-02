@@ -55,8 +55,13 @@ export default {
     PROPOSER_MARKED_CF: 'Proposer marked this assessment as "Constructive Feedback"',
     VCA_MARKED_CF: 'Veteran Community Advisors marked this assessment as "Constructive Feedback"',
     VCA: 'Veteran Community Advisors',
-    VCA_GOOD: 'Assessment marked GOOD',
-    VCA_EXCELLENT: 'Assessment marked EXCELLENT',
+    VCA_GOOD: 'rated GOOD',
+    VCA_EXCELLENT: 'rated EXCELLENT',
+    VCA_GROUP: 'no vCA | by a Community Advisor| by a group of {count} Community Advisors',
+    DETAILS: 'Details',
+    RATED_EXCELLENT: 'rated "EXCELLENT"',
+    RATED_GOOD: 'rated "GOOD"',
+    RATED_FILTERED_OUT: 'rated as to be "FILTERED OUT"',
 
   },
   pickList: {
