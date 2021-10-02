@@ -52,18 +52,7 @@ export default {
   data(){
     return {
       challenges: [],
-      proposals: [],
-      sortingOptions: [
-        { k: { v: 'amount', r: false}, l: this.$t('challenge.REQUESTED_BUDGET_DESC')},
-        { k: { v: 'amount', r: true}, l: this.$t('challenge.REQUESTED_BUDGET_ASC')},
-        { k: { v: 'rating', r: false}, l: this.$t('challenge.REVIEW_SCORE_DESC')},
-        { k: { v: 'rating', r: true}, l: this.$t('challenge.REVIEW_SCORE_ASC') },
-        { k: { v: 'title', r: false}, l: this.$t('challenge.AZ') },
-        { k: { v: 'title', r: true}, l: this.$t('challenge.ZA') },
-        { k: { v: 'no_assessments', r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
-        { k: { v: 'no_assessments', r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') },
-        { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') },
-      ]
+      proposals: []
     }
   },
 
@@ -79,6 +68,28 @@ export default {
     ...mapGetters("user", ["challengeSeed"]),
     seed() {
       return this.challengeSeed(this.challengeId)
+    },
+    sortingOptions() {
+      let rating
+      let no_ass
+      if (this.fund == 'f6') {
+        rating = 'f6_rating'
+        no_ass = 'f6_no_assessments'
+      } else {
+        rating = 'rating'
+        no_ass = 'no_assessments'
+      }
+      return [
+        { k: { v: 'amount', r: false}, l: this.$t('challenge.REQUESTED_BUDGET_DESC')},
+        { k: { v: 'amount', r: true}, l: this.$t('challenge.REQUESTED_BUDGET_ASC')},
+        { k: { v: rating, r: false}, l: this.$t('challenge.REVIEW_SCORE_DESC')},
+        { k: { v: rating, r: true}, l: this.$t('challenge.REVIEW_SCORE_ASC') },
+        { k: { v: 'title', r: false}, l: this.$t('challenge.AZ') },
+        { k: { v: 'title', r: true}, l: this.$t('challenge.ZA') },
+        { k: { v: no_ass, r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
+        { k: { v: no_ass, r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') },
+        { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') },
+      ]
     },
     sortBy: {
       get () {
