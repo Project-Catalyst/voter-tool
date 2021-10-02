@@ -18,13 +18,13 @@
         <b-navbar-item tag="router-link" :to="{ name: 'Support' }">
           {{ $t('general.SUPPORT') }}
         </b-navbar-item>
-        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/ofo1bz/fund_5_register_to_vote_all_you_need_to_know/">
+        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/p2xpi8/project_catalyst_all_you_need_to_know_fund6_voter">
           {{ $t('general.VOTING_GUIDE') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
           {{ $t('general.CHALLENGE_PICKER') }}
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f5'}}">
+        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f6'}}">
           {{ $t('general.MY_VOTE_PICK_LIST') }}
         </b-navbar-item>
       </template>
@@ -39,7 +39,6 @@
     </div>
     <footer class="footer">
       <div class="content has-text-centered">
-        <p>{{$t('general.MADE_BY')}}</p>
         <p class="has-text-weight-bold">
           {{$t('general.DONATE')}}
           <br />
@@ -53,6 +52,8 @@
             icon-left="content-copy">
           </b-button>
         </p>
+        <p>{{$t('general.MADE_BY')}}</p>
+        <p><img class="aim-logo" src="@/assets/images/aim-logo.png" alt="Cardano AIM" /></p>
         <b-button
           :label="$t('general.FEEDBACK')"
           type="is-primary"
@@ -127,6 +128,10 @@ export default {
 }
 
 #nav {
+}
+
+.aim-logo {
+  width: 150px;
 }
 
 
