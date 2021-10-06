@@ -147,18 +147,20 @@ export default {
       if (this.objChallenges && this.pickList && Object.keys(this.proposals).length) {
         if (this.pickList.rationales) {
           this.pickList.rationales.forEach((ch) => {
-            const tot = this.objChallenges[ch.challenge_id].amount
-            let ptot = tot
-            if (ch.proposals) {
-              let proposals = ch.proposals.split(',').map((p_id) => {
-                let p = this.proposals[p_id]
-                let cp = {...p}
-                cp.remaining = ptot - p.amount
-                ptot = cp.remaining
-                cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
-                return cp
-              })
-              data[ch.challenge_id] = proposals
+            if (this.objChallenges[ch.challenge_id]) {
+              const tot = this.objChallenges[ch.challenge_id].amount
+              let ptot = tot
+              if (ch.proposals) {
+                let proposals = ch.proposals.split(',').map((p_id) => {
+                  let p = this.proposals[p_id]
+                  let cp = {...p}
+                  cp.remaining = ptot - p.amount
+                  ptot = cp.remaining
+                  cp.inBudget = (cp.remaining >= 0) ? '' : this.$t('pickList.OUT_OF_BUDGET')
+                  return cp
+                })
+                data[ch.challenge_id] = proposals
+              }
             }
           })
         }
@@ -170,11 +172,13 @@ export default {
       if (this.objChallenges && this.pickList && Object.keys(this.proposals).length) {
         if (this.pickList.rationales) {
           this.pickList.rationales.forEach((ch) => {
-            if (ch.downProposals) {
-              let downProposals = ch.downProposals.split(',').map((p_id) => {
-                return this.proposals[p_id]
-              })
-              data[ch.challenge_id] = downProposals
+            if (this.objChallenges[ch.challenge_id]) {
+              if (ch.downProposals) {
+                let downProposals = ch.downProposals.split(',').map((p_id) => {
+                  return this.proposals[p_id]
+                })
+                data[ch.challenge_id] = downProposals
+              }
             }
           })
         }
@@ -257,26 +261,29 @@ export default {
   mounted(){
     CatalystAPI.challenges(this.fund).then((r) => {
       this.challenges = r.data
-    })
-    ShareAPI.shared(this.uuid).then((r) => {
-      let localProposals = {}
-      this.pickList = r.data.pick_list
-      if (r.data.pick_list.rationales) {
-        let requests = []
-        r.data.pick_list.rationales.forEach((rationale) => {
-          requests.push(CatalystAPI.proposals(this.fund, rationale.challenge_id))
-        })
-        axios.all(requests).then(axios.spread((...responses) => {
-          responses.forEach((res) => {
-            if (res.data.length) {
-              res.data.forEach((p) => {
-                localProposals[p.id] = p
-              })
-              this.proposals = localProposals
-            }
+      ShareAPI.shared(this.uuid).then((r) => {
+        let localProposals = {}
+        let localPicklist = r.data.pick_list
+        if (r.data.pick_list.rationales) {
+          let requests = []
+          let rationales = r.data.pick_list.rationales.filter((rr) => (this.objChallenges[rr.challenge_id]))
+          localPicklist.rationales = rationales
+          this.pickList = localPicklist
+          rationales.forEach((rationale) => {
+            requests.push(CatalystAPI.proposals(this.fund, rationale.challenge_id))
           })
-        }))
-      }
+          axios.all(requests).then(axios.spread((...responses) => {
+            responses.forEach((res) => {
+              if (res.data.length) {
+                res.data.forEach((p) => {
+                  localProposals[p.id] = p
+                })
+                this.proposals = localProposals
+              }
+            })
+          }))
+        }
+      })
     })
   },
 }
