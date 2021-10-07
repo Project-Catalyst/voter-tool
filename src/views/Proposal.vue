@@ -272,18 +272,25 @@ export default {
         return acc + (val[key]/length);
       }, 0);
     },
+    parseUrlQuery(value) {
+      var urlParams = new URL(value).searchParams
+      return Array.from(urlParams.keys()).reduce((acc, key) => {
+        acc[key] = urlParams.getAll(key)
+        return acc
+      }, {})
+    },
     getVideoParams(video) {
       let params = {
         'picture-in-picture': 1,
         accelerometer: 1,
         gyroscope: 1
       }
-      var url = new URLSearchParams(video)
-      if (url.has("start")) {
-        params.start = url.get("start")
+      var urlParams = this.parseUrlQuery(video)
+      if (urlParams["start"]) {
+        params.start = urlParams["start"]
       }
-      if (url.has("end")) {
-        params.end = url.get("end")
+      if (urlParams["end"]) {
+        params.end = urlParams["end"]
       }
       return params
     },
