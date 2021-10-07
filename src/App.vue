@@ -66,9 +66,10 @@
     </footer>
     <div class="floating-button is-hidden-mobile">
       <b-button
+        class="special-button"
         tag="router-link"
         :to="{ name: 'Support' }"
-        type="is-primary" size="is-medium">{{$t('support.SUPPORT_US')}}</b-button>
+        type="is-primary" size="is-medium">{{$t('support.SUPPORT_US')}}<br />{{$t('support.MYSTERIOUS_BOX')}}</b-button>
     </div>
     <div class="glass" v-for="badEaster, idx in badEasterEgg"
       :key="`glass-${idx}`"
@@ -176,5 +177,8 @@ body {
     height: 1098px;
     transform: translateX(-57%) translateY(-43%);
     pointer-events: none;
+  }
+  .special-button {
+    height: 3.5em !important;
   }
 </style>

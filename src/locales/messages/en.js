@@ -93,6 +93,12 @@ export default {
   support: {
     SUPPORT_US: 'Support us',
     SUPPORT_TEXT: '<p>This tool is from a range of tools imagined, designed and developed by the <b>AIM</b> (members of the Catalyst and Cardano community) for the Cardano Catalyst Community.</p><p>Tools currently available include:<br /><ul><li><a href="https://cardanocataly.st/ca-tool" target="_blank">CA-tool</a></li><li><a href="https://cardanocataly.st/vca-tool" target="_blank">vCA-tool</a></li><li><a href="https://cardanocataly.st/voter-tool" target="_blank">Voter-tool</a></li><li><a href="https://cardanocataly.st/feedback-challenge-tool" target="_blank">FeedbackChallenge-tool</a></li><li><a href="https://cardanocataly.st/" target="_blank">Community Landing Page</a></li></ul></p><p>If you like what we do and wish to support us you can use our tips jar wallet:</p>',
-    SUPPORT_TEXT_3: ''
+    SUPPORT_TEXT_3: '',
+    MYSTERIOUS_TEXT: '<p>Thank you for your support. We are running a limited time promotion that will end on <b>October 31, 2021 23:59:59</b>.<br />You can support us by purchasing a “Mysterious Box” NFT and support the development of our secret side project.<br />The funds raised will help us with the early developed and engagement of the necessary talent.<br />The “Mysterious Box” will have some connection with our future creation. So please keep an eye out for developments.</p>',
+    BUY_MYSTERIOUS_BOX: 'Buy a “Mysterious Box”',
+    BUY_MYSTERIOUS_TEXT: 'To buy the “Mysterious Box” NFT you have to send exactly <b>15 ADA</b> to the address below:',
+    BUY_MYSTERIOUS_TEXT_2: 'You will receive after some minutes the minted NFT at your address along with 2 ADA.<br />To buy the NFT use Daedalus, Yoroi or ADALite wallet, never send ADA from an exchange!',
+    COPY_ADDRESS: 'Copy the wallet address',
+    MYSTERIOUS_BOX: 'Mysterious Box',
   }
 }
