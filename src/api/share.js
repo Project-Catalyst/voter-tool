@@ -5,7 +5,10 @@ export default {
     return axios.post(
       `api/picklist`,
       data,
-      { baseURL: 'https://api.voter-tool.ze.lc/' }
+      {
+        useCredentails: true,
+        baseURL: 'https://api.voter-tool.ze.lc/'
+      }
     )
   },
   edit(id){
