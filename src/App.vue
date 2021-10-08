@@ -74,15 +74,17 @@
           </router-link>
         </div>
       </div>
-      <!--
-      <b-button
-        class="special-button"
-        tag="router-link"
-        :to="{ name: 'Support' }"
-        type="is-primary" size="is-medium">
-        {{$t('support.SUPPORT_US')}}<br />{{$t('support.MYSTERIOUS_BOX')}}
-      </b-button>
-      -->
+    </div>
+    <div class="floating-mobile-button is-hidden-desktop">
+      <div class="card has-background-dark">
+        <div class="card-image">
+          <router-link :to="{ name: 'Support' }">
+            <div class="image">
+              <img src="@/assets/images/mysterious-box-mob-support.png" />
+            </div>
+          </router-link>
+        </div>
+      </div>
     </div>
     <div class="glass" v-for="badEaster, idx in badEasterEgg"
       :key="`glass-${idx}`"
@@ -180,6 +182,21 @@ body {
   width: 180px;
   cursor: pointer;
   z-index: 10;
+}
+
+.floating-mobile-button {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+  cursor: pointer;
+  z-index: 10;
+  .card-image {
+    .image {
+      img {
+        max-width: 320px !important;
+      }
+    }
+  }
 }
 
   .glass {
