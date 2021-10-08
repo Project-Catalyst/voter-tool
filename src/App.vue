@@ -65,11 +65,24 @@
       </div>
     </footer>
     <div class="floating-button is-hidden-mobile">
+      <div class="card has-background-dark">
+        <div class="card-image">
+          <router-link :to="{ name: 'Support' }">
+            <div class="image">
+              <img src="@/assets/images/mysterious-box-ad.png" />
+            </div>
+          </router-link>
+        </div>
+      </div>
+      <!--
       <b-button
         class="special-button"
         tag="router-link"
         :to="{ name: 'Support' }"
-        type="is-primary" size="is-medium">{{$t('support.SUPPORT_US')}}<br />{{$t('support.MYSTERIOUS_BOX')}}</b-button>
+        type="is-primary" size="is-medium">
+        {{$t('support.SUPPORT_US')}}<br />{{$t('support.MYSTERIOUS_BOX')}}
+      </b-button>
+      -->
     </div>
     <div class="glass" v-for="badEaster, idx in badEasterEgg"
       :key="`glass-${idx}`"
