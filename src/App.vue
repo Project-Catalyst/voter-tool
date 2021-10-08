@@ -69,7 +69,7 @@
         <div class="card-image">
           <router-link :to="{ name: 'Support' }">
             <div class="image">
-              <img src="@/assets/images/mysterious-box-ad.png" />
+              <img src="@/assets/images/mysterious-box-support.png" />
             </div>
           </router-link>
         </div>
