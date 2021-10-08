@@ -7,7 +7,7 @@
         </b-navbar-item>
       </template>
       <template #end>
-        <b-navbar-dropdown :label="langs[$i18n.locale]" v-if="langs.length > 1">
+        <b-navbar-dropdown :label="langs[$i18n.locale]" v-if="Object.keys(langs).length > 1">
           <b-navbar-item
             @click="changeLocale(lang)"
             v-for="(name, lang) in langs"

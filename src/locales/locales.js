@@ -1,3 +1,4 @@
 export default {
-  en: "English"
+  en: "English",
+  ja: "日本語（生成）"
 }

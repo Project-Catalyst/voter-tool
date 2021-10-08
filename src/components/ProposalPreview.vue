@@ -14,13 +14,13 @@
           {{ proposal.author }}
         </p>
         <p>{{ proposal.description }}</p>
-        <p><b>Funds requested:</b> {{ proposal.amount | currency}}</p>
+        <p><b>{{ $t('pickList.FUNDS_REQUESTED') }}:</b> {{ proposal.amount | currency}}</p>
         <div class="columns">
           <div class="column is-11" v-if="proposal.rating">
-            <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} reviews by Community Advisors
+            <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} {{ $t('proposal.REVIEWS_BY_CA') }}
           </div>
           <div class="column is-11" v-if="proposal.f6_rating">
-            <b-rate v-model="proposal.f6_rating" disabled /> {{ proposal.f6_no_assessments }} reviews by Community Advisors
+            <b-rate v-model="proposal.f6_rating" disabled /> {{ proposal.f6_no_assessments }} {{ $t('proposal.REVIEWS_BY_CA') }}
           </div>
           <div class="column is-11" v-if="!proposal.f6_rating && !proposal.rating">
             <b-rate v-model="fakeRate" disabled />
