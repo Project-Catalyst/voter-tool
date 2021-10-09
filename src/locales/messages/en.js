@@ -61,7 +61,16 @@ export default {
     "DETAILS": "Details",
     "RATED_EXCELLENT": "rated 'EXCELLENT'",
     "RATED_GOOD": "rated 'GOOD'",
-    "RATED_FILTERED_OUT": "rated as to be 'FILTERED OUT'"
+    "RATED_FILTERED_OUT": "rated as to be 'FILTERED OUT'",
+    "Impact": "Impact",
+    "Feasibility": "Feasibility",
+    "Auditability": "Auditability",
+    "Alignment": "Alignment",
+    "Verifiability": "Verifiability",
+    "ADD_UPVOTE_PICKLIST": "Add to My Upvote Pick List",
+    "REMOVE_UPVOTE_PICKLIST": "Remove from My Upvote Pick List",
+    "ADD_DOWNVOTE_PICKLIST": "Add to My Downvote Pick List",
+    "REMOVE_DOWNVOTE_PICKLIST": "Remove from My Downvote Pick List"
   },
   "pickList": {
     "MY_VOTE_PICK_LIST": "My Vote Pick List",

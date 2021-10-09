@@ -57,7 +57,7 @@
               <b-rate size="is-large" v-model="fakeRating" disabled />
             </div>
             <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
-              <b-field class="inline" :label="questions[question].title">
+              <b-field class="inline" :label="$t(`proposal.${questions[question].title}`)">
                 <b-rate size="is-small" v-model="avgByQuestion[question]" disabled />
               </b-field>
             </div>
@@ -254,10 +254,10 @@ export default {
       return avgs
     },
     pickMsg() {
-      return (this.isProposalPicked) ? `Remove from My Upvote Pick List` : `Add to My Upvote Pick List`
+      return (this.isProposalPicked) ? this.$t('proposal.REMOVE_UPVOTE_PICKLIST') : this.$t('proposal.ADD_UPVOTE_PICKLIST')
     },
     pickDownMsg() {
-      return (this.isProposalDownPicked) ? `Remove from My Downvote Pick List` : `Add to My Downvote Pick List`
+      return (this.isProposalDownPicked) ? this.$t('proposal.REMOVE_DOWNVOTE_PICKLIST') : this.$t('proposal.ADD_DOWNVOTE_PICKLIST')
     },
     formLink() {
       const proposalId = this.proposal.id
