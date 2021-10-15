@@ -66,11 +66,6 @@
         </div>
       </div>
     </div>
-    <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
-      <p class="subtitle is-4">
-        {{ $t('pickList.NO_PROPOSALS_TEXT')}}
-      </p>
-    </b-message>
     <b-modal
       v-model="shareActive"
       has-modal-card
