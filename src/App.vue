@@ -64,28 +64,6 @@
         </b-button>
       </div>
     </footer>
-    <div class="floating-button is-hidden-mobile">
-      <div class="card has-background-dark">
-        <div class="card-image">
-          <router-link :to="{ name: 'Support' }">
-            <div class="image">
-              <img src="@/assets/images/mysterious-box-support.png" />
-            </div>
-          </router-link>
-        </div>
-      </div>
-    </div>
-    <div class="floating-mobile-button is-hidden-desktop">
-      <div class="card has-background-dark">
-        <div class="card-image">
-          <router-link :to="{ name: 'Support' }">
-            <div class="image">
-              <img src="@/assets/images/mysterious-box-mob-support.png" />
-            </div>
-          </router-link>
-        </div>
-      </div>
-    </div>
     <div class="glass" v-for="badEaster, idx in badEasterEgg"
       :key="`glass-${idx}`"
       :style="{'top': `${badEaster.y}px`, 'left': `${badEaster.x}px`}"></div>

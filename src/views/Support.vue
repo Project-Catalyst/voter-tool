@@ -2,27 +2,6 @@
   <div>
     <div class="box is-size-5 content">
       <p class="title is-2 has-text-centered">{{ $t('support.SUPPORT_US') }}</p>
-      <div class="is-4 mb-6" v-html="$t('support.MYSTERIOUS_TEXT')" />
-      <div class="is-flex is-justify-content-center mb-6 mt-6">
-        <b-button
-          @click="buy"
-          type="is-primary"
-          size="is-large">
-          {{ $t('support.BUY_MYSTERIOUS_BOX') }}
-        </b-button>
-      </div>
-      <div class="mysterious-box-image is-flex is-justify-content-center mb-2">
-        <img src="@/assets/images/MysteriousBox-low.jpg" />
-      </div>
-      <p class="is-size-7 has-text-centered">Policy:<br /><a class="is-b-ellipsis" href="https://pool.pm/policy/4a2eb4fe8421164aaba78987258d7bcf96128b86dd2ad2fc13b75be6" target="_blank">4a2eb4fe8421164aaba78987258d7bcf96128b86dd2ad2fc13b75be6</a></p>
-      <div class="is-flex is-justify-content-center mb-6 mt-6">
-        <b-button
-          @click="buy"
-          type="is-primary"
-          size="is-large">
-          {{ $t('support.BUY_MYSTERIOUS_BOX') }}
-        </b-button>
-      </div>
       <p class="title is-3">AIM</p>
       <div class="is-4" v-html="$t('support.SUPPORT_TEXT')" />
       <p class="has-text-weight-bold is-flex is-justify-content-center">
