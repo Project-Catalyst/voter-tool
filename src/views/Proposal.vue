@@ -2,7 +2,12 @@
   <div class="container" v-if="proposal && challenge">
     <div class="hero mb-6">
       <p class="title is-6 mb-2">
-        {{ challenge.title }}
+        <router-link :to="{ name: 'challenge', params: {
+          fund: this.fund,
+          challenge: challenge.id
+          }}">
+          {{ challenge.title }}
+        </router-link>
       </p>
       <p class="title is-3">
         {{ proposal.title }}
@@ -130,7 +135,7 @@
           :key="assessment.id" />
       </div>
     </section>
-    <section class="reviews-list" v-if="proposal.f6_assessments">
+    <section class="reviews-list" v-if="proposal.f6_no_assessments">
       <p class="title is-4">{{ $t('proposal.REVIEWS')}}</p>
       <assessment-full v-for="assessment in proposal.f6_assessments"
         :isChallengeSetting="(proposal.importance)"
@@ -162,7 +167,7 @@ export default {
       questions: questions,
       challenges: [],
       proposal: [],
-      currentFund: 'f6',
+      currentFund: 'f7',
       goodEasterEgg: false,
       fakeRating: 0,
       publicPath: process.env.BASE_URL

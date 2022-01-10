@@ -7,6 +7,9 @@
       }}">
     <div class="card-content">
       <div class="content">
+        <p class="subtitle is-6 mb-0" v-if="proposal.fund">
+          {{ fundName }}
+        </p>
         <p class="subtitle is-4 mb-1">
           {{ proposal.title }}
         </p>
@@ -69,6 +72,9 @@ export default {
     isProposalDownPicked() {
       return this.isDownPicked(this.proposal)
     },
+    fundName() {
+      return this.fund.replace('f', 'Fund ')
+    }
   }
 }
 

@@ -57,7 +57,7 @@ export default {
     "VCA": "Veteran Community Advisors",
     "VCA_GOOD": "rated GOOD",
     "VCA_EXCELLENT": "rated EXCELLENT",
-    "VCA_GROUP": "no vCA | by a Community Advisor| by a group of {count} Community Advisors",
+    "VCA_GROUP": "no vCA | by a Veteran Community Advisor| by a group of {count} Veteran Community Advisors",
     "DETAILS": "Details",
     "RATED_EXCELLENT": "rated 'EXCELLENT'",
     "RATED_GOOD": "rated 'GOOD'",
