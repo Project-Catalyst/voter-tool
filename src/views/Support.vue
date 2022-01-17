@@ -2,6 +2,13 @@
   <div>
     <div class="box is-size-5 content">
       <p class="title is-2 has-text-centered">{{ $t('support.SUPPORT_US') }}</p>
+      <div class="mt-6 mb-6">
+        <p class="is-size-2 has-text-weight-bold has-text-centered">
+          <a href="https://cardanoscan.io/pool/b61f05ec1e907ab9b069eaec6c664056c16f56cab59076109c66d2ae" target="_blank">
+            Stake with [AIM] pool
+          </a>
+        </p>
+      </div>
       <p class="title is-3">AIM</p>
       <div class="is-4" v-html="$t('support.SUPPORT_TEXT')" />
       <p class="has-text-weight-bold is-flex is-justify-content-center">

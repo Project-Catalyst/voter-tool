@@ -24,7 +24,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
           {{ $t('general.CHALLENGE_PICKER') }}
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f6'}}">
+        <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f7'}}">
           {{ $t('general.MY_VOTE_PICK_LIST') }}
         </b-navbar-item>
       </template>
@@ -80,16 +80,12 @@
         </b-button>
       </div>
     </footer>
-    <div class="glass" v-for="badEaster, idx in badEasterEgg"
-      :key="`glass-${idx}`"
-      :style="{'top': `${badEaster.y}px`, 'left': `${badEaster.x}px`}"></div>
   </div>
 </template>
 
 <script>
 
 import langs from "@/locales/locales";
-import { EventBus } from "./EventBus";
 export default {
   data(){
     return {
@@ -138,12 +134,6 @@ export default {
   created() {
     this.$i18n.locale = this.$store.state.user.locale
     this.$store.commit('proposals/updateVersion')
-  },
-  mounted() {
-    EventBus.$on("badEaster", this.activateBadEaster);
-  },
-  destroyed() {
-    EventBus.$off("badEaster");
   }
 }
 </script>
