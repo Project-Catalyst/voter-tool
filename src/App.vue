@@ -76,7 +76,7 @@
           icon-left="message-reply-text"
           tag="a"
           target="_blank"
-          href="https://forms.gle/7R79GhM2vpoGyFfa9">
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeOszOgMfmUmD3EpLxsznkhMGsR1BmpNZnEOcB7Na6zz4NDug/viewform">
         </b-button>
       </div>
     </footer>
