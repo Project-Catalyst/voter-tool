@@ -3,8 +3,8 @@
     <div class="card-content">
       <div class="content columns">
         <div class="column">
-          <b v-if="isChallengeSetting">{{ questions[4].full}}</b>
-          <b v-if="!isChallengeSetting">{{ questions[1].full}}</b>
+          <b v-if="isChallengeSetting">{{ $t(questions[4].full) }}</b>
+          <b v-if="!isChallengeSetting">{{ $t(questions[1].full) }}</b>
           <p>{{ assessment.q0 }}</p>
         </div>
         <div class="column is-narrow">
@@ -13,8 +13,8 @@
       </div>
       <div class="content columns">
         <div class="column">
-          <b v-if="isChallengeSetting">{{ questions[5].full}}</b>
-          <b v-if="!isChallengeSetting">{{ questions[2].full}}</b>
+          <b v-if="isChallengeSetting">{{ $t(questions[5].full) }}</b>
+          <b v-if="!isChallengeSetting">{{ $t(questions[2].full) }}</b>
           <p>{{ assessment.q1 }}</p>
         </div>
         <div class="column is-narrow">
@@ -23,8 +23,8 @@
       </div>
       <div class="content columns">
         <div class="column">
-          <b v-if="isChallengeSetting">{{ questions[6].full}}</b>
-          <b v-if="!isChallengeSetting">{{ questions[3].full}}</b>
+          <b v-if="isChallengeSetting">{{ $t(questions[6].full) }}</b>
+          <b v-if="!isChallengeSetting">{{ $t(questions[3].full) }}</b>
           <p>{{ assessment.q2 }}</p>
         </div>
         <div class="column is-narrow">

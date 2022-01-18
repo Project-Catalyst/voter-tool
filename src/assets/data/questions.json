@@ -1,26 +1,26 @@
 {
   "1": {
-    "full": "This proposal effectively addresses the challenge",
-    "title": "Impact"
+    "full": "questions.IMPACT_FULL",
+    "title": "questions.IMPACT"
   },
   "2": {
-    "full": "Given experience and plan presented it is highly likely this proposal will be implemented successfully",
-    "title": "Feasibility"
+    "full": "questions.FEASIBILITY_FULL",
+    "title": "questions.FEASIBILITY"
   },
   "3": {
-    "full": "The proposal provides sufficient information to assess how feasible it is and how effectively it addresses the challenge.",
-    "title": "Auditability"
+    "full": "questions.AUDITABILITY_FULL",
+    "title": "questions.AUDITABILITY"
   },
   "4": {
-    "full": "Alignment: This challenge is critical to achieve Cardano's mission.",
-    "title": "Alignment"
+    "full": "questions.ALIGNMENT_FULL",
+    "title": "questions.ALIGNMENT"
   },
   "5": {
-    "full": "Feasibility: The Catalyst community has the capacity to address the challenge.",
-    "title": "Feasibility"
+    "full": "questions.FEASIBILITY_CS_FULL",
+    "title": "questions.FEASIBILITY_CS"
   },
   "6": {
-    "full": "Verifiability: Success criteria and suggested metrics are set correctly to measure progress in addressing the challenge.",
-    "title": "Verifiability"
+    "full": "questions.VERIFIABILITY_FULL",
+    "title": "questions.VERIFIABILITY"
   }
 }
