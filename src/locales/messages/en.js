@@ -2,7 +2,7 @@ export default {
   "general": {
     "SEARCH_FOR": "Search for proposals...",
     "ADDRESS_COPIED": "Address copied to clipboard!",
-    "WARNING_POPUP": "IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 5 voting information is available on <a target='_blank' href='https://www.reddit.com/r/cardano/comments/p2xpi8/project_catalyst_all_you_need_to_know_fund6_voter'>Reddit from u/danny_cryptofay</a>",
+    "WARNING_POPUP": "IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 7 voting information is available on <a target='_blank' href='https://www.reddit.com/r/cardano/comments/qwngps/project_catalyst_fund7_voter_registration/'>Reddit from u/danny_cryptofay</a>",
     "CONFIRM_POPUP": "Cool!",
     "SUPPORT": "Support us",
     "VOTING_GUIDE": "Voting Guide",

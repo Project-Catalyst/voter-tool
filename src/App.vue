@@ -18,7 +18,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'Support' }">
           {{ $t('general.SUPPORT') }}
         </b-navbar-item>
-        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/p2xpi8/project_catalyst_all_you_need_to_know_fund6_voter">
+        <b-navbar-item tag="a" target="_blank" href="https://www.reddit.com/r/cardano/comments/qwngps/project_catalyst_fund7_voter_registration/">
           {{ $t('general.VOTING_GUIDE') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">

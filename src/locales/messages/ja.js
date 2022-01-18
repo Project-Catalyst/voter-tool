@@ -2,7 +2,7 @@ export default {
     "general": {
         "SEARCH_FOR": "\u63d0\u6848\u3092\u63a2\u3059...",
         "ADDRESS_COPIED": "\u30a2\u30c9\u30ec\u30b9\u304c\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u306b\u30b3\u30d4\u30fc\u3055\u308c\u307e\u3057\u305f",
-        "WARNING_POPUP": "\u91cd\u8981\u306a\u3053\u3068\u3067\u3059\u3002<br />\u305d\u306e\u305f\u3081\u306b\u306f\u3001\u516c\u5f0f\u306e\u6295\u7968\u30a2\u30d7\u30ea\u3067\u6295\u7968\u3092\u884c\u3046\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002<br /><br />Fund 5\u306e\u6295\u7968\u60c5\u5831\u306f\u3001<a target= _blank' href= https://www.reddit.com/r/cardano/comments/p2xpi8/project_catalyst_all_you_need_to_know_fund6_voter >Reddit from u/danny_cryptofay</a>\u3067\u3054\u89a7\u3044\u305f\u3060\u3051\u307e\u3059\u3002",
+        "WARNING_POPUP": "\u91cd\u8981!<br /><br />Fund 7\u306e\u6295\u7968\u60c5\u5831\u306f\u3001<a target='_blank' href='https://www.reddit.com/r/cardano/comments/qwngps/project_catalyst_fund7_voter_registration/'>Reddit from u/danny_cryptofay</a>\u306b\u63b2\u8f09\u3055\u308c\u3066\u3044\u307e\u3059\u3002",
         "CONFIRM_POPUP": "Cool!",
         "SUPPORT": "\u5fdc\u63f4\u3059\u308b",
         "VOTING_GUIDE": "\u6295\u7968\u306e\u624b\u5f15\u304d",

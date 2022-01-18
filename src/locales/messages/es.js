@@ -2,7 +2,7 @@ export default {
     "general": {
         "SEARCH_FOR": "B\u00fasqueda de propuestas...",
         "ADDRESS_COPIED": "Direcci\u00f3n copiada en el portapapeles.",
-        "WARNING_POPUP": "\u00a1\u00a1\u00a1IMPORTANTE!!! La herramienta no emite votos, en su lugar crea una gu\u00eda de referencia cuando se vota.<br />Para ello tendr\u00e1s que enviar tus votos a trav\u00e9s de la app oficial de votaciones.<br /><br />La informaci\u00f3n de las votaciones del Fondo 5 est\u00e1 disponible en <a target='_blank' href='https://www.reddit.com/r/cardano/comments/p2xpi8/project_catalyst_all_you_need_to_know_fund6_voter'>Reddit de u/danny_cryptofay</a>",
+        "WARNING_POPUP": "\u00a1\u00a1\u00a1IMPORTANTE!!! La herramienta no emite votos, en su lugar crea una gu\u00eda de referencia cuando se vota.<br />Para ello tendr\u00e1s que enviar tus papeletas a trav\u00e9s de la app oficial de votaciones.<br /><br />La informaci\u00f3n de las votaciones del Fondo 7 est\u00e1 disponible en <a target='_blank' href='https://www.reddit.com/r/cardano/comments/qwngps/project_catalyst_fund7_voter_registration/'>Reddit de u/danny_cryptofay</a>",
         "CONFIRM_POPUP": "\u00a1Genial!",
         "SUPPORT": "Ap\u00f3yanos",
         "VOTING_GUIDE": "Gu\u00eda de votaci\u00f3n",
