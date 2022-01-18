@@ -62,7 +62,7 @@
               <b-rate size="is-large" v-model="fakeRating" disabled />
             </div>
             <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
-              <b-field class="inline" :label="$t(`proposal.${questions[question].title}`)">
+              <b-field class="inline" :label="$t(questions[question].title)">
                 <b-rate size="is-small" v-model="avgByQuestion[question]" disabled />
               </b-field>
             </div>
@@ -142,11 +142,6 @@
         :assessment="assessment"
         :key="assessment.id" />
     </section>
-    <div class="victor" v-if="goodEasterEgg">
-      <video width="500" autoplay muted playsinline @ended="goodEasterEgg = false">
-        <source :src="`${publicPath}/victor-approves.mp4`" type="video/mp4">
-      </video>
-    </div>
   </div>
 </template>
 
@@ -156,7 +151,6 @@ import questions from "@/assets/data/questions.json";
 import CatalystAPI from '@/api/catalyst.js'
 import groupBy from '@/utils/group.js'
 
-import { EventBus } from "./../EventBus";
 import FundedWidget from '@/components/FundedWidget';
 import AssessmentPartial from '@/components/AssessmentPartial';
 import AssessmentFull from '@/components/AssessmentFull';
@@ -313,9 +307,6 @@ export default {
           position: 'is-bottom-right'
         })
       } else {
-        if (this.proposal.id === 368984) {
-          this.goodEasterEgg = true
-        }
         this.$store.commit("proposals/addProposal", this.proposal);
         this.$buefy.notification.open({
           message: `<b>${this.proposal.title}</b> added to the Vote Pick List<br />
@@ -325,7 +316,7 @@ export default {
         })
       }
     },
-    handleDownPickList(e) {
+    handleDownPickList() {
       const pickListLink = this.$router.resolve({
         name: 'picked',
         params: { fund: this.fund }
@@ -339,9 +330,6 @@ export default {
           position: 'is-bottom-right'
         })
       } else {
-        if (this.proposal.id === 368984) {
-          EventBus.$emit("badEaster", e);
-        }
         this.$store.commit("proposals/downAddProposal", this.proposal);
         this.$buefy.notification.open({
           message: `<b>${this.proposal.title}</b> added to the DownVote Pick List<br />
