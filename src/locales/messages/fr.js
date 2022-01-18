@@ -108,5 +108,19 @@ export default {
         "BUY_MYSTERIOUS_TEXT_2": "Vous recevrez apr\u00e8s quelques minutes le NFT frapp\u00e9 \u00e0 votre adresse ainsi que 2 ADA.<br />Pour acheter le NFT utilisez le portefeuille Daedalus, Yoroi ou ADALite, n'envoyez jamais d'ADA depuis un \u00e9change !",
         "COPY_ADDRESS": "Copiez l'adresse du portefeuille",
         "MYSTERIOUS_BOX": "Bo\u00eete myst\u00e9rieuse"
+    },
+    "questions": {
+        "IMPACT": "Impact",
+        "IMPACT_FULL": "Cette proposition r\u00e9pond efficacement au d\u00e9fi",
+        "FEASIBILITY": "Faisabilit\u00e9",
+        "FEASIBILITY_FULL": "Compte tenu de l'exp\u00e9rience et du plan pr\u00e9sent\u00e9, il est tr\u00e8s probable que cette proposition sera mise en \u0153uvre avec succ\u00e8s.",
+        "AUDITABILITY": "Auditabilit\u00e9",
+        "AUDITABILITY_FULL": "Les informations fournies sont suffisantes pour v\u00e9rifier l'avancement et le succ\u00e8s de la proposition.",
+        "ALIGNMENT": "Alignement",
+        "ALIGNMENT_FULL": "Ce d\u00e9fi est essentiel pour r\u00e9aliser la mission de Cardano.",
+        "FEASIBILITY_CS": "Faisabilit\u00e9",
+        "FEASIBILITY_CS_FULL": "La communaut\u00e9 Catalyst a la capacit\u00e9 de relever ce d\u00e9fi.",
+        "VERIFIABILITY": "V\u00e9rifiabilit\u00e9",
+        "VERIFIABILITY_FULL": "Les crit\u00e8res de r\u00e9ussite et les mesures sugg\u00e9r\u00e9es sont correctement d\u00e9finis pour mesurer les progr\u00e8s accomplis dans la r\u00e9solution du probl\u00e8me."
     }
 }

@@ -108,5 +108,19 @@ export default {
     "BUY_MYSTERIOUS_TEXT_2": "You will receive after some minutes the minted NFT at your address along with 2 ADA.<br />To buy the NFT use Daedalus, Yoroi or ADALite wallet, never send ADA from an exchange!",
     "COPY_ADDRESS": "Copy the wallet address",
     "MYSTERIOUS_BOX": "Mysterious Box"
+  },
+  "questions": {
+    "IMPACT": "Impact",
+    "IMPACT_FULL": "This proposal effectively addresses the challenge",
+    "FEASIBILITY": "Feasibility",
+    "FEASIBILITY_FULL": "Given experience and plan presented it is highly likely this proposal will be implemented successfully",
+    "AUDITABILITY": "Auditability",
+    "AUDITABILITY_FULL": "The information provided is sufficient to audit the progress and the success of the proposal.",
+    "ALIGNMENT": "Alignment",
+    "ALIGNMENT_FULL": "This challenge is critical to achieve Cardano's mission.",
+    "FEASIBILITY_CS": "Feasibility",
+    "FEASIBILITY_CS_FULL": "The Catalyst community has the capacity to address the challenge.",
+    "VERIFIABILITY": "Verifiability",
+    "VERIFIABILITY_FULL": "Success criteria and suggested metrics are set correctly to measure progress in addressing the challenge."
   }
 }

@@ -108,5 +108,19 @@ export default {
         "BUY_MYSTERIOUS_TEXT_2": "Recibir\u00e1s despu\u00e9s de unos minutos el NFT acu\u00f1ado en tu direcci\u00f3n junto con 2 ADA.<br />Para comprar el NFT utiliza el monedero Daedalus, Yoroi o ADALite, \u00a1nunca env\u00edes ADA desde un exchange!",
         "COPY_ADDRESS": "Copiar la direcci\u00f3n del monedero",
         "MYSTERIOUS_BOX": "Caja misteriosa"
+    },
+    "questions": {
+        "IMPACT": "Impacto",
+        "IMPACT_FULL": "Esta propuesta aborda eficazmente el reto",
+        "FEASIBILITY": "Viabilidad",
+        "FEASIBILITY_FULL": "Dada la experiencia y el plan presentado, es muy probable que esta propuesta se aplique con \u00e9xito",
+        "AUDITABILITY": "Auditabilidad",
+        "AUDITABILITY_FULL": "La informaci\u00f3n proporcionada es suficiente para auditar el progreso y el \u00e9xito de la propuesta.",
+        "ALIGNMENT": "Alineaci\u00f3n",
+        "ALIGNMENT_FULL": "Este reto es fundamental para lograr la misi\u00f3n de Cardano.",
+        "FEASIBILITY_CS": "Viabilidad",
+        "FEASIBILITY_CS_FULL": "La comunidad de Catalyst tiene la capacidad de afrontar el reto.",
+        "VERIFIABILITY": "Verificabilidad",
+        "VERIFIABILITY_FULL": "Los criterios de \u00e9xito y las m\u00e9tricas sugeridas se establecen correctamente para medir el progreso en el tratamiento del desaf\u00edo."
     }
 }
