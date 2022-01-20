@@ -2,7 +2,7 @@ export default {
     "general": {
         "SEARCH_FOR": "Busca de propostas...",
         "ADDRESS_COPIED": "Endere\u00e7o copiado para prancheta!",
-        "WARNING_POPUP": "IMPORTANTE! A ferramenta n\u00e3o emite votos, mas cria um guia de refer\u00eancia quando voc\u00ea vota.<br />Para isso, voc\u00ea precisar\u00e1 enviar suas c\u00e9dulas atrav\u00e9s do aplicativo oficial de vota\u00e7\u00e3o.<br />>Fund 7 voting information is available on <a target='_blank' href='https://www.reddit.com/r/cardano/comments/qwngps/project_catalyst_fund7_voter_registration/'>Reddit from u/danny_cryptofay</a>",
+        "WARNING_POPUP": "IMPORTANTE! A ferramenta n\u00e3o emite votos, mas cria um guia de refer\u00eancia quando voc\u00ea vota.<br />Para isso, voc\u00ea precisar\u00e1 enviar suas c\u00e9dulas atrav\u00e9s do aplicativo oficial de vota\u00e7\u00e3o.<br />>Fund 7 voting information is available on <a target='_blank' href='https://bit.ly/Fund7-Voting-Open'>Reddit from u/danny_cryptofay</a>",
         "CONFIRM_POPUP": "Legal!",
         "SUPPORT": "Apoie-nos",
         "VOTING_GUIDE": "Guia de Vota\u00e7\u00e3o",

@@ -2,7 +2,7 @@ export default {
     "general": {
         "SEARCH_FOR": "\u63d0\u6848\u3092\u63a2\u3059...",
         "ADDRESS_COPIED": "\u30a2\u30c9\u30ec\u30b9\u304c\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u306b\u30b3\u30d4\u30fc\u3055\u308c\u307e\u3057\u305f",
-        "WARNING_POPUP": "\u91cd\u8981!<br /><br />Fund 7\u306e\u6295\u7968\u60c5\u5831\u306f\u3001<a target='_blank' href='https://www.reddit.com/r/cardano/comments/qwngps/project_catalyst_fund7_voter_registration/'>Reddit from u/danny_cryptofay</a>\u306b\u63b2\u8f09\u3055\u308c\u3066\u3044\u307e\u3059\u3002",
+        "WARNING_POPUP": "\u91cd\u8981!<br /><br />Fund 7\u306e\u6295\u7968\u60c5\u5831\u306f\u3001<a target='_blank' href='https://bit.ly/Fund7-Voting-Open'>Reddit from u/danny_cryptofay</a>\u306b\u63b2\u8f09\u3055\u308c\u3066\u3044\u307e\u3059\u3002",
         "CONFIRM_POPUP": "Cool!",
         "SUPPORT": "\u5fdc\u63f4\u3059\u308b",
         "VOTING_GUIDE": "\u6295\u7968\u306e\u624b\u5f15\u304d",
