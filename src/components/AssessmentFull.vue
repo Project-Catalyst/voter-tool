@@ -103,5 +103,8 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+p {
+  white-space: pre-line;
+}
 </style>
