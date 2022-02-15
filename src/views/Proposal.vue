@@ -66,7 +66,7 @@
                 <b-rate size="is-small" v-model="avgByQuestion[question]" disabled />
               </b-field>
             </div>
-            <funded-widget class="internal-funded-widget mt-3" :proposal="proposal" :fund="fund" />
+            <funded-widget class="internal-funded-widget mt-3 is-full" :proposal="proposal" :fund="fund" />
           </div>
         </div>
         <div class="buttons">

@@ -7,17 +7,22 @@
       }}">
     <div class="card-content">
       <div class="content">
-        <p class="subtitle is-6 mb-0" v-if="proposal.fund">
-          {{ fundName }}
-        </p>
-        <p class="subtitle is-4 mb-1">
-          {{ proposal.title }}
-        </p>
-        <p class="subtitle is-6 mb-4" v-if="proposal.author">
-          {{ proposal.author }}
-        </p>
-        <p>{{ proposal.description }}</p>
-        <p><b>{{ $t('pickList.FUNDS_REQUESTED') }}:</b> {{ proposal.amount | currency}}</p>
+        <div class="columns">
+          <div class="column is-10">
+            <p class="subtitle is-6 mb-0" v-if="proposal.fund">
+              {{ fundName }}
+            </p>
+            <p class="subtitle is-4 mb-1">
+              {{ proposal.title }}
+            </p>
+            <p class="subtitle is-6 mb-4" v-if="proposal.author">
+              {{ proposal.author }}
+            </p>
+            <p>{{ proposal.description }}</p>
+            <p><b>{{ $t('pickList.FUNDS_REQUESTED') }}:</b> {{ proposal.amount | currency}}</p>
+          </div>
+          <funded-widget class="is-2" :proposal="proposal" :fund="fund" />
+        </div>
         <div class="columns">
           <div class="column is-11" v-if="proposal.rating">
             <b-rate v-model="proposal.rating" disabled /> ~ {{ Math.ceil(proposal.no_assessments / 3) }} {{ $t('proposal.REVIEWS_BY_CA') }}
@@ -28,7 +33,7 @@
           <div class="column is-11" v-if="!proposal.f6_rating && !proposal.rating">
             <b-rate v-model="fakeRate" disabled />
           </div>
-          <div class="column is-1 card has-text-centered" v-if="isProposalPicked || isProposalDownPicked">
+          <div class="column is-1 card has-text-centered mt-2" v-if="isProposalPicked || isProposalDownPicked">
             <p class="subtitle is-7 mb-1">
               {{ $t('pickList.VOTE_PICK_LIST') }}
             </p>
@@ -45,7 +50,6 @@
       </div>
     </div>
     </router-link>
-    <funded-widget :proposal="proposal" :fund="fund" />
   </div>
 </template>
 

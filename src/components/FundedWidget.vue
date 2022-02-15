@@ -1,8 +1,11 @@
 <template>
-  <div class="card funded-card" v-if="proposal.funded > 0">
+  <div class="card funded-card column" v-if="proposal.upvotes">
     <div class='card-content has-text-centered'>
       <p class="subtitle is-4 mb-1">
         {{ fundedText }}
+      </p>
+      <p class="subtitle is-6 mb-1">
+        {{ reason }}
       </p>
       <b-icon
         v-if="proposal.funded === 2"
@@ -32,6 +35,16 @@
             {{ proposal.downvotes | currency_ada}}
           </div>
         </div>
+        <div class="is-flex is-align-items-center" v-if="proposal.votes_cast">
+          <b-icon
+            class="mr-3"
+            icon="vote"
+            size="is-small">
+          </b-icon>
+          <div class="is-flex-grow-1 has-text-right">
+            {{ proposal.votes_cast }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +63,12 @@ export default {
       } else {
         return this.$t('proposal.NOT_FUNDED')
       }
+    },
+    reason() {
+      if (this.proposal.funded === 1) {
+        return this.$t('proposal.IS_OVER_BUDGET')
+      }
+      return ''
     }
   }
 }
@@ -59,10 +78,15 @@ export default {
 <style lang="scss">
   @import 'bulma/sass/utilities/mixins';
   .funded-card {
+    .card-content {
+      padding: 0;
+    }
+    /*
     @include desktop {
       position: absolute !important;
       top: -30px;
       right: -30px;
     }
+    */
   }
 </style>
