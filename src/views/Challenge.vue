@@ -88,6 +88,10 @@ export default {
         { k: { v: 'title', r: true}, l: this.$t('challenge.ZA') },
         { k: { v: no_ass, r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
         { k: { v: no_ass, r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') },
+        ...(this.isFund7 ? [{ k: { v: 'votes_cast', r: false}, l: this.$t('challenge.NUMBER_OF_WALLETS_DESC')}] : []),
+        ...(this.isFund7 ? [{ k: { v: 'votes_cast', r: true}, l: this.$t('challenge.NUMBER_OF_WALLETS_ASC') }] : []),
+        ...(this.isFund7 ? [{ k: { v: 'votes_result', r: false}, l: this.$t('challenge.VOTING_RESULTS_DESC')}] : []),
+        ...(this.isFund7 ? [{ k: { v: 'votes_result', r: true}, l: this.$t('challenge.VOTING_RESULTS_ASC') }] : []),
         { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') },
       ]
     },
@@ -134,6 +138,9 @@ export default {
         return this.$route.params.fund
       }
       return false
+    },
+    isFund7() {
+      return this.fund == 'f7'
     },
     challengeId() {
       if (this.$route) {
