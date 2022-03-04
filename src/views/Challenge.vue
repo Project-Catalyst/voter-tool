@@ -70,6 +70,7 @@ export default {
       return this.challengeSeed(this.challengeId)
     },
     sortingOptions() {
+      let proposals = this.proposals;
       let rating
       let no_ass
       if (this.fund == 'f6' || this.fund == 'f7') {
@@ -79,6 +80,7 @@ export default {
         rating = 'rating'
         no_ass = 'no_assessments'
       }
+      
       const default_obj = [
         { k: { v: 'amount', r: false}, l: this.$t('challenge.REQUESTED_BUDGET_DESC')},
         { k: { v: 'amount', r: true}, l: this.$t('challenge.REQUESTED_BUDGET_ASC')},
@@ -89,10 +91,16 @@ export default {
         { k: { v: no_ass, r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
         { k: { v: no_ass, r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') }
       ]
-      if (this.fund == 'f7'){
+      let exists_vcast = proposals.filter((el) => el.votes_cast);
+      if (exists_vcast.length > 0){
         default_obj.push(
           { k: { v: 'votes_cast', r: false}, l: this.$t('challenge.NO_OF_WALLETS_DESC') },
-          { k: { v: 'votes_cast', r: true}, l: this.$t('challenge.NO_OF_WALLETS_ASC') },
+          { k: { v: 'votes_cast', r: true}, l: this.$t('challenge.NO_OF_WALLETS_ASC') }
+        )
+      }
+      let exists_vres = proposals.filter((el) => el.votes_result);
+      if (exists_vres.length > 0){
+        default_obj.push(
           { k: { v: 'votes_result', r: false}, l: this.$t('challenge.VOTE_RESULTS_DESC') },
           { k: { v: 'votes_result', r: true}, l: this.$t('challenge.VOTE_RESULTS_ASC') }
         )
