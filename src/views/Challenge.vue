@@ -79,7 +79,7 @@ export default {
         rating = 'rating'
         no_ass = 'no_assessments'
       }
-      return [
+      const default_obj = [
         { k: { v: 'amount', r: false}, l: this.$t('challenge.REQUESTED_BUDGET_DESC')},
         { k: { v: 'amount', r: true}, l: this.$t('challenge.REQUESTED_BUDGET_ASC')},
         { k: { v: rating, r: false}, l: this.$t('challenge.REVIEW_SCORE_DESC')},
@@ -87,9 +87,18 @@ export default {
         { k: { v: 'title', r: false}, l: this.$t('challenge.AZ') },
         { k: { v: 'title', r: true}, l: this.$t('challenge.ZA') },
         { k: { v: no_ass, r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
-        { k: { v: no_ass, r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') },
-        { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') },
+        { k: { v: no_ass, r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') }
       ]
+      if (this.fund == 'f7'){
+        default_obj.push(
+          { k: { v: 'votes_cast', r: false}, l: this.$t('challenge.NO_OF_WALLETS_DESC') },
+          { k: { v: 'votes_cast', r: true}, l: this.$t('challenge.NO_OF_WALLETS_ASC') },
+          { k: { v: 'votes_result', r: false}, l: this.$t('challenge.VOTE_RESULTS_DESC') },
+          { k: { v: 'votes_result', r: true}, l: this.$t('challenge.VOTE_RESULTS_ASC') }
+        )
+      }
+      default_obj.push({ k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') })
+      return default_obj
     },
     sortBy: {
       get () {
