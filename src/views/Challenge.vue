@@ -70,16 +70,10 @@ export default {
       return this.challengeSeed(this.challengeId)
     },
     sortingOptions() {
-      let rating
-      let no_ass
-      if (this.fund == 'f6' || this.fund == 'f7') {
-        rating = 'f6_rating'
-        no_ass = 'f6_no_assessments'
-      } else {
-        rating = 'rating'
-        no_ass = 'no_assessments'
-      }
-      return [
+      const exceptionFundCondition = (this.fund == 'f6' || this.fund == 'f7');
+      const rating = exceptionFundCondition ? 'f6_rating' : 'rating';
+      const no_ass = exceptionFundCondition ? 'f6_no_assessments' : 'no_assessments';
+      let options = [
         { k: { v: 'amount', r: false}, l: this.$t('challenge.REQUESTED_BUDGET_DESC')},
         { k: { v: 'amount', r: true}, l: this.$t('challenge.REQUESTED_BUDGET_ASC')},
         { k: { v: rating, r: false}, l: this.$t('challenge.REVIEW_SCORE_DESC')},
@@ -88,8 +82,24 @@ export default {
         { k: { v: 'title', r: true}, l: this.$t('challenge.ZA') },
         { k: { v: no_ass, r: false}, l: this.$t('challenge.NO_REVIEWS_DESC') },
         { k: { v: no_ass, r: true}, l: this.$t('challenge.NO_REVIEWS_ASC') },
-        { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') },
+        { k: { v: 'random', r: false}, l: this.$t('challenge.RANDOM') }
       ]
+      const walletsCondition = this.proposals.filter((prop) => prop.votes_cast).length > 0;
+      if(walletsCondition){
+        options.push(
+          { k: { v: 'votes_cast', r: false}, l: this.$t('challenge.WALLETS_DESC') },
+          { k: { v: 'votes_cast', r: true}, l: this.$t('challenge.WALLETS_ASC') },
+        );
+      }
+      const votesCondition = this.proposals.filter((prop) => prop.upvotes && prop.downvotes).length > 0;
+      if(votesCondition){
+        options.push(
+          { k: { v: 'ada_votes', r: false}, l: this.$t('challenge.ADA_VOTES_DESC') },
+          { k: { v: 'ada_votes', r: true}, l: this.$t('challenge.ADA_VOTES_ASC') }
+        );
+      }
+         
+      return options
     },
     sortBy: {
       get () {
@@ -176,7 +186,17 @@ export default {
               sorted.reverse()
             }
             return sorted
-          } else {
+          } else if(this.sortBy.v === 'ada_votes'){
+              let sorted = proposals.sort((a, b) => {
+              var resultA = a.upvotes - a.downvotes
+              var resultB = b.upvotes - b.downvotes
+              return (resultA < resultB) ? -1 : (resultA > resultB) ? 1 : 0
+            })
+            if (this.sortBy.r) {
+              sorted.reverse()
+            }
+            return sorted
+          }   else {
             let sorted = proposals.sort((a, b) => b[this.sortBy.v] - a[this.sortBy.v])
             if (this.sortBy.r) {
               sorted.reverse()

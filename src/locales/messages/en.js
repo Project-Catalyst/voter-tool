@@ -31,7 +31,11 @@ export default {
     "NO_REVIEWS_DESC": "No. reviews (DESC)",
     "NO_REVIEWS_ASC": "No. reviews (ASC)",
     "RANDOM": "Random",
-    "SEARCH": "Search..."
+    "SEARCH": "Search...",
+    "WALLETS_DESC": "Number of Wallets (DESC)",
+    "WALLETS_ASC": "Number of Wallets (ASC)",
+    "ADA_VOTES_DESC": "Results of ADA votes (DESC)",
+    "ADA_VOTES_ASC" : "Results of ADA votes (ASC)"
   },
   "proposal": {
     "PROBLEM_STATEMENT": "Problem statement",
