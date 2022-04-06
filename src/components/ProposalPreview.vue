@@ -20,6 +20,10 @@
             </p>
             <p>{{ proposal.description }}</p>
             <p><b>{{ $t('pickList.FUNDS_REQUESTED') }}:</b> {{ proposal.amount | currency}}</p>
+            <!-- TODO: plamen5kov: here to debug (preffer this info to be in the FundingWidget component) -->
+            <p v-if="proposal.votes_result">
+              <b>{{ $t('pickList.NUMBER_OF_CALCULATED_VOTES') }}:</b> {{ proposal.votes_result | currency_ada }}
+            </p>
           </div>
           <funded-widget class="is-2" :proposal="proposal" :fund="fund" />
         </div>
