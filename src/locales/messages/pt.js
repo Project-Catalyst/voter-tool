@@ -44,6 +44,7 @@ export default {
         "AVAILABLE_FUNDS": "dos fundos dispon\u00edveis em desafio",
         "REVIEWS_BY_CA": " revis\u00f5es por Conselheiros Comunit\u00e1rios",
         "VIEW_FULL_PROPOSAL": "Ver proposta completa em IdeaScale",
+        "LINK": "Compartilhar avaliação",
         "SUGGEST_VIDEO_MEDIA": "Voc\u00ea quer sugerir v\u00eddeo ou m\u00eddia para esta proposta? Clique aqui!",
         "VIDEOS": "V\u00eddeos",
         "LINKS_MEDIA": "Links / M\u00eddia",

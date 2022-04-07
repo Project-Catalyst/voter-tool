@@ -44,6 +44,7 @@ export default {
         "AVAILABLE_FUNDS": "\u6311\u6218\u4e2d\u7684\u53ef\u7528\u8d44\u91d1",
         "REVIEWS_BY_CA": "\u793e\u533a\u987e\u95ee\u7684\u8bc4\u8bba",
         "VIEW_FULL_PROPOSAL": "\u67e5\u770bIdeaScale\u4e2d\u7684\u5b8c\u6574\u63d0\u6848",
+        "LINK": "分享评估",
         "SUGGEST_VIDEO_MEDIA": "\u4f60\u60f3\u4e3a\u8fd9\u4e2a\u63d0\u6848\u63a8\u8350\u89c6\u9891\u6216\u5a92\u4f53\u5417\uff1f\u8bf7\u70b9\u51fb\u8fd9\u91cc!",
         "VIDEOS": "\u89c6\u9891",
         "LINKS_MEDIA": "\u94fe\u63a5/\u5a92\u4f53",
