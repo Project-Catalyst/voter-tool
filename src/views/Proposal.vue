@@ -52,15 +52,23 @@
           </div>
           <div class="column is-narrow">
             <div class="mb-6" v-if="proposal.rating">
-              <b-rate size="is-large" v-model="proposal.rating" disabled />
-              ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
+              <b-rate size="is-large" 
+                v-model="proposal.rating"
+                v-bind:style="styleCustom"
+                disabled />
+                ~ <b>{{ Math.ceil(proposal.no_assessments / 3) }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
             </div>
             <div class="mb-6" v-if="proposal.f6_rating">
-              <b-rate size="is-large" v-model="proposal.f6_rating" disabled />
-              <b>{{ proposal.f6_no_assessments }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
+              <b-rate size="is-large" 
+                v-model="proposal.f6_rating"
+                v-bind:style="styleCustom"
+                disabled />
+                <b>{{ proposal.f6_no_assessments }}</b> {{ $t('proposal.REVIEWS_BY_CA')}}
             </div>
             <div class="mb-6" v-if="!proposal.f6_rating && !proposal.rating">
-              <b-rate size="is-large" v-model="fakeRating" disabled />
+              <b-rate size="is-large" 
+                v-model="fakeRating" 
+                disabled />
             </div>
             <div v-for="(avg, question) in avgByQuestion" :key="`avg-${question}`">
               <b-field class="inline" :label="$t(questions[question].title)">
@@ -165,7 +173,9 @@ export default {
       currentFund: 'f7',
       goodEasterEgg: false,
       fakeRating: 0,
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      opacity_range: [0.5,1],
+      n_opacity_range: [3,7]
     }
   },
 
@@ -263,6 +273,23 @@ export default {
       const proposalId = this.proposal.id
       const proposalTitle = encodeURI(this.proposal.title)
       return `https://docs.google.com/forms/d/e/1FAIpQLSdnL1Dgnp_IrWc-ZiRYVXt4WxVLrxad-1T_fF9Jczeh0q9pGA/viewform?usp=pp_url&entry.1253257562=${proposalId}&entry.1906290995=${proposalTitle}`
+    },
+    styleCustom() {
+      let n_ass;
+      this.proposal.f6_no_assessments ? n_ass=this.proposal.f6_no_assessments : n_ass=Math.ceil(this.proposal.no_assessments / 3)
+      
+      let delta_opac = this.opacity_range[1] / this.n_opacity_range[1]; // incremental opacity value based on maximum number of assessments (for full opacity)
+      let opac = n_ass * delta_opac
+
+      if (opac <= this.opacity_range[0]) {  // final element opacity lesser than minimum
+        return {opacity: this.opacity_range[0]}
+      }
+      else if (opac > this.opacity_range[1]) {  // final element opacity greater than maximum
+        return {opacity: this.opacity_range[1]}
+      }
+      else {
+        return {opacity: opac}
+      }
     }
   },
   methods: {
