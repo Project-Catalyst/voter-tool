@@ -20,14 +20,14 @@ const getLocalizedPath = (fund) => {
 export default {
   challenges(fund){
     const localizedPath = getLocalizedPath(fund)
-    return axios.get(`data/${localizedPath}/challenges.json`, { responseType: 'json' })
+    return axios.get(`${process.env.BASE_URL}/data/${localizedPath}/challenges.json`, { responseType: 'json' })
   },
   proposals(fund, challenge){
     const localizedPath = getLocalizedPath(fund)
-    return axios.get(`data/${localizedPath}/${challenge}/proposals.json`)
+    return axios.get(`${process.env.BASE_URL}/data/${localizedPath}/${challenge}/proposals.json`)
   },
   proposal(fund, challenge, id){
     const localizedPath = getLocalizedPath(fund)
-    return axios.get(`data/${localizedPath}/${challenge}/proposals/${id}.json`)
+    return axios.get(`${process.env.BASE_URL}/data/${localizedPath}/${challenge}/proposals/${id}.json`)
   }
 }
