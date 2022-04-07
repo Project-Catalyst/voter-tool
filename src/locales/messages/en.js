@@ -86,7 +86,7 @@ export default {
     "TITLE": "Title",
     "OPEN_IN_IDEASCALE": "Open in IdeaScale",
     "FUNDS_REQUESTED": "Funds requested",
-    "PROPOSAL_CATALYST_ID": "Catalyst ID",
+    "PROPOSAL_CATALYST_ID": "Catalyst id",
     "NUMBER_OF_CALCULATED_VOTES": "Number of calculated votes",
     "FUNDS_REMAINING": "Funds remaining",
     "NO_PROPOSALS_TEXT": "You don't have any proposals in your Vote Pick List yet. Browse through the proposals and add them to see the projection of your choice of vote!",

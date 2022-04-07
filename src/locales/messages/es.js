@@ -82,7 +82,7 @@ export default {
         "TITLE": "T\u00edtulo",
         "OPEN_IN_IDEASCALE": "Abrir en IdeaScale",
         "FUNDS_REQUESTED": "Fondos solicitados",
-        "PROPOSAL_CATALYST_ID": "Catalyst ID",
+        "PROPOSAL_CATALYST_ID": "Catalyst id",
         "FUNDS_REMAINING": "Fondos restantes",
         "NO_PROPOSALS_TEXT": "Todav\u00eda no tienes ninguna propuesta en tu lista de elecci\u00f3n de voto. \u00a1Navega por las propuestas y a\u00f1\u00e1delas para ver la proyecci\u00f3n de tu elecci\u00f3n de voto!",
         "OUT_OF_BUDGET": "Fuera de presupuesto",

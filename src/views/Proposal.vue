@@ -43,7 +43,7 @@
               {{ proposal.success }}
             </p>
             <p class="mb-3"><b>{{ $t('proposal.FUNDS_REQUEST')}}</b> {{ proposal.amount | currency }}</p>
-            <p class="mb-3"><b>{{ $t('pickList.PROPOSAL_CATALYST_ID') }}:</b> {{ proposal.id }}</p>
+            <p class="mb-3"><b>{{ $t('pickList.PROPOSAL_CATALYST_ID') }}:</b> {{ proposal.catalystId }}</p>
             <div class="my-progress">
               <b-progress :value="percentOfChallenge" size="is-medium" show-value>
                 {{percentOfChallenge}}% {{ $t('proposal.AVAILABLE_FUNDS')}}
@@ -278,13 +278,13 @@ export default {
       let n_ass;
       this.proposal.f6_no_assessments ? n_ass=this.proposal.f6_no_assessments : n_ass=Math.ceil(this.proposal.no_assessments / 3)
       
-      let delta_opac = this.opacity_range[1] / this.n_opacity_range[1]; // incremental opacity value based on max number of assessments for full opacity (max_opacity / max_assessments)
+      let delta_opac = this.opacity_range[1] / this.n_opacity_range[1]; // incremental opacity value based on maximum number of assessments (for full opacity)
       let opac = n_ass * delta_opac
 
       if (opac <= this.opacity_range[0]) {  // final element opacity lesser than minimum
         return {opacity: this.opacity_range[0]}
       }
-      else if (opac >= this.opacity_range[1]) {  // final element opacity greater than maximum
+      else if (opac > this.opacity_range[1]) {  // final element opacity greater than maximum
         return {opacity: this.opacity_range[1]}
       }
       else {

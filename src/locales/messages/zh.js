@@ -82,7 +82,7 @@ export default {
         "TITLE": "\u6807\u9898",
         "OPEN_IN_IDEASCALE": "\u5728IdeaScale\u4e2d\u6253\u5f00",
         "FUNDS_REQUESTED": "\u8981\u6c42\u7684\u8d44\u91d1",
-        "PROPOSAL_CATALYST_ID": "Catalyst ID",
+        "PROPOSAL_CATALYST_ID": "Catalyst id",
         "FUNDS_REMAINING": "\u5269\u4f59\u8d44\u91d1",
         "NO_PROPOSALS_TEXT": "\u60a8\u7684\u6295\u7968\u9009\u62e9\u5217\u8868\u4e2d\u8fd8\u6ca1\u6709\u4efb\u4f55\u63d0\u6848\u3002\u6d4f\u89c8\u4e00\u4e0b\u63d0\u6848\u5e76\u6dfb\u52a0\u5b83\u4eec\uff0c\u770b\u770b\u4f60\u7684\u6295\u7968\u9009\u62e9\u7684\u9884\u6d4b!",
         "OUT_OF_BUDGET": "\u8d85\u51fa\u9884\u7b97",
