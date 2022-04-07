@@ -43,6 +43,7 @@
               {{ proposal.success }}
             </p>
             <p class="mb-3"><b>{{ $t('proposal.FUNDS_REQUEST')}}</b> {{ proposal.amount | currency }}</p>
+            <p class="mb-3"><b>{{ $t('pickList.PROPOSAL_CATALYST_ID') }}:</b> {{ proposal.catalystId }}</p>
             <div class="my-progress">
               <b-progress :value="percentOfChallenge" size="is-medium" show-value>
                 {{percentOfChallenge}}% {{ $t('proposal.AVAILABLE_FUNDS')}}
