@@ -52,6 +52,12 @@ const router = new VueRouter({
         setTimeout(() => {
           resolve(savedPosition)
         }, 500)
+      } else if(to.hash) {
+        setTimeout(() => {
+          const element = document.getElementById(to.hash.substring("#".length))
+          element.scrollIntoView({behavior: "smooth"})
+          resolve(true)
+        }, 500)
       } else {
         resolve({ x: 0, y: 0 })
       }

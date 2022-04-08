@@ -153,6 +153,10 @@ body {
   vertical-align: middle;
 }
 
+.transparent-text {
+  color: rgba(0, 0, 0, 0.0);
+}
+
 #app {
   position: relative;
 }

@@ -1,5 +1,17 @@
 <template>
   <div class="card mb-4">
+     <div class="card-header">
+      <b-button
+        tag="a"
+        icon-left="link"
+        type="mb-2"
+        target="blank"
+        @click="copyLink(assessment.id)"
+      >
+        {{ $t("proposal.LINK") }}
+      </b-button>
+      <div v-bind:id="assessment.id" class="transparent-text">{{assessment.id}}</div>
+    </div>
     <div class="card-content">
       <div class="content columns">
         <div class="column">
@@ -96,6 +108,13 @@ export default {
     return {
       questions: questions,
       details: false
+    }
+  },
+  methods: {
+    copyLink(assessmentId) {
+      const linkUrl = `${window.location.origin}/#${this.$route.path}#${assessmentId}`
+      navigator.clipboard.writeText(linkUrl)
+      this.$buefy.toast.open('copied assessment url')
     }
   },
   props: ['assessment', 'isChallengeSetting'],

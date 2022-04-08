@@ -49,6 +49,7 @@ export default {
     "AVAILABLE_FUNDS": "of available funds in challenge",
     "REVIEWS_BY_CA": " reviews by Community Advisors",
     "VIEW_FULL_PROPOSAL": "View full proposal in IdeaScale",
+    "LINK": "Share assessment",
     "SUGGEST_VIDEO_MEDIA": "Do you want to suggest video or media for this proposal? Click here!",
     "VIDEOS": "Videos",
     "LINKS_MEDIA": "Links / Media",
