@@ -13,7 +13,8 @@ export default {
         "SUPPORT_US_WITH_CNFT": "Apoie-nos com CNFTs",
         "MADE_BY": "Feito pela Comunidade Catalisadora para a Comunidade Catalisadora",
         "DONATE": "Se voc\u00ea quiser apoiar o desenvolvimento da ferramenta de vota\u00e7\u00e3o, voc\u00ea pode doar algum ADA para:",
-        "FEEDBACK": "Feedback"
+        "FEEDBACK": "Feedback",
+        "RAW_DATA": "Dados não processados"
     },
     "home": {
         "TOOL_TITLE": "Ferramenta do projeto Catalyst Voter",

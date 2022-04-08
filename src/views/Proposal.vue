@@ -278,13 +278,13 @@ export default {
       let n_ass;
       this.proposal.f6_no_assessments ? n_ass=this.proposal.f6_no_assessments : n_ass=Math.ceil(this.proposal.no_assessments / 3)
       
-      let delta_opac = this.opacity_range[1] / this.n_opacity_range[1]; // incremental opacity value based on maximum number of assessments (for full opacity)
+      let delta_opac = this.opacity_range[1] / this.n_opacity_range[1]; // incremental opacity value based on maximum number of assessments for full opacity  (max_opacity / max_assessments)
       let opac = n_ass * delta_opac
 
       if (opac <= this.opacity_range[0]) {  // final element opacity lesser than minimum
         return {opacity: this.opacity_range[0]}
       }
-      else if (opac > this.opacity_range[1]) {  // final element opacity greater than maximum
+      else if (opac >= this.opacity_range[1]) {  // final element opacity greater than maximum
         return {opacity: this.opacity_range[1]}
       }
       else {

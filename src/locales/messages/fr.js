@@ -13,7 +13,8 @@ export default {
         "SUPPORT_US_WITH_CNFT": "Soutenez-nous avec les CNFT",
         "MADE_BY": "R\u00e9alis\u00e9 par la communaut\u00e9 Catalyst pour la communaut\u00e9 Catalyst",
         "DONATE": "Si vous souhaitez soutenir le d\u00e9veloppement de l'outil de vote, vous pouvez faire don de l'ADA \u00e0 :",
-        "FEEDBACK": "Commentaires"
+        "FEEDBACK": "Commentaires",
+        "RAW_DATA": "Donn\u00e9es brutes"
     },
     "home": {
         "TOOL_TITLE": "Outil pour les \u00e9lecteurs du projet Catalyst",
