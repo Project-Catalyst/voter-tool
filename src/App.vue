@@ -15,6 +15,9 @@
             {{ name }}
           </b-navbar-item>
         </b-navbar-dropdown>
+        <b-navbar-item tag="a" target="_blank" href="https://github.com/Project-Catalyst/voter-tool/tree/master/public/data">
+          {{ $t('general.RAW_DATA') }}
+        </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'Support' }">
           {{ $t('general.SUPPORT') }}
         </b-navbar-item>
@@ -26,9 +29,6 @@
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'picked', params: {fund: 'f7'}}">
           {{ $t('general.MY_VOTE_PICK_LIST') }}
-        </b-navbar-item>
-        <b-navbar-item tag="a" target="_blank" href="https://github.com/Project-Catalyst/voter-tool/tree/master/public/data">
-          {{ $t('general.RAW_DATA') }}
         </b-navbar-item>
       </template>
     </b-navbar>
