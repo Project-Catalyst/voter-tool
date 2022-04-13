@@ -120,6 +120,15 @@ export default {
   },
 
   mounted(){
+    if (window.localStorage) {
+      let oldKeys = ['voter-tool-f5-default']
+      oldKeys.forEach((k) => {
+        let oldKey = window.localStorage.getItem(k)
+        if (oldKey) {
+          window.localStorage.removeItem(k)
+        }
+      })
+    }
     this.fundsKeys.forEach((el) => {
       CatalystAPI.challenges(el).then((r) => {
         this.funds[el].challenges = r.data
