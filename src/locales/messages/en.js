@@ -2,7 +2,7 @@ export default {
   "general": {
     "SEARCH_FOR": "Search for proposals...",
     "ADDRESS_COPIED": "Address copied to clipboard!",
-    "WARNING_POPUP": "IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.<br /><br />Fund 7 voting information is available on <a target='_blank' href='https://bit.ly/Fund7-Voting-Open'>Reddit from u/danny_cryptofay</a>",
+    "WARNING_POPUP": "IMPORTANT!: The tool does not cast votes, instead it creates a guide to reference when you do vote.<br />To do so you will need to submit your ballots through the official voting app.",
     "CONFIRM_POPUP": "Cool!",
     "SUPPORT": "Support us",
     "VOTING_GUIDE": "Voting Guide",
