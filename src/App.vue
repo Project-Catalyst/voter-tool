@@ -21,9 +21,11 @@
         <b-navbar-item tag="router-link" :to="{ name: 'Support' }">
           {{ $t('general.SUPPORT') }}
         </b-navbar-item>
+        <!--
         <b-navbar-item tag="a" target="_blank" href="https://bit.ly/Fund7-Voting-Open">
           {{ $t('general.VOTING_GUIDE') }}
         </b-navbar-item>
+        -->
         <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
           {{ $t('general.CHALLENGE_PICKER') }}
         </b-navbar-item>
