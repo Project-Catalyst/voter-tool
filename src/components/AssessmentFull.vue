@@ -1,16 +1,7 @@
 <template>
   <div class="card mb-4">
+    <div v-bind:id="assessment.id" class="transparent-text">{{assessment.id}}</div>
      <div class="card-header">
-      <b-button
-        tag="a"
-        icon-left="link"
-        type="mb-2"
-        target="blank"
-        @click="copyLink(assessment.id)"
-      >
-        {{ $t("proposal.LINK") }}
-      </b-button>
-      <div v-bind:id="assessment.id" class="transparent-text">{{assessment.id}}</div>
     </div>
     <div class="card-content">
       <div class="content columns">
@@ -94,6 +85,16 @@
             </div>
           </div>
         </blockquote>
+
+        <b-button
+          tag="a"
+          icon-left="link"
+          type="mb-2"
+          target="blank"
+          @click="copyLink(assessment.id)"
+        >
+          {{ $t("proposal.LINK") }}
+        </b-button>
       </div>
     </div>
   </div>
