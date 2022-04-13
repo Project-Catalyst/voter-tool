@@ -102,7 +102,7 @@ export default {
         this.$emit('close')
         this.$buefy.dialog.alert({
           title: this.$t('share.PICK_LIST_SAVED'),
-          message: `${this.$t('share.PICK_LIST_SAVED_MSG')}<br /><b><a href="https://cardanocataly.st/voter-tool/#/f7/shared/${r.data.pick_list.uuid}" target="_blank">https://cardanocataly.st/voter-tool/#/f7/shared/${r.data.pick_list.uuid}</a></b>`,
+          message: `${this.$t('share.PICK_LIST_SAVED_MSG')}<br /><b><a href="https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}" target="_blank">https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}</a></b>`,
           confirmText: 'OK'
         })
       })
