@@ -92,7 +92,8 @@ export default {
         "SHARE": "Partagez !",
         "SHARE_TITLE": "Titre pour votre liste de choix de vote :",
         "CHALLENGE_RATIONALE": "Justifiez vos choix dans le cadre de ce d\u00e9fi :",
-        "MODAL_TITLE": "Votez pour la liste de s\u00e9lection"
+        "MODAL_TITLE": "Votez pour la liste de s\u00e9lection",
+        "EXPORT_PDF": "Exporter PDF"
     },
     "share": {
         "SHARE_PICK_LIST": "Votez pour la liste de s\u00e9lection",

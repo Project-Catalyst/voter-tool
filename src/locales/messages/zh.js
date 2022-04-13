@@ -91,7 +91,8 @@ export default {
         "SHARE": "\u5206\u4eab!",
         "SHARE_TITLE": "\u4e3a\u4f60\u7684\u6295\u7968\u9009\u5355\u547d\u540d\u3002",
         "CHALLENGE_RATIONALE": "\u4f60\u5728\u8fd9\u4e2a\u6311\u6218\u4e2d\u7684\u9009\u62e9\u7684\u7406\u7531\u3002",
-        "MODAL_TITLE": "\u5206\u4eab \u6295\u7968\u9009\u62e9\u540d\u5355"
+        "MODAL_TITLE": "\u5206\u4eab \u6295\u7968\u9009\u62e9\u540d\u5355",
+        "EXPORT_PDF": "Exportar PDF"
     },
     "share": {
         "SHARE_PICK_LIST": "\u5206\u4eab \u6295\u7968\u9009\u62e9\u540d\u5355",

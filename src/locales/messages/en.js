@@ -97,7 +97,8 @@ export default {
     "SHARE": "Share!",
     "SHARE_TITLE": "Title for your Vote Pick List:",
     "CHALLENGE_RATIONALE": "Rationale for your choices in this challenge:",
-    "MODAL_TITLE": "Share Vote Pick List"
+    "MODAL_TITLE": "Share Vote Pick List",
+    "EXPORT_PDF": "Export PDF"
   },
   "share": {
     "SHARE_PICK_LIST": "Share Vote Pick List",

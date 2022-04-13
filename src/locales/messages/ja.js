@@ -91,7 +91,8 @@ export default {
         "SHARE": "Share!",
         "SHARE_TITLE": "Vote Pick List\u306e\u30bf\u30a4\u30c8\u30eb",
         "CHALLENGE_RATIONALE": "\u3053\u306e\u8ab2\u984c\u3067\u306e\u9078\u629e\u306e\u7406\u7531\u3002",
-        "MODAL_TITLE": "Share Vote Pick List"
+        "MODAL_TITLE": "Share Vote Pick List",
+        "EXPORT_PDF": "Export PDF"
     },
     "share": {
         "SHARE_PICK_LIST": "Share Vote Pick List",

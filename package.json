@@ -11,6 +11,7 @@
     "axios": "^0.21.2",
     "buefy": "^0.9.7",
     "core-js": "^3.6.5",
+    "html2pdf.js": "^0.10.1",
     "v-clipboard": "^2.2.3",
     "v-video-embed": "^1.0.8",
     "vue": "^2.6.11",

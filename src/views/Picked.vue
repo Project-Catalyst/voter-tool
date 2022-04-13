@@ -15,63 +15,35 @@
             <b-input v-model="title"></b-input>
           </b-field>
         </div>
-        <div class="column is-4">
+        <div class="column is-2">
           <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
         </div>
+        <div class="column is-2">
+          <b-button type="is-primary is-large" @click="savePdf">{{ $t('pickList.EXPORT_PDF') }}</b-button>
+        </div>
       </div>
-      <div class="box"
-        v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
-        <p class="title is-3">
-          {{ objChallenges[k].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[k].amount | currency }})</span>
-        </p>
-        <b-field :label="$t('pickList.CHALLENGE_RATIONALE')">
-          <b-input :value="rationales[k]" type="textarea"
-            @keyup.native.stop="updateRationale($event, k)"
-            @click="updateRationale($event, k)"
-            @change="updateRationale($event, k)"
-            ></b-input>
-        </b-field>
-        <b-table
-          v-if="(proposals.length)"
-          :data="proposals"
-          :row-class="(row, index) => row.remaining < 0 && 'is-warning'"
-          draggable
-          @dragstart="dragstart"
-          @drop="drop"
-          @dragover="dragover"
-          @dragleave="dragleave">
-          <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
-            <router-link :to="{ name: 'proposal', params: {
-                fund: fund,
-                challenge: props.row.category,
-                id: props.row.id
-              }}">
-            {{ props.row.title }}
-            </router-link>
-            <a class="is-size-7" :href="props.row.url" target="blank">({{$t('pickList.OPEN_IN_IDEASCALE')}})</a>
-          </b-table-column>
-          <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
-            {{ props.row.amount | currency }}
-          </b-table-column>
-          <b-table-column field="remaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
-            {{ props.row.remaining | currency }}
-          </b-table-column>
-          <b-table-column field="inBudget" label="" v-slot="props">
-            {{ props.row.inBudget}}
-          </b-table-column>
-          <b-table-column label="" width="40" v-slot="props" >
-            <button class="button is-small is-light" @click="deleteRow(props.row)">
-              <b-icon icon="delete"></b-icon>
-            </button>
-          </b-table-column>
-        </b-table>
-        <div class="downvote-wrapper" v-if="downChallenges[k] && downChallenges[k].length">
-          <p class="title is-6 mb-0 mt-6">
-            <span class="subtitle is-4">{{$t('pickList.DOWNVOTE')}}</span>
+      <section id="export_pdf">
+        <div class="box "
+          v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
+          <p class="title is-3">
+            {{ objChallenges[k].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[k].amount | currency }})</span>
           </p>
+          <b-field :label="$t('pickList.CHALLENGE_RATIONALE')">
+            <b-input :value="rationales[k]" type="textarea"
+              @keyup.native.stop="updateRationale($event, k)"
+              @click="updateRationale($event, k)"
+              @change="updateRationale($event, k)"
+              ></b-input>
+          </b-field>
           <b-table
-            class="downvote-list"
-            :data="downChallenges[k]">
+            v-if="(proposals.length)"
+            :data="proposals"
+            :row-class="(row, index) => row.remaining < 0 && 'is-warning'"
+            draggable
+            @dragstart="dragstart"
+            @drop="drop"
+            @dragover="dragover"
+            @dragleave="dragleave">
             <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
               <router-link :to="{ name: 'proposal', params: {
                   fund: fund,
@@ -85,16 +57,54 @@
             <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
               {{ props.row.amount | currency }}
             </b-table-column>
+            <b-table-column field="remaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
+              {{ props.row.remaining | currency }}
+            </b-table-column>
+            <b-table-column field="inBudget" label="" v-slot="props">
+              {{ props.row.inBudget}}
+            </b-table-column>
             <b-table-column label="" width="40" v-slot="props" >
-              <button class="button is-small is-light" @click="deleteDownRow(props.row)">
+              <button class="button is-small is-light" @click="deleteRow(props.row)">
                 <b-icon icon="delete"></b-icon>
               </button>
             </b-table-column>
           </b-table>
+          <div class="downvote-wrapper" v-if="downChallenges[k] && downChallenges[k].length">
+            <p class="title is-6 mb-0 mt-6">
+              <span class="subtitle is-4">{{$t('pickList.DOWNVOTE')}}</span>
+            </p>
+            <b-table
+              class="downvote-list"
+              :data="downChallenges[k]">
+              <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
+                <router-link :to="{ name: 'proposal', params: {
+                    fund: fund,
+                    challenge: props.row.category,
+                    id: props.row.id
+                  }}">
+                {{ props.row.title }}
+                </router-link>
+                <a class="is-size-7" :href="props.row.url" target="blank">({{$t('pickList.OPEN_IN_IDEASCALE')}})</a>
+              </b-table-column>
+              <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
+                {{ props.row.amount | currency }}
+              </b-table-column>
+              <b-table-column label="" width="40" v-slot="props" >
+                <button class="button is-small is-light" @click="deleteDownRow(props.row)">
+                  <b-icon icon="delete"></b-icon>
+                </button>
+              </b-table-column>
+            </b-table>
+          </div>
         </div>
-      </div>
-      <div class="is-centered">
-        <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
+      </section>
+      <div class="columns mt-1">
+        <div class="column is-6">
+          <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
+        </div>
+        <div class="column is-6">
+          <b-button type="is-primary is-large is-pulled-right" @click="savePdf">{{ "Export PDF" }}</b-button>
+        </div>
       </div>
     </div>
     <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
@@ -120,6 +130,7 @@
 <script>
 import { mapState } from "vuex";
 import CatalystAPI from '@/api/catalyst.js'
+import html2pdf from 'html2pdf.js'
 
 import Share from '@/components/Share';
 
@@ -234,6 +245,31 @@ export default {
     },
     openShare() {
       this.shareActive = true
+    },
+    savePdf() {
+      var element = document.getElementById('export_pdf');
+      var opt = {
+        margin: 5,
+        filename: 'voter-tool_my-voter-pick-list.pdf',
+        image: {type: 'jpeg', quality: 0.98},
+        pagebreak: {
+            mode: ['css', 'whiteline'],
+            avoid: ['img', '.row']
+        },
+        html2canvas: {
+            scale: 2,
+            dpi: 192,
+            letterRendering: true,
+            logging: true
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+        },
+        pdfCallback: this.pdfCallback
+      }
+      html2pdf(element, opt);
     }
   },
   mounted(){

@@ -14,7 +14,7 @@ export default {
         "MADE_BY": "Feito pela Comunidade Catalisadora para a Comunidade Catalisadora",
         "DONATE": "Se voc\u00ea quiser apoiar o desenvolvimento da ferramenta de vota\u00e7\u00e3o, voc\u00ea pode doar algum ADA para:",
         "FEEDBACK": "Feedback",
-        "RAW_DATA": "Dados não processados"
+        "RAW_DATA": "Dados n\u00e3o processados"
     },
     "home": {
         "TOOL_TITLE": "Ferramenta do projeto Catalyst Voter",
@@ -92,7 +92,8 @@ export default {
         "SHARE": "Compartilhe!",
         "SHARE_TITLE": "T\u00edtulo para sua Lista de Escolha de Votos:",
         "CHALLENGE_RATIONALE": "Justificativa para suas escolhas neste desafio:",
-        "MODAL_TITLE": "Lista de Escolha de Votos para Compartilhar"
+        "MODAL_TITLE": "Lista de Escolha de Votos para Compartilhar",
+        "EXPORT_PDF": "Exportar PDF"
     },
     "share": {
         "SHARE_PICK_LIST": "Lista de Escolha de Votos para Compartilhar",

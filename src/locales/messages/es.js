@@ -92,7 +92,8 @@ export default {
         "SHARE": "\u00a1Comparte!",
         "SHARE_TITLE": "T\u00edtulo para su lista de selecci\u00f3n de votos:",
         "CHALLENGE_RATIONALE": "Justificaci\u00f3n de sus elecciones en este reto:",
-        "MODAL_TITLE": "Compartir la lista de selecci\u00f3n de votos"
+        "MODAL_TITLE": "Compartir la lista de selecci\u00f3n de votos",
+        "EXPORT_PDF": "Exportar PDF"
     },
     "share": {
         "SHARE_PICK_LIST": "Compartir la lista de selecci\u00f3n de votos",
