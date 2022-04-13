@@ -7,6 +7,7 @@ const fundsTranslations = {
   'f5': [],
   'f6': ['ja'],
   'f7': ['es', 'ja', 'fr', 'ru', 'zh', 'pt'],
+  'f8': []
 }
 
 const getLocalizedPath = (fund) => {

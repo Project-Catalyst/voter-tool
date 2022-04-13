@@ -71,9 +71,13 @@ export default {
     return {
       challenges: [],
       proposals: [],
-      fund: 'f7',
+      fund: 'f8',
       keyword: '',
       funds: {
+        'f8': {
+          title: "Fund 8",
+          challenges: []
+        },
         'f7': {
           title: "Fund 7",
           challenges: []
