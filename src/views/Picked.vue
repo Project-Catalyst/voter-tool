@@ -18,9 +18,11 @@
         <div class="column is-2">
           <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
         </div>
+        <!--
         <div class="column is-2">
           <b-button type="is-primary is-large" @click="savePdf">{{ $t('pickList.EXPORT_PDF') }}</b-button>
         </div>
+        -->
       </div>
       <section id="export_pdf">
         <div class="box "
@@ -102,9 +104,11 @@
         <div class="column is-6">
           <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
         </div>
+        <!--
         <div class="column is-6">
           <b-button type="is-primary is-large is-pulled-right" @click="savePdf">{{ "Export PDF" }}</b-button>
         </div>
+        -->
       </div>
     </div>
     <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
