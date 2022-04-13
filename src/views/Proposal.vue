@@ -170,7 +170,7 @@ export default {
       questions: questions,
       challenges: [],
       proposal: [],
-      currentFund: 'f7',
+      currentFund: 'f8',
       goodEasterEgg: false,
       fakeRating: 0,
       publicPath: process.env.BASE_URL,
