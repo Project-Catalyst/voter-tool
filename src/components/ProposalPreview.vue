@@ -20,7 +20,7 @@
             </p>
             <p>{{ proposal.description }}</p>
             <p><b>{{ $t('pickList.FUNDS_REQUESTED') }}:</b> {{ proposal.amount | currency}}</p>
-            <p><b>{{ $t('pickList.PROPOSAL_CATALYST_ID') }}:</b> {{ proposal.catalystId }}</p>
+            <p v-if="proposal.catalystId"><b>{{ $t('pickList.PROPOSAL_CATALYST_ID') }}:</b> {{ proposal.catalystId }}</p>
             <!-- TODO: plamen5kov: here to debug (preffer this info to be in the FundingWidget component) -->
             <p v-if="proposal.votes_result">
               <b>{{ $t('pickList.NUMBER_OF_CALCULATED_VOTES') }}:</b> {{ proposal.votes_result | currency_ada }}
