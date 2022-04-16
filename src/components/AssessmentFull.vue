@@ -113,7 +113,9 @@ export default {
   },
   methods: {
     copyLink(assessmentId) {
-      const linkUrl = `${window.location.origin}/#${this.$route.path}#${assessmentId}`
+      console.log(this.$router.options.base)
+      const base = (this.$router.options.base) ? `/${this.$router.options.base}` : ''
+      const linkUrl = `${window.location.origin}${base}/#${this.$route.path}#${assessmentId}`
       navigator.clipboard.writeText(linkUrl)
       this.$buefy.toast.open('copied assessment url')
     }
