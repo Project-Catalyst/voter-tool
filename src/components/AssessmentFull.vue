@@ -113,9 +113,8 @@ export default {
   },
   methods: {
     copyLink(assessmentId) {
-      console.log(this.$router.options.base)
-      const base = (this.$router.options.base) ? `/${this.$router.options.base}` : ''
-      const linkUrl = `${window.location.origin}${base}/#${this.$route.path}#${assessmentId}`
+      const base = process.env.VUE_APP_API_URL
+      const linkUrl = `${window.location.origin}${base}#${this.$route.path}#${assessmentId}`
       navigator.clipboard.writeText(linkUrl)
       this.$buefy.toast.open('copied assessment url')
     }
