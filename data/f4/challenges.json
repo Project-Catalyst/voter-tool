@@ -1,0 +1,58 @@
+[
+  {
+    "id": 25868,
+    "title": "F4: Developer ecosystem",
+    "description": "How can we create a positive developer experience that helps the developer focus on building successful apps?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25868",
+    "amount": 400000,
+    "nr_proposals": 72
+  },
+  {
+    "id": 25869,
+    "title": "F4: DApps & Integrations",
+    "description": "How can application developers drive adoption of Cardano in 2021?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25869",
+    "amount": 200000,
+    "nr_proposals": 106
+  },
+  {
+    "id": 25870,
+    "title": "F4: Distributed Decision Making",
+    "description": "How can we help the Catalyst community to get better at distributed decision making within the next two Catalyst rounds?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25870",
+    "amount": 50000,
+    "nr_proposals": 19
+  },
+  {
+    "id": 25871,
+    "title": "F4: Proposer Outreach",
+    "description": "How can we encourage entrepreneurs from outside the Cardano ecosystem to submit proposals to Catalyst in the next two funds?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25871",
+    "amount": 50000,
+    "nr_proposals": 17
+  },
+  {
+    "id": 25872,
+    "title": "F4: Catalyst Value Onboarding",
+    "description": "How can we encourage more meaningful participation in Project Catalyst from community members in the next two funds?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25872",
+    "amount": 50000,
+    "nr_proposals": 12
+  },
+  {
+    "id": 25873,
+    "title": "F4: Local Community Centers",
+    "description": "How can we mobilize the community to solve local problems using Cardano, through a Local Community Center model supported by the CF?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25873",
+    "amount": 50000,
+    "nr_proposals": 25
+  },
+  {
+    "id": 25874,
+    "title": "F4: Fund6 Challenge Setting",
+    "description": "What Challenges should the community prioritize to address in Fund6?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25874",
+    "amount": 400000,
+    "nr_proposals": 29
+  }
+]
