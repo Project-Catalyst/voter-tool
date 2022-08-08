@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <p class="title is-3">{{ $t('home.TOOL_TITLE') }}</p>
-        <p v-html="$t('home.TOOL_DESCRIPTION')"></p>
-      </div>
-      <div class="filters columns column is-12 mb-4 is-multiline">
+    <div class="column is-12">
+      <p class="title is-3">{{ $t('home.TOOL_TITLE') }}</p>
+      <p v-html="$t('home.TOOL_DESCRIPTION')"></p>
+    </div>
+
+    <div class="filters">
+      <div class="columns column is-12 mb-4 is-multiline">
         <div class="column is-12">
           <p><em>Scroll down to choose an specific Fund-Challenge proposal environment, or use the filters to search for proposals.</em></p>
         </div>
@@ -16,61 +17,77 @@
             {{pickFilterButtonMsg}}
           </b-button>
         </div>
-        <b-collapse class="column is-12"
-          animation="slide"
-          v-model="isFilterOpen">
-          <template #trigger></template>
-
-          
-            <!-- Search input -->
-            <b-field class="column is-12">
-              <b-input :placeholder="$t('general.SEARCH_FOR')"
-                type="search"
-                icon="magnify"
-                icon-clickable
-                v-model="keyword">
-              </b-input>
-            </b-field>
-            
-            <!-- Fund Selection -->
-            <b-field class="column is-3">
-              <b-taginput
-                  ref="fundTagSelection"
-                  v-model="selectedFunds"
-                  :data="filteredFunds"
-                  autocomplete
-                  field="title"
-                  icon="label"
-                  :open-on-focus="true"
-                  placeholder="Filter by funds"
-                  max-height="450px"
-                  @remove="getFilteredFunds(false)"
-                  @typing="getFilteredFunds"
-                  type="is-primary is-light"
-                  close-type="is-primary is-light"
-                  attached>
-                  <template v-slot="props">
-                      {{props.option.title}}
-                  </template>
-                  <template #empty>
-                      There are no items
-                  </template>
-              </b-taginput>
-            </b-field>
-
-          
-        </b-collapse>
-
-        <!-- <b-field class="column">
-            <b-input :placeholder="$t('general.SEARCH_FOR')"
-                type="search"
-                icon="magnify"
-                icon-clickable
-                v-model="keyword">
-            </b-input>
-        </b-field> -->
       </div>
+
+      <!-- Collapsable filters -->
+      <b-collapse
+        animation="slide"
+        v-model="isFilterOpen">
+        <template #trigger></template>
+
+        <div class="columns mb-4 is-multiline">
+          <!-- Fund Selection -->
+          <b-field label="Select from Funds" class="column is-8">
+            <b-taginput
+                ref="fundTagSelection"
+                v-model="selectedFunds"
+                :data="filteredFunds"
+                autocomplete
+                field="title"
+                icon="label"
+                :open-on-focus="true"
+                placeholder="Filter by specific funds"
+                @remove="getFilteredFunds(false)"
+                @typing="getFilteredFunds"
+                type="is-primary is-light"
+                close-type="is-primary is-light"
+                attached>
+                <template v-slot="props">
+                    {{props.option.title}}
+                </template>
+                <template #empty>
+                    There are no items
+                </template>
+            </b-taginput>
+          </b-field>
+          
+          <!-- FundedStatus Selection -->
+          <b-field label="Funded Status" class="column is-4">
+            <b-select placeholder="Funded status"
+              v-bind="fundedStatus">
+              <option value="all">All</option>
+              <option value="funded">Funded</option>
+              <option value="not-funded">Not Funded</option>
+            </b-select>
+          </b-field>
+
+          <b-field label="Number of Reviews" class="column is-4">
+            <b-slider :min="1" :max="10" ticks></b-slider>
+          </b-field>
+
+          <b-field label="Funds Requested" class="column is-4">
+            <b-slider :min="1" :max="10" ticks></b-slider>
+          </b-field>
+
+          <b-field label="Rating" class="column is-4">
+            <b-rate></b-rate>
+          </b-field>
+
+          <!-- Search input -->
+          <b-field label="Select from Titles" class="column is-10">
+            <b-input :placeholder="$t('general.SEARCH_FOR')"
+              type="search"
+              icon="magnify"
+              icon-clickable
+              v-model="keyword">
+            </b-input>
+          </b-field>
+        </div>  
+
+        
+      </b-collapse>
     </div>
+
     <div v-if="!activeFilters">
       <div class="columns is-multiline mb-6"
         v-for="localFund in fundsKeys"
@@ -130,6 +147,7 @@ export default {
       isFilterOpen: false,
       filteredFunds: [],
       selectedFunds: [],
+      fundedStatus: '',
       keyword: '',
       funds: {
         'f8': {
@@ -185,21 +203,17 @@ export default {
     },
     filteredProposals() {
       let filteredProposals = this.proposals;
-      console.log(filteredProposals)
       // apply Funds filter
       if (this.selectedFunds.length > 0) {
-        console.log('Fund Selection')
         let fundsIDs = this.selectedFunds.map( (fundObj) => 
           Object.keys(this.funds).find(key => this.funds[key].title === fundObj.title)
         )
-        console.log(fundsIDs)
         let selecProps = [];
         fundsIDs.forEach((fID) => {
           selecProps.push(
             filteredProposals.filter( (el) => el.fund.toLowerCase().includes(fID.toLowerCase()))
           )
         })
-        console.log(selecProps)
         filteredProposals = selecProps.flat();
       }
       // apply text search filter
