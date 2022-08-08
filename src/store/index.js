@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersist from 'vuex-localstorage'
-import createMutationsSharer from "vuex-shared-mutations";
+import createMutationsSharer from "vuex-shared-mutations"
 import proposals from './modules/proposals'
 import user from './modules/user'
 
