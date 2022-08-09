@@ -86,14 +86,14 @@
 
           <!-- Reviews Selection -->
           <b-field label="Number of Reviews" class="column is-4">
-            <b-slider v-model="selectedReviews" :min="reviewsMin" :max="reviewsMax"></b-slider>
+            <b-slider v-model="reviewsRange" :min="0" :max="reviewsMax" lazy></b-slider>
           </b-field>
+
           <!-- Rating Selection -->
           <b-field label="Rating" class="column is-4">
             <b-rate></b-rate>
           </b-field>
           
-
           <!-- Search input -->
           <b-field label="Select from Titles" class="column is-10">
             <b-input :placeholder="$t('general.SEARCH_FOR')"
@@ -170,8 +170,7 @@ export default {
       selectedFunds: [],
       fundsAmount: [],
       fundedStatus: '',
-      selectedReviews: [0,0],
-      selectedAmount: [0,0],
+      reviewsRange: [0,0],
       keyword: '',
       funds: {
         'f8': {
@@ -223,11 +222,7 @@ export default {
       return Object.keys(this.funds)
     },
     activeFilters() {
-      return (this.keyword.trim().length > 3) || (this.selectedFunds.length > 0)
-    },
-    reviewsMin() {
-      let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
-      return Math.min(...reviews)
+      return this.keywordCondition || this.fundSelectionCondition || this.fundedStatusCondition || this.reviewsRangeCondition || this.fundsAmountCondition
     },
     reviewsMax() {
       let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
@@ -238,10 +233,10 @@ export default {
         let amount = this.proposals.map( (fundObj) => fundObj.amount );
         let quantiles = quantileSeq(amount, [1/3, 0.5, 2/3]);
         return [
-          {id: 1, title:`$min - $${quantiles[0]}`, range:[Math.min(...amount),quantiles[0]]},
-          {id: 2, title:`$${quantiles[0]} - $${quantiles[1]}`, range:[quantiles[0],quantiles[1]]},
-          {id: 3, title:`$${quantiles[1]} - $${quantiles[2]}`, range:[quantiles[1],quantiles[2]]},
-          {id: 4, title:`$${quantiles[2]} - $max`, range:[quantiles[2],Math.max(...amount)]}
+          {id: 1, range:[Math.min(...amount),quantiles[0]], title:`$min - $${quantiles[0]}`},
+          {id: 2, range:[quantiles[0],quantiles[1]],        title:`$${quantiles[0]} - $${quantiles[1]}`},
+          {id: 3, range:[quantiles[1],quantiles[2]],        title:`$${quantiles[1]} - $${quantiles[2]}`},
+          {id: 4, range:[quantiles[2],Math.max(...amount)], title:`$${quantiles[2]} - $max`}
         ]
       }
       return false
@@ -251,7 +246,7 @@ export default {
       // console.log(filteredProposals)
 
       // apply Funds filter
-      if (this.selectedFunds.length > 0) {
+      if (this.fundSelectionCondition) {
         let fundsIDs = this.selectedFunds.map( (fundObj) => 
           Object.keys(this.funds).find(key => this.funds[key].title === fundObj.title)
         )
@@ -265,34 +260,60 @@ export default {
       }
 
       // apply fundedStatus filter
-      if (this.fundedStatus === 'funded') {
-        filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
+      if (this.fundedStatusCondition) { 
+        if (this.fundedStatus === 'funded') {
+          filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
+        }
+        else if (this.fundedStatus === 'notfunded') {
+          let selecProps = [];
+          selecProps.push(filteredProposals.filter( (el) => el.funded === 1));
+          // selecProps.push(filteredProposals.filter((el) => !Object.prototype.hasOwnProperty.call(el, 'funded') ))
+          filteredProposals = selecProps.flat();
+        }
       }
-      else if (this.fundedStatus === 'notfunded') {
-        let selecProps = [];
-        selecProps.push(filteredProposals.filter( (el) => el.funded === 1));
-        // selecProps.push(filteredProposals.filter((el) => !Object.prototype.hasOwnProperty.call(el, 'funded') ))
-        filteredProposals = selecProps.flat();
+
+      // apply reviewsRange filter
+      if (this.reviewsRangeCondition) {
+        console.log(this.reviewsRange)
+        filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'f6_no_assessments')
+          ? (el.f6_no_assessments >= this.reviewsRange[0] && el.f6_no_assessments <= this.reviewsRange[1]) 
+          : (el.no_assessments >= this.reviewsRange[0] && el.no_assessments <= this.reviewsRange[1])
+        )
       }
 
       // apply fundsAmount filter
-      if (this.fundsAmount.length > 0) {
-        console.log(this.fundsAmount)
+      if (this.fundsAmountCondition) {
         filteredProposals = filteredProposals.filter( (el) => (el.amount >= this.fundsAmount[0] && el.amount <= this.fundsAmount[1]) )
       }
       console.log(filteredProposals)
 
-      // apply text search filter
-      if (this.keyword.trim().length > 3) {
+      // apply keywork text search filter
+      if (this.keywordCondition) {
         let selecProps = filteredProposals.filter(
           (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase())
         )
         filteredProposals = selecProps;
       }
+
       return filteredProposals
     },
     pickFilterButtonMsg() {
       return (this.isFilterOpen) ? 'Close filters' : 'Open filters'
+    },
+    keywordCondition() {
+      return this.keyword.trim().length > 3
+    },
+    fundSelectionCondition() {
+      return this.selectedFunds.length > 0
+    }, 
+    fundedStatusCondition() {
+      return this.fundedStatus !== ''
+    },
+    reviewsRangeCondition() {
+      return this.reviewsRange[1] !== 0
+    },
+    fundsAmountCondition() {
+      return this.fundsAmount.length > 0
     }
   },
 
