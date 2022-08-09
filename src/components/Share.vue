@@ -100,12 +100,18 @@ export default {
     share() {
       ShareAPI.share(this.toShare).then((r) => {
         this.$emit('close')
-        this.$buefy.dialog.alert({
+        this.$buefy.dialog.confirm({
           title: this.$t('share.PICK_LIST_SAVED'),
           message: `${this.$t('share.PICK_LIST_SAVED_MSG')}<br /><b><a href="https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}" target="_blank">https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}</a></b>`,
-          confirmText: 'OK'
+          cancelText: 'OK',
+          confirmText: 'Copy to clipboard',
+          onConfirm: () => this.copyText(`https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}`)
         })
       })
+    },
+    copyText(text) {
+      this.$clipboard(text)
+      this.$buefy.toast.open('Text copied successfully')
     }
   },
   mounted() {
