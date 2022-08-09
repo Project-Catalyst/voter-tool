@@ -62,13 +62,6 @@
               </option>
             </b-select>
           </b-field>
-          <!-- <b-field label="Funds Requested (in thousands)" class="column is-4">
-            <b-slider v-model="selectedAmount" :min="amountMin" :max="amountMax"></b-slider>
-          </b-field> -->
-          <!-- <b-field label="Funds Requested (Lower/Up limits)" class="column is-4">
-            <b-numberinput controls-alignment="left"  controls-position="compact" size="is-small" :min="amountMin" :max="amountMax"></b-numberinput>
-            <b-numberinput controls-alignment="right" controls-position="compact" size="is-small" :min="amountMin" :max="amountMax"></b-numberinput>
-          </b-field> -->
 
           <!-- FundedStatus Selection -->
           <b-field label="Funded Status" class="column is-4">
@@ -87,12 +80,6 @@
                 native-value="notfunded">
                 Not funded
             </b-radio>
-            <!-- <b-select placeholder="Funded status"
-              v-bind="fundedStatus">
-              <option value="all">All</option>
-              <option value="funded">Funded</option>
-              <option value="not-funded">Not Funded</option>
-            </b-select> -->
           </b-field>
 
           <!-- Reviews Selection -->
@@ -243,14 +230,6 @@ export default {
       let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
       return Math.max(...reviews)
     },
-    // amountMin() {
-    //   let amount = this.proposals.map( (fundObj) => fundObj.amount );
-    //   return Math.min(...amount)
-    // },
-    // amountMax() {
-    //   let amount = this.proposals.map( (fundObj) => fundObj.amount );
-    //   return Math.max(...amount)
-    // },
     fundsRange() {
       if(this.proposals.length > 0) {
         let amount = this.proposals.map( (fundObj) => fundObj.amount );
@@ -266,7 +245,7 @@ export default {
     },
     filteredProposals() {
       let filteredProposals = this.proposals;
-      console.log(filteredProposals)
+      // console.log(filteredProposals)
       // apply Funds filter
       if (this.selectedFunds.length > 0) {
         let fundsIDs = this.selectedFunds.map( (fundObj) => 
@@ -278,6 +257,16 @@ export default {
             filteredProposals.filter( (el) => el.fund.toLowerCase().includes(fID.toLowerCase()))
           )
         })
+        filteredProposals = selecProps.flat();
+      }
+      // apply fundedStatus filter
+      if (this.fundedStatus === 'funded') {
+        filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
+      }
+      else if (this.fundedStatus === 'notfunded') {
+        let selecProps = [];
+        selecProps.push(filteredProposals.filter( (el) => el.funded === 1));
+        // selecProps.push(filteredProposals.filter((el) => !Object.prototype.hasOwnProperty.call(el, 'funded') ))
         filteredProposals = selecProps.flat();
       }
       // apply text search filter
