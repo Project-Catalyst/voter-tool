@@ -50,28 +50,60 @@
                 </template>
             </b-taginput>
           </b-field>
-          
+
+          <!-- FundsAmount Selection -->
+          <b-field label="Funds Requested" class="column is-4">
+            <b-select placeholder="Select an interval">
+              <option
+                v-for="option in fundsRange"
+                :value="option.range"
+                :key="option.id">
+                {{ option.title }}
+              </option>
+            </b-select>
+          </b-field>
+          <!-- <b-field label="Funds Requested (in thousands)" class="column is-4">
+            <b-slider v-model="selectedAmount" :min="amountMin" :max="amountMax"></b-slider>
+          </b-field> -->
+          <!-- <b-field label="Funds Requested (Lower/Up limits)" class="column is-4">
+            <b-numberinput controls-alignment="left"  controls-position="compact" size="is-small" :min="amountMin" :max="amountMax"></b-numberinput>
+            <b-numberinput controls-alignment="right" controls-position="compact" size="is-small" :min="amountMin" :max="amountMax"></b-numberinput>
+          </b-field> -->
+
           <!-- FundedStatus Selection -->
           <b-field label="Funded Status" class="column is-4">
-            <b-select placeholder="Funded status"
+            <b-radio v-model="fundedStatus"
+                name="name"
+                native-value="all">
+                All
+            </b-radio>
+            <b-radio v-model="fundedStatus"
+                name="name"
+                native-value="funded">
+                Funded 
+            </b-radio>
+            <b-radio v-model="fundedStatus"
+                name="name"
+                native-value="notfunded">
+                Not funded
+            </b-radio>
+            <!-- <b-select placeholder="Funded status"
               v-bind="fundedStatus">
               <option value="all">All</option>
               <option value="funded">Funded</option>
               <option value="not-funded">Not Funded</option>
-            </b-select>
+            </b-select> -->
           </b-field>
 
+          <!-- Reviews Selection -->
           <b-field label="Number of Reviews" class="column is-4">
-            <b-slider :min="1" :max="10" ticks></b-slider>
+            <b-slider v-model="selectedReviews" :min="reviewsMin" :max="reviewsMax"></b-slider>
           </b-field>
-
-          <b-field label="Funds Requested" class="column is-4">
-            <b-slider :min="1" :max="10" ticks></b-slider>
-          </b-field>
-
+          <!-- Rating Selection -->
           <b-field label="Rating" class="column is-4">
             <b-rate></b-rate>
           </b-field>
+          
 
           <!-- Search input -->
           <b-field label="Select from Titles" class="column is-10">
@@ -84,7 +116,6 @@
           </b-field>
         </div>  
 
-        
       </b-collapse>
     </div>
 
@@ -134,6 +165,7 @@
 import { mapGetters } from "vuex";
 import CatalystAPI from '@/api/catalyst.js';
 import ProposalPreview from '@/components/ProposalPreview';
+import { quantileSeq } from 'mathjs'
 
 export default {
   components: {
@@ -148,6 +180,8 @@ export default {
       filteredFunds: [],
       selectedFunds: [],
       fundedStatus: '',
+      selectedReviews: [0,0],
+      selectedAmount: [0,0],
       keyword: '',
       funds: {
         'f8': {
@@ -201,8 +235,38 @@ export default {
     activeFilters() {
       return (this.keyword.trim().length > 3) || (this.selectedFunds.length > 0)
     },
+    reviewsMin() {
+      let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
+      return Math.min(...reviews)
+    },
+    reviewsMax() {
+      let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
+      return Math.max(...reviews)
+    },
+    // amountMin() {
+    //   let amount = this.proposals.map( (fundObj) => fundObj.amount );
+    //   return Math.min(...amount)
+    // },
+    // amountMax() {
+    //   let amount = this.proposals.map( (fundObj) => fundObj.amount );
+    //   return Math.max(...amount)
+    // },
+    fundsRange() {
+      if(this.proposals.length > 0) {
+        let amount = this.proposals.map( (fundObj) => fundObj.amount );
+        let quantiles = quantileSeq(amount, [1/3, 0.5, 2/3]);
+        return [
+          {id: 1, title:`$min - $${quantiles[0]}`, range:[Math.min(...amount),quantiles[0]]},
+          {id: 2, title:`$${quantiles[0]} - $${quantiles[1]}`, range:[quantiles[0],quantiles[1]]},
+          {id: 3, title:`$${quantiles[1]} - $${quantiles[2]}`, range:[quantiles[1],quantiles[2]]},
+          {id: 4, title:`$${quantiles[2]} - $max`, range:[quantiles[2],Math.max(...amount)]}
+        ]
+      }
+      return false
+    },
     filteredProposals() {
       let filteredProposals = this.proposals;
+      console.log(filteredProposals)
       // apply Funds filter
       if (this.selectedFunds.length > 0) {
         let fundsIDs = this.selectedFunds.map( (fundObj) => 
@@ -255,7 +319,6 @@ export default {
         })
       })
     })
-    // populate filters
     this.getFilteredFunds()
     if (!this.dialogAccepted) {
       this.$buefy.dialog.alert({
