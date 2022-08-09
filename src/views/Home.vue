@@ -152,6 +152,13 @@
         :fund="proposal.fund"
         v-for="proposal in filteredProposals"
         />
+      <b-notification
+        v-if="filteredProposals.length===0"
+        type="is-danger is-light"
+        :closable=false
+        message="<b>There are no results for the filtering selection requested.</b> 
+                Be aware that <em>Funded Status</em>, <em>Number of Reviews</em> and <em>Rating</em> information is only available to some Funds.">
+      </b-notification>
     </div>
   </div>
 </template>
@@ -241,7 +248,7 @@ export default {
       return this.keywordCondition || this.fundSelectionCondition || this.fundedStatusCondition || this.reviewsRangeCondition || this.fundsAmountCondition || this.ratingSelectionCondition
     },
     reviewsMax() {
-      let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
+      let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : Math.ceil(fundObj.no_assessments / 3) );
       return Math.max(...reviews)
     },
     fundsRange() {
@@ -259,7 +266,6 @@ export default {
     },
     filteredProposals() {
       let filteredProposals = this.proposals;
-      // console.log(filteredProposals)
 
       // apply Funds filter
       if (this.fundSelectionCondition) {
@@ -292,7 +298,7 @@ export default {
       if (this.reviewsRangeCondition) {
         filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'f6_no_assessments')
           ? (el.f6_no_assessments >= this.reviewsRange[0] && el.f6_no_assessments <= this.reviewsRange[1]) 
-          : (el.no_assessments >= this.reviewsRange[0] && el.no_assessments <= this.reviewsRange[1])
+          : (Math.ceil(el.no_assessments / 3) >= this.reviewsRange[0] && Math.ceil(el.no_assessments / 3) <= this.reviewsRange[1])
         )
       }
 
@@ -308,8 +314,7 @@ export default {
       if (this.fundsAmountCondition) {
         filteredProposals = filteredProposals.filter( (el) => (el.amount >= this.fundsAmount[0] && el.amount <= this.fundsAmount[1]) )
       }
-      console.log(filteredProposals)
-
+      
       // apply keywork text search filter
       if (this.keywordCondition) {
         let selecProps = filteredProposals.filter(
@@ -333,7 +338,7 @@ export default {
       return this.fundedStatus !== ''
     },
     reviewsRangeCondition() {
-      return this.reviewsRange[1] !== 0
+      return this.reviewsRange[0] !== 0 || this.reviewsRange[1] !== 0
     },
     fundsAmountCondition() {
       return this.fundsAmount.length > 0
