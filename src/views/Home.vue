@@ -6,15 +6,21 @@
     </div>
 
     <div class="filters">
-      <div class="columns column is-12 mb-4 is-multiline">
+      <div class="columns column is-12 is-multiline">
         <div class="column is-12">
           <p><em>Scroll down to choose an specific Fund-Challenge proposal environment, or use the filters to search for proposals.</em></p>
         </div>
-        <div class="column is-12">
+        <div class="column is-4">
           <b-button
             type="is-primary"
             @click="isFilterOpen = !isFilterOpen">
             {{pickFilterButtonMsg}}
+          </b-button>
+          <b-button
+            v-if="isFilterOpen"
+            type="is-primary is-light"
+            @click="resetFilters">
+            Reset filters
           </b-button>
         </div>
       </div>
@@ -91,7 +97,7 @@
 
           <!-- Rating Selection -->
           <b-field label="Rating" class="column is-4">
-            <b-rate></b-rate>
+            <b-rate v-model="ratingSelection"></b-rate>
           </b-field>
           
           <!-- Search input -->
@@ -165,13 +171,6 @@ export default {
       challenges: [],
       proposals: [],
       fund: 'f8',
-      isFilterOpen: false,
-      filteredFunds: [],
-      selectedFunds: [],
-      fundsAmount: [],
-      fundedStatus: '',
-      reviewsRange: [0,0],
-      keyword: '',
       funds: {
         'f8': {
           title: "Fund 8",
@@ -193,7 +192,15 @@ export default {
           title: "Fund 4",
           challenges: []
         }
-      }
+      },
+      isFilterOpen: false,
+      filteredFunds: [],
+      selectedFunds: [],
+      fundsAmount: [],
+      fundedStatus: '',
+      reviewsRange: [0,0],
+      ratingSelection: 0,
+      keyword: ''
     }
   },
 
@@ -213,6 +220,15 @@ export default {
       this.filteredFunds = filteredFunds.filter((option) => {
         return this.selectedFunds.indexOf(option) === -1
       })
+    },
+    resetFilters() {
+      this.filteredFunds = [];
+      this.selectedFunds = [];
+      this.fundsAmount = [];
+      this.fundedStatus = '';
+      this.reviewsRange = [0,0];
+      this.ratingSelection = 0;
+      this.keyword = ''
     }
   },
 
@@ -222,7 +238,7 @@ export default {
       return Object.keys(this.funds)
     },
     activeFilters() {
-      return this.keywordCondition || this.fundSelectionCondition || this.fundedStatusCondition || this.reviewsRangeCondition || this.fundsAmountCondition
+      return this.keywordCondition || this.fundSelectionCondition || this.fundedStatusCondition || this.reviewsRangeCondition || this.fundsAmountCondition || this.ratingSelectionCondition
     },
     reviewsMax() {
       let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : fundObj.no_assessments);
@@ -274,10 +290,17 @@ export default {
 
       // apply reviewsRange filter
       if (this.reviewsRangeCondition) {
-        console.log(this.reviewsRange)
         filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'f6_no_assessments')
           ? (el.f6_no_assessments >= this.reviewsRange[0] && el.f6_no_assessments <= this.reviewsRange[1]) 
           : (el.no_assessments >= this.reviewsRange[0] && el.no_assessments <= this.reviewsRange[1])
+        )
+      }
+
+      // apply ratingSelection filter
+      if (this.ratingSelectionCondition) {
+        filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'rating')
+          ? (el.rating > this.ratingSelection-1 && el.rating <= this.ratingSelection) 
+          : (el.f6_rating > this.ratingSelection-1 && el.f6_rating <= this.ratingSelection)
         )
       }
 
@@ -314,6 +337,9 @@ export default {
     },
     fundsAmountCondition() {
       return this.fundsAmount.length > 0
+    },
+    ratingSelectionCondition() {
+      return this.ratingSelection !== 0
     }
   },
 
