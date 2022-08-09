@@ -53,7 +53,9 @@
 
           <!-- FundsAmount Selection -->
           <b-field label="Funds Requested" class="column is-4">
-            <b-select placeholder="Select an interval">
+            <b-select 
+            placeholder="Select an interval"
+            v-model="fundsAmount">
               <option
                 v-for="option in fundsRange"
                 :value="option.range"
@@ -166,6 +168,7 @@ export default {
       isFilterOpen: false,
       filteredFunds: [],
       selectedFunds: [],
+      fundsAmount: [],
       fundedStatus: '',
       selectedReviews: [0,0],
       selectedAmount: [0,0],
@@ -246,6 +249,7 @@ export default {
     filteredProposals() {
       let filteredProposals = this.proposals;
       // console.log(filteredProposals)
+
       // apply Funds filter
       if (this.selectedFunds.length > 0) {
         let fundsIDs = this.selectedFunds.map( (fundObj) => 
@@ -259,6 +263,7 @@ export default {
         })
         filteredProposals = selecProps.flat();
       }
+
       // apply fundedStatus filter
       if (this.fundedStatus === 'funded') {
         filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
@@ -269,6 +274,14 @@ export default {
         // selecProps.push(filteredProposals.filter((el) => !Object.prototype.hasOwnProperty.call(el, 'funded') ))
         filteredProposals = selecProps.flat();
       }
+
+      // apply fundsAmount filter
+      if (this.fundsAmount.length > 0) {
+        console.log(this.fundsAmount)
+        filteredProposals = filteredProposals.filter( (el) => (el.amount >= this.fundsAmount[0] && el.amount <= this.fundsAmount[1]) )
+      }
+      console.log(filteredProposals)
+
       // apply text search filter
       if (this.keyword.trim().length > 3) {
         let selecProps = filteredProposals.filter(
