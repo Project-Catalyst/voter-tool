@@ -33,6 +33,7 @@
         :key="proposal.id"
         :fund="fund"
         :challenge="challenge"
+        :allFunds="allFunds"
         v-for="proposal in sortedFilteredProposals"
         />
     </div>
@@ -137,6 +138,12 @@ export default {
           search: value
         })
       }
+    },
+    allFunds() {
+      if (this.$route) {
+        return this.$route.params.allFunds
+      }
+      return false
     },
     fund() {
       if (this.$route) {

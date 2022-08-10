@@ -25,20 +25,11 @@
               <proposer-modal 
                 :author="proposal.author"
                 :challenges="challenges"
+                :allFunds="allFunds"
                 @close="props.close">
               </proposer-modal>
           </template>
       </b-modal>
-      <!-- <p class="subtitle is-6">
-        {{ proposal.author }}
-      </p> -->
-      <!-- <proposer-modal id="proposerModal"
-        :author="proposal.author"
-        :challenges="challenges"
-        trap-focus
-        :active="isProposerModalActive "
-        :destroy-on-hide="false"
-      /> -->
       <div class="box proposal-content">
         <div class="columns">
           <div class="column">
@@ -227,6 +218,12 @@ export default {
     },
     isProposalDownPicked() {
       return this.isDownPicked(this.proposal)
+    },
+    allFunds() {
+      if (this.$route) {
+        return this.$route.params.allFunds
+      }
+      return false
     },
     fund() {
       if (this.$route) {

@@ -9,7 +9,8 @@
       </div>
       <div class="content">
         <a @click="openChallenges">Console log Challenges</a>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
+        <br><a @click="openAllFunds">Console log allFunds</a>
+        <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
         iaculis mauris. <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
         <br />
         <small>11:09 PM - 1 Jan 2016</small>
@@ -27,13 +28,16 @@ export default {
 
     }
   },
-  props: ['author', 'challenges'],
+  props: ['author', 'challenges', 'allFunds'],
   computed: {
 
   },
   methods: {
     openChallenges() {
       console.log(this.challenges)
+    },
+    openAllFunds() {
+      console.log(this.allFunds)
     }
   }
 }

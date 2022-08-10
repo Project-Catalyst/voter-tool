@@ -5,7 +5,8 @@
         <router-link :to="{ name: 'proposal', params: {
           fund: fund,
           challenge: proposal.category,
-          id: proposal.id
+          id: proposal.id,
+          allFunds: allFunds
           }}">
         <div class="columns">
           <div class="column is-10">
@@ -115,7 +116,7 @@ export default {
       fakeRate: 0
     }
   },
-  props: ['proposal', 'fund'],
+  props: ['proposal', 'fund', 'allFunds'],
   components: {
     FundedWidget
   },

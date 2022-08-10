@@ -128,7 +128,8 @@
           <div class="card is-primary">
             <router-link :to="{ name: 'challenge', params: {
               fund: localFund,
-              challenge: challenge.id
+              challenge: challenge.id,
+              allFunds: allFunds
               }}">
             <div class="card-content">
               <div class="content">
@@ -150,6 +151,7 @@
         :proposal="proposal"
         :key="proposal.id"
         :fund="proposal.fund"
+        :allFunds="allFunds"
         v-for="proposal in filteredProposals"
         />
       <b-notification
@@ -241,6 +243,9 @@ export default {
 
   computed: {
     ...mapGetters("user", ["dialogAccepted"]),
+    allFunds() {
+      return this.funds
+    },
     fundsKeys() {
       return Object.keys(this.funds)
     },
