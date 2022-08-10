@@ -13,8 +13,32 @@
         {{ proposal.title }}
       </p>
       <p class="subtitle is-6">
-        {{ proposal.author }}
+        Author: <a @click="isProposerModalOpen = true">{{ proposal.author }}</a>
       </p>
+      <b-modal
+          v-model="isProposerModalOpen"
+          :width="640" 
+          scroll="keep"
+          trap-focus
+          :destroy-on-hide="false">
+          <template #default="props">
+              <proposer-modal 
+                :author="proposal.author"
+                :challenges="challenges"
+                @close="props.close">
+              </proposer-modal>
+          </template>
+      </b-modal>
+      <!-- <p class="subtitle is-6">
+        {{ proposal.author }}
+      </p> -->
+      <!-- <proposer-modal id="proposerModal"
+        :author="proposal.author"
+        :challenges="challenges"
+        trap-focus
+        :active="isProposerModalActive "
+        :destroy-on-hide="false"
+      /> -->
       <div class="box proposal-content">
         <div class="columns">
           <div class="column">
@@ -163,6 +187,7 @@ import groupBy from '@/utils/group.js'
 import FundedWidget from '@/components/FundedWidget';
 import AssessmentPartial from '@/components/AssessmentPartial';
 import AssessmentFull from '@/components/AssessmentFull';
+import ProposerModal from '@/components/ProposerModal';
 
 export default {
   data(){
@@ -175,14 +200,16 @@ export default {
       fakeRating: 0,
       publicPath: process.env.BASE_URL,
       opacity_range: [0.5,1],
-      n_opacity_range: [3,7]
+      n_opacity_range: [3,7],
+      isProposerModalOpen: false
     }
   },
 
   components: {
     FundedWidget,
     AssessmentPartial,
-    AssessmentFull
+    AssessmentFull,
+    ProposerModal
   },
 
   mounted(){
@@ -366,6 +393,16 @@ export default {
           position: 'is-bottom-right'
         })
       }
+    },
+    openProposerModal() {
+      console.log('openProposerModal')
+    //   this.$buefy.modal.open({
+    //       parent: this,
+    //       component: pModal,
+    //       // hasModalCard: true,
+    //       // customClass: 'custom-class custom-class-2',
+    //       trapFocus: true
+    //   })
     }
   }
 }
