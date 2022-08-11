@@ -16,8 +16,7 @@
         Author: <a @click="isProposerModalOpen = true">{{ proposal.author }}</a>
       </p>
       <b-modal
-          v-model="isProposerModalOpen"
-          :width="640" 
+          v-model="isProposerModalOpen" 
           scroll="keep"
           trap-focus
           :destroy-on-hide="false">
@@ -25,7 +24,6 @@
               <proposer-modal 
                 :author="proposal.author"
                 :challenges="challenges"
-                :allFunds="allFunds"
                 @close="props.close">
               </proposer-modal>
           </template>
@@ -219,12 +217,6 @@ export default {
     isProposalDownPicked() {
       return this.isDownPicked(this.proposal)
     },
-    allFunds() {
-      if (this.$route) {
-        return this.$route.params.allFunds
-      }
-      return false
-    },
     fund() {
       if (this.$route) {
         return this.$route.params.fund
@@ -390,16 +382,6 @@ export default {
           position: 'is-bottom-right'
         })
       }
-    },
-    openProposerModal() {
-      console.log('openProposerModal')
-    //   this.$buefy.modal.open({
-    //       parent: this,
-    //       component: pModal,
-    //       // hasModalCard: true,
-    //       // customClass: 'custom-class custom-class-2',
-    //       trapFocus: true
-    //   })
     }
   }
 }

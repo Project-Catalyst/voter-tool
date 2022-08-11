@@ -128,8 +128,7 @@
           <div class="card is-primary">
             <router-link :to="{ name: 'challenge', params: {
               fund: localFund,
-              challenge: challenge.id,
-              allFunds: allFunds
+              challenge: challenge.id
               }}">
             <div class="card-content">
               <div class="content">
@@ -151,7 +150,6 @@
         :proposal="proposal"
         :key="proposal.id"
         :fund="proposal.fund"
-        :allFunds="allFunds"
         v-for="proposal in filteredProposals"
         />
       <b-notification
@@ -180,7 +178,7 @@ export default {
       challenges: [],
       proposals: [],
       fund: 'f8',
-      funds: {
+      funds: {  // on-change: this property is also manually implemented in @/components/ProposerModal.vue >> please adjust there
         'f8': {
           title: "Fund 8",
           challenges: []
@@ -243,9 +241,6 @@ export default {
 
   computed: {
     ...mapGetters("user", ["dialogAccepted"]),
-    allFunds() {
-      return this.funds
-    },
     fundsKeys() {
       return Object.keys(this.funds)
     },
