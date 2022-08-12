@@ -1,8 +1,5 @@
 <template>
   <div class="card">
-    <!-- <div class="card-icon">
-        <b-icon icon="account-details" size="is-medium"></b-icon>
-    </div> -->
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -15,53 +12,47 @@
       </div>
       <div class="content">
 
-        <b-field label="Proposals across Funds">
-<!-- 
-          <b-table
-            :data="isEmpty ? [] : data"
-            :striped="true"
-            :narrowed="true"
-            :hoverable="true"
-            :loading="isLoading"
-            :focusable="isFocusable"
-            :mobile-cards="hasMobileCards">
+        <b-field label="Proposals across Funds"></b-field>
+        <b-table
+          :data="tableData"
+          ref="table"
+          :loading="isLoading"
+          detailed
+          hoverable
+          custom-detail-row
+          :opened-detailed="[proposerFunds[0]]"
+          detail-key="proposal"
+          @details-open="(row, index) => $buefy.toast.open(`Expanded ${row.proposal}`)"
+          :show-detail-icon="true">
 
-            <b-table-column field="id" label="ID" width="40" :td-attrs="columnTdAttrs" numeric v-slot="props">
-                {{ props.row.id }}
-            </b-table-column>
+          <b-table-column field="proposal" label="Title" v-slot="props">
+            <b>{{ props.row.proposal }}</b>
+          </b-table-column>
 
-            <b-table-column field="first_name" label="First Name" :td-attrs="columnTdAttrs" v-slot="props">
-                {{ props.row.first_name }}
-            </b-table-column>
+          <b-table-column field="reviews" label="Number of reviews" numeric centered v-slot="props">
+            <b>{{ props.row.reviews }}</b>
+          </b-table-column>
 
-            <b-table-column field="last_name" label="Last Name" :td-attrs="columnTdAttrs" v-slot="props">
-                {{ props.row.last_name }}
-            </b-table-column>
+          <b-table-column field="amount" label="Funds requested" numeric centered v-slot="props">
+            <b>{{ props.row.amount }}</b>
+          </b-table-column>
 
-            <b-table-column field="date" label="Date" :th-attrs="dateThAttrs" :td-attrs="columnTdAttrs" centered v-slot="props">
-                <span class="tag is-success">
-                    {{ new Date(props.row.date).toLocaleDateString() }}
-                </span>
-            </b-table-column>
+          <b-table-column field="funded" label="Funded status" centered v-slot="props">
+            <b>{{ props.row.funded }}</b>
+          </b-table-column>
 
-            <b-table-column label="Gender" :td-attrs="columnTdAttrs" v-slot="props">
-                <span>
-                    <b-icon
-                        v-if="props.row.id !== 'Total'"
-                        pack="fas"
-                        :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                    </b-icon>
-                    {{ props.row.gender }}
-                </span>
-            </b-table-column>
+          <template slot="detail" slot-scope="props">
+            <tr v-for="item in props.row.items" :key="item.id">
+              <td></td>
+              <td><a @click="goToProposal(item)">{{ item.proposal }}</a></td>
+              <td class="has-text-centered">{{ item.reviews }}</td>
+              <td class="has-text-centered">{{ item.amount }}</td>
+              <td class="has-text-centered"><b-icon :icon="item.funded === 'yes' ? 'check-bold' : ''"></b-icon></td>
+            </tr>
+          </template>
+        </b-table>
 
-            <template #empty>
-                <div class="has-text-centered">No records</div>
-            </template> -->
-        
-        </b-field>
-
-        <a @click="openChallenges">Console log Challenges</a>
+        <!-- <a @click="openChallenges">Console log Challenges</a>
         <br><a @click="openFunds">Console log Funds</a>
         <br><a @click="openAllProposals">Console log allProposals</a>
         <br><a @click="displayTableData">Console log tableData</a>
@@ -69,7 +60,7 @@
         <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
         iaculis mauris. <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
         <br />
-        <small>11:09 PM - 1 Jan 2016</small>
+        <small>11:09 PM - 1 Jan 2016</small> -->
       </div>
     </div>
   </div>
@@ -139,6 +130,9 @@ export default {
         data.push(this.getFundData(fId, template)) 
       })
       return data
+    },
+    isLoading() {
+      return (this.proposals.length === 0) ? true : false
     }
   },
 
@@ -173,8 +167,9 @@ export default {
       data.amount = proposal.amount;
       let hasFunded = Object.prototype.hasOwnProperty.call(proposal, 'funded');
       ( hasFunded ) 
-      ? data.funded = (proposal.funded === 1) ? '&check;' : ''
+      ? data.funded = (proposal.funded === 1) ? 'yes' : 'no'
       : data.funded = 'n/a'
+      data.id = proposal.id
       return data
     },
     getFundData(fundId, templateData) {
@@ -213,7 +208,15 @@ export default {
       
       return data
     },
-    
+    goToProposal(item) {
+      let proposal = this.proposerProposals.filter( (p) => p.id === item.id )[0]
+      let page = this.$router.resolve({name: 'proposal', params: { 
+        fund: proposal.fund,
+        challenge: proposal.category,
+        id: proposal.id 
+      }})
+      window.open(page.href, '_blank');
+    }    
   },
 
   created() {
