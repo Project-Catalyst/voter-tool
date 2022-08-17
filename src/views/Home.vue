@@ -258,7 +258,8 @@ export default {
       this.fundedStatus = '';
       this.reviewsRange = [0,0];
       this.ratingSelection = 0;
-      this.keyword = ''
+      this.keyword = '';
+      this.getFilteredFunds()
     }, 
     updatePreFilter() {
       let preFilterIds = this.preFilteredFunds.map( (f) => f.title )
