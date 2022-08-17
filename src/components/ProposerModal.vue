@@ -58,7 +58,7 @@
           </b-table-column>
 
           <b-table-column field="funded" label="Funded status" centered v-slot="props">
-            <span v-if="props.row.funded === 0" style="color:red;">
+            <span v-if="props.row.funded === 0" style="color:#993404;">
               <b>{{ props.row.funded }}</b><b-icon icon="check-bold"></b-icon>
             </span>
             <span v-else style="color:green;">
@@ -146,6 +146,7 @@ export default {
     overBudValue()   { return 'over budget' },
     fundedValue()    { return 'funded' },
     notFundedValue() { return 'not funded' },
+    challengeSettingText() { return 'challenge setting' },
     fundsKeys() {
       return Object.keys(this.funds)
     },
@@ -177,9 +178,8 @@ export default {
       };
       
       // push Fund-N templateData to const < data >
-      this.proposerFunds.forEach( (fId) => {
-        data.push(this.getFundData(fId, template))
-      })
+      data.push(this.getChallengeSettingData(template))
+      this.proposerFunds.forEach( (fId) => data.push(this.getFundData(fId, template)) )
       return data
     },
     isLoading() {
@@ -232,6 +232,9 @@ export default {
       data.proposal = proposal.title;
       data.count = '';
       data.challenge = this.funds[proposal.fund].challenges.find( (el) => el.id === proposal.category ).title.split(": ").pop();
+      ( data.challenge.includes(this.challengeSettingText) )
+      ? data.challenge = data.challenge.replace(this.challengeSettingText, '')
+      : data.challenge = data.challenge
       data.reviews = this.getReviews(proposal);
       data.amount = proposal.amount;
       data.funded = this.isFundedStatus(proposal);
@@ -267,6 +270,39 @@ export default {
       data.funded = fundProposals.map( (p) => (this.isFunded(p)) ? 1 : 0 ).reduce((partialSum, a) => partialSum + a, 0);
       // items
       data.items = fundProposals.map( (p) => this.getProposalData(p, templateData) );
+      data.items.sort(this.sortProposalsByChallenge);
+
+      return data
+    },
+    getChallengeSettingData (templateData) {
+      /*
+      templateData = {
+            proposal: '',
+            count: '',
+            challenge: '',
+            reviews: 0,
+            amount: 0,
+            funded: 'n/a'
+            items: [] // [... proposalData]
+          }
+      */
+      const data = {...templateData};
+      let csProposals = this.proposerProposals.filter( (p) => this.funds[p.fund].challenges.find( (el) => el.id === p.category ).title.includes(this.challengeSettingText) );
+
+      // proposal
+      data.proposal = "Challenge Setting proposals";
+      // count
+      data.count = csProposals.length;
+      // challenge
+      data.challenge = "Fund challenge reference";
+      // reviews
+      data.reviews = csProposals.map( (p) => this.getReviews(p) ).reduce((partialSum, a) => partialSum + a, 0);
+      // amount
+      data.amount = csProposals.map( (p) => p.amount ).reduce((partialSum, a) => partialSum + a, 0);
+      // funded
+      data.funded = csProposals.map( (p) => (this.isFunded(p)) ? 1 : 0 ).reduce((partialSum, a) => partialSum + a, 0);
+      // items
+      data.items = csProposals.map( (p) => this.getProposalData(p, templateData) );
       data.items.sort(this.sortProposalsByChallenge);
 
       return data
