@@ -254,7 +254,9 @@ export default {
           }
       */
       const data = {...templateData};
-      let fundProposals = this.proposerProposals.filter( (p) => p.fund === fundId );
+      let fundProposals = this.proposerProposals
+        .filter( (p) => p.fund === fundId )
+        .filter( (p) => !this.funds[p.fund].challenges.find( (el) => el.id === p.category ).title.includes(this.challengeSettingText) );
 
       // proposal
       data.proposal = this.funds[fundId].title.concat(" ", "proposals");
