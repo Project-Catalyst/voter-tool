@@ -23,9 +23,9 @@
             </div>
           </div>
           <h4>{{proposerProposals.length}} proposals submitted from {{fundsText}}</h4>
-          <h4>${{proposerAmountSum}} total funds requested</h4>
-          <h4>${{proposerAmountFunded}} funds provided *</h4>
-          <p><small>* <em>Funding information is not available to all Funds:</em> check out the table below for detailed information on provided fundings.</small></p>
+          <h4>Total funds requested: {{proposerAmountSum | currency}}</h4>
+          <h4>Funds approved*: {{proposerAmountFunded | currency}}</h4>
+          <p><small>* Is the total funds approved by community vote. Funds are provided on conditions and therefore may not yet be fully distributed to the proposer. Funding information is not available to all Funds: check out the table below for detailed information.</small></p>
         </div>
 
         <b-field label="Explore the author's proposals across funds:"></b-field>
@@ -59,7 +59,7 @@
           </b-table-column>
 
           <b-table-column field="amount" label="Funds requested" numeric centered v-slot="props">
-            <b>$ {{ props.row.amount }}</b>
+            <b>{{ props.row.amount | currency }}</b>
           </b-table-column>
 
           <b-table-column field="funded" label="Funded status" centered v-slot="props">
@@ -81,10 +81,10 @@
               <td class="has-text-centered">{{ item.reviews }}</td>
               <td class="has-text-centered">
                 <span v-if="item.funded === 'funded'" style="color:green;">
-                    $ {{ item.amount }}
+                    {{ item.amount | currency }}
                 </span>
                 <span v-else>
-                    $ {{ item.amount }}
+                    {{ item.amount | currency }}
                 </span>
               </td>
               <td class="has-text-centered">
