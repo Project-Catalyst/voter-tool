@@ -56,7 +56,7 @@
         <br><a @click="openFunds">Console log Funds</a>
         <br><a @click="openAllProposals">Console log allProposals</a>
         <br><a @click="displayTableData">Console log tableData</a>
-        
+
         <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
         iaculis mauris. <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
         <br />
@@ -75,6 +75,10 @@ export default {
     return {
       proposals: [],
       funds: {
+        'f9': {
+          title: "Fund 9",
+          challenges: []
+        },
         'f8': {
           title: "Fund 8",
           challenges: []
@@ -98,7 +102,7 @@ export default {
       }
     }
   },
-  
+
   computed: {
     fundsKeys() {
       return Object.keys(this.funds)
@@ -124,10 +128,10 @@ export default {
         funded: 'n/a'
         // items: []
       };
-      
+
       // push Fund-N templateData to const data
       this.proposerFunds.forEach( (fId) => {
-        data.push(this.getFundData(fId, template)) 
+        data.push(this.getFundData(fId, template))
       })
       return data
     },
@@ -150,45 +154,45 @@ export default {
       console.log(this.proposals)
     },
     getProposalData (proposal, templateData) {
-      /* 
+      /*
       templateData = {
             proposal: '',
             reviews: 0,
             amount: 0,
             funded: 'n/a'
-            // items: [] 
-          } 
+            // items: []
+          }
       */
       const data = {...templateData};
       data.proposal = proposal.title;
-      data.reviews = (Object.prototype.hasOwnProperty.call(proposal, 'f6_no_assessments')) 
-        ? proposal.f6_no_assessments 
+      data.reviews = (Object.prototype.hasOwnProperty.call(proposal, 'f6_no_assessments'))
+        ? proposal.f6_no_assessments
         : proposal.no_assessments
       data.amount = proposal.amount;
       let hasFunded = Object.prototype.hasOwnProperty.call(proposal, 'funded');
-      ( hasFunded ) 
+      ( hasFunded )
       ? data.funded = (proposal.funded === 1) ? 'yes' : 'no'
       : data.funded = 'n/a'
       data.id = proposal.id
       return data
     },
     getFundData(fundId, templateData) {
-      /* 
+      /*
       templateData = {
             proposal: '',
             reviews: 0,
             amount: 0,
             funded: 'n/a'
-            items: [] // [... proposalData] 
-          } 
+            items: [] // [... proposalData]
+          }
       */
       const data = {...templateData};
       let fundProposals = this.proposerProposals.filter( (p) => p.fund === fundId );
-      
+
       // proposal
       data.proposal = this.funds[fundId].title.concat(" ", "proposals");
       // reviews
-      data.reviews = fundProposals.map( (p) => ( Object.prototype.hasOwnProperty.call(p, 'f6_no_assessments') ) 
+      data.reviews = fundProposals.map( (p) => ( Object.prototype.hasOwnProperty.call(p, 'f6_no_assessments') )
         ? p.f6_no_assessments
         : Math.ceil(p.no_assessments / 3)
       ).reduce((partialSum, a) => partialSum + a, 0);
@@ -203,20 +207,20 @@ export default {
           return 0          // compute 0 for n/a funded info
         }
       }).reduce((partialSum, a) => partialSum + a, 0);
-      // items 
+      // items
       data.items = fundProposals.map( (p) => this.getProposalData(p, templateData) )
-      
+
       return data
     },
     goToProposal(item) {
       let proposal = this.proposerProposals.filter( (p) => p.id === item.id )[0]
-      let page = this.$router.resolve({name: 'proposal', params: { 
+      let page = this.$router.resolve({name: 'proposal', params: {
         fund: proposal.fund,
         challenge: proposal.category,
-        id: proposal.id 
+        id: proposal.id
       }})
       window.open(page.href, '_blank');
-    }    
+    }
   },
 
   created() {

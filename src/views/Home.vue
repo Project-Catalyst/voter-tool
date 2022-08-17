@@ -59,7 +59,7 @@
 
           <!-- FundsAmount Selection -->
           <b-field label="Funds Requested" class="column is-4">
-            <b-select 
+            <b-select
             placeholder="Select an interval"
             v-model="fundsAmount">
               <option
@@ -81,7 +81,7 @@
             <b-radio v-model="fundedStatus"
                 name="name"
                 native-value="funded">
-                Funded 
+                Funded
             </b-radio>
             <b-radio v-model="fundedStatus"
                 name="name"
@@ -99,7 +99,7 @@
           <b-field label="Rating" class="column is-4">
             <b-rate v-model="ratingSelection"></b-rate>
           </b-field>
-          
+
           <!-- Search input -->
           <b-field label="Select from Titles" class="column is-10">
             <b-input :placeholder="$t('general.SEARCH_FOR')"
@@ -109,7 +109,7 @@
               v-model="keyword">
             </b-input>
           </b-field>
-        </div>  
+        </div>
 
       </b-collapse>
     </div>
@@ -156,7 +156,7 @@
         v-if="filteredProposals.length===0"
         type="is-danger is-light"
         :closable=false
-        message="<b>There are no results for the filtering selection requested.</b> 
+        message="<b>There are no results for the filtering selection requested.</b>
                 Be aware that <em>Funded Status</em>, <em>Number of Reviews</em> and <em>Rating</em> information is only available to some Funds.">
       </b-notification>
     </div>
@@ -177,8 +177,12 @@ export default {
     return {
       challenges: [],
       proposals: [],
-      fund: 'f8',
+      fund: 'f9',
       funds: {  // on-change: this property is also manually implemented in @/components/ProposerModal.vue >> please adjust there
+        'f9': {
+          title: "Fund 9",
+          challenges: []
+        },
         'f8': {
           title: "Fund 8",
           challenges: []
@@ -269,7 +273,7 @@ export default {
 
       // apply Funds filter
       if (this.fundSelectionCondition) {
-        let fundsIDs = this.selectedFunds.map( (fundObj) => 
+        let fundsIDs = this.selectedFunds.map( (fundObj) =>
           Object.keys(this.funds).find(key => this.funds[key].title === fundObj.title)
         )
         let selecProps = [];
@@ -282,7 +286,7 @@ export default {
       }
 
       // apply fundedStatus filter
-      if (this.fundedStatusCondition) { 
+      if (this.fundedStatusCondition) {
         if (this.fundedStatus === 'funded') {
           filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
         }
@@ -297,7 +301,7 @@ export default {
       // apply reviewsRange filter
       if (this.reviewsRangeCondition) {
         filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'f6_no_assessments')
-          ? (el.f6_no_assessments >= this.reviewsRange[0] && el.f6_no_assessments <= this.reviewsRange[1]) 
+          ? (el.f6_no_assessments >= this.reviewsRange[0] && el.f6_no_assessments <= this.reviewsRange[1])
           : (Math.ceil(el.no_assessments / 3) >= this.reviewsRange[0] && Math.ceil(el.no_assessments / 3) <= this.reviewsRange[1])
         )
       }
@@ -305,7 +309,7 @@ export default {
       // apply ratingSelection filter
       if (this.ratingSelectionCondition) {
         filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'rating')
-          ? (el.rating > this.ratingSelection-1 && el.rating <= this.ratingSelection) 
+          ? (el.rating > this.ratingSelection-1 && el.rating <= this.ratingSelection)
           : (el.f6_rating > this.ratingSelection-1 && el.f6_rating <= this.ratingSelection)
         )
       }
@@ -314,7 +318,7 @@ export default {
       if (this.fundsAmountCondition) {
         filteredProposals = filteredProposals.filter( (el) => (el.amount >= this.fundsAmount[0] && el.amount <= this.fundsAmount[1]) )
       }
-      
+
       // apply keywork text search filter
       if (this.keywordCondition) {
         let selecProps = filteredProposals.filter(
@@ -333,7 +337,7 @@ export default {
     },
     fundSelectionCondition() {
       return this.selectedFunds.length > 0
-    }, 
+    },
     fundedStatusCondition() {
       return this.fundedStatus !== ''
     },

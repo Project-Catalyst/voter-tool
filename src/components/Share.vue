@@ -102,10 +102,10 @@ export default {
         this.$emit('close')
         this.$buefy.dialog.confirm({
           title: this.$t('share.PICK_LIST_SAVED'),
-          message: `${this.$t('share.PICK_LIST_SAVED_MSG')}<br /><b><a href="https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}" target="_blank">https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}</a></b>`,
+          message: `${this.$t('share.PICK_LIST_SAVED_MSG')}<br /><b><a href="https://cardanocataly.st/voter-tool/#/f9/shared/${r.data.pick_list.uuid}" target="_blank">https://cardanocataly.st/voter-tool/#/f9/shared/${r.data.pick_list.uuid}</a></b>`,
           cancelText: 'OK',
           confirmText: 'Copy to clipboard',
-          onConfirm: () => this.copyText(`https://cardanocataly.st/voter-tool/#/f8/shared/${r.data.pick_list.uuid}`)
+          onConfirm: () => this.copyText(`https://cardanocataly.st/voter-tool/#/f9/shared/${r.data.pick_list.uuid}`)
         })
       })
     },

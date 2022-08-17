@@ -16,12 +16,12 @@
         Author: <a @click="isProposerModalOpen = true">{{ proposal.author }}</a>
       </p>
       <b-modal
-          v-model="isProposerModalOpen" 
+          v-model="isProposerModalOpen"
           scroll="keep"
           trap-focus
           :destroy-on-hide="false">
           <template #default="props">
-              <proposer-modal 
+              <proposer-modal
                 :author="proposal.author"
                 :challenges="challenges"
                 @close="props.close">
@@ -184,7 +184,7 @@ export default {
       questions: questions,
       challenges: [],
       proposal: [],
-      currentFund: 'f8',
+      currentFund: 'f9',
       goodEasterEgg: false,
       fakeRating: 0,
       publicPath: process.env.BASE_URL,

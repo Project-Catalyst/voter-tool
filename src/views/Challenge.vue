@@ -77,7 +77,7 @@ export default {
     sortingOptions() {
       let rating
       let no_ass
-      if (this.fund == 'f6' || this.fund == 'f7' || this.fund == 'f8') {
+      if (this.fund == 'f6' || this.fund == 'f7' || this.fund == 'f8' || this.fund == 'f9') {
         rating = 'f6_rating'
         no_ass = 'f6_no_assessments'
       } else {
