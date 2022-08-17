@@ -336,15 +336,9 @@ export default {
       
       // apply fundedStatus filter
       if (this.fundedStatusCondition) {
-        if (this.fundedStatus === 'funded') {
-          filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
-        }
-        else if (this.fundedStatus === 'notfunded') {
-          let selecProps = [];
-          selecProps.push(filteredProposals.filter( (el) => el.funded === 1));
-          // selecProps.push(filteredProposals.filter((el) => !Object.prototype.hasOwnProperty.call(el, 'funded') ))
-          filteredProposals = selecProps.flat();
-        }
+        (this.fundedStatus === 'funded')
+        ? filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
+        : filteredProposals = filteredProposals.filter( (el) => el.funded !== 2)
       }
 
       // apply reviewsRange filter
