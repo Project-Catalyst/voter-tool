@@ -100,6 +100,9 @@ export default {
     "MODAL_TITLE": "Share Vote Pick List",
     "EXPORT_PDF": "Export PDF"
   },
+  "proposerModal": {
+    "NOTE": "Note: <em>the information here provided is regarding this proposer. Their level of participation in specific proposals may vary. Totals will not reflect the funds they have personally received from total proposals. Data is provided as is with no warranty of accuracy.<em>"
+  },
   "share": {
     "SHARE_PICK_LIST": "Share Vote Pick List",
     "SHARE_INTRO": "By clicking 'Generate link for your pick list' you will create an URL with your vote pick list that you can share with other people.",

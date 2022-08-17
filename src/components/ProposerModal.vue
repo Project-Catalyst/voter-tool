@@ -2,17 +2,34 @@
   <div class="card">
     <div class="card-content">
       <div class="media">
-        <div class="media-left">
+        <!-- <div class="media-left">
             <b-icon icon="account-details" size="is-medium"></b-icon>
-        </div>
+        </div> -->
         <div class="media-content">
-          <p class="title is-4">{{author}}</p>
-          <p class="subtitle is-6">{{proposerProposals.length}} proposals submitted from {{fundsTextSubtitle}} &bull; ${{proposerAmountSum}} total funds requested</p>
+          <!-- <p class="title is-4">{{author}}</p> -->
+          <!-- <p class="subtitle is-6">{{proposerProposals.length}} proposals submitted from {{fundsTextSubtitle}} &bull; ${{proposerAmountSum}} total funds requested</p> -->
+          <p class="subtitle is-6" v-html="$t('proposerModal.NOTE')"></p>
         </div>
       </div>
       <div class="content">
 
-        <b-field label="Proposals across Funds"></b-field>
+        <div class="box">
+          <div class="media">
+            <div class="media-left">
+                <b-icon icon="account-details" size="is-medium"></b-icon>
+            </div>
+            <div class="media-content">
+              <h1 class="title">{{author}}</h1>
+            </div>
+          </div>
+          <h4>{{proposerProposals.length}} proposals submitted from {{fundsText}}</h4>
+          <h4>${{proposerAmountSum}} total funds requested</h4>
+          <h4>${{proposerAmountFunded}} funds provided *</h4>
+          <p><small>* <em>Funding information is not available to all Funds:</em> check out the table below for detailed information on provided fundings.</small></p>
+        </div>
+
+        <b-field label="Explore the author's proposals across funds:"></b-field>
+
         <b-table
           :data="tableData"
           ref="table"
@@ -29,25 +46,59 @@
             <b>{{ props.row.proposal }}</b>
           </b-table-column>
 
-          <b-table-column field="reviews" label="Number of reviews" numeric centered v-slot="props">
+          <b-table-column field="count" label="#" numeric centered v-slot="props">
+            <b>{{ props.row.count }}</b>
+          </b-table-column>
+
+          <b-table-column field="challenge" label="Challenge Setting" centered v-slot="props">
+            <b>{{ props.row.challenge }}</b>
+          </b-table-column>
+
+          <b-table-column field="reviews" label="N. of reviews" numeric centered v-slot="props">
             <b>{{ props.row.reviews }}</b>
           </b-table-column>
 
           <b-table-column field="amount" label="Funds requested" numeric centered v-slot="props">
-            <b>{{ props.row.amount }}</b>
+            <b>$ {{ props.row.amount }}</b>
           </b-table-column>
 
           <b-table-column field="funded" label="Funded status" centered v-slot="props">
-            <b>{{ props.row.funded }}</b>
+            <span v-if="props.row.funded === 0" style="color:red;">
+              <b>{{ props.row.funded }}</b><b-icon icon="check-bold"></b-icon>
+            </span>
+            <span v-else style="color:green;">
+                <b>{{ props.row.funded }}</b><b-icon icon="check-bold"></b-icon>
+            </span>
+            <!-- <b>{{ props.row.funded }}</b><b-icon icon="check-bold"></b-icon> -->
           </b-table-column>
 
           <template slot="detail" slot-scope="props">
             <tr v-for="item in props.row.items" :key="item.id">
               <td></td>
               <td><a @click="goToProposal(item)">{{ item.proposal }}</a></td>
+              <td class="has-text-centered">{{ item.count }}</td>
+              <td class="has-text-centered">{{ item.challenge }}</td>
               <td class="has-text-centered">{{ item.reviews }}</td>
-              <td class="has-text-centered">{{ item.amount }}</td>
-              <td class="has-text-centered"><b-icon :icon="item.funded === 'yes' ? 'check-bold' : ''"></b-icon></td>
+              <td class="has-text-centered">
+                <span v-if="item.funded === 'funded'" style="color:green;">
+                    $ {{ item.amount }}
+                </span>
+                <span v-else>
+                    $ {{ item.amount }}
+                </span>
+              </td>
+              <td class="has-text-centered">
+                <span v-if="item.funded === fundedValue" class="tag is-success">
+                  &emsp;  {{ item.funded }} &emsp;
+                </span>
+                <span v-else-if="item.funded === overBudValue" class="tag is-warning">
+                   {{ item.funded }}
+                </span>
+                <span v-else class="tag is-danger">
+                    {{ item.funded }}
+                </span>
+                <!-- <b-icon :icon="item.funded === 'funded' ? 'check-bold' : ''"></b-icon> -->
+              </td>
             </tr>
           </template>
         </b-table>
@@ -55,12 +106,7 @@
         <!-- <a @click="openChallenges">Console log Challenges</a>
         <br><a @click="openFunds">Console log Funds</a>
         <br><a @click="openAllProposals">Console log allProposals</a>
-        <br><a @click="displayTableData">Console log tableData</a>
-
-        <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
-        iaculis mauris. <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
-        <br />
-        <small>11:09 PM - 1 Jan 2016</small> -->
+        <br><a @click="displayTableData">Console log tableData</a> -->
       </div>
     </div>
   </div>
@@ -104,10 +150,13 @@ export default {
   },
 
   computed: {
+    overBudValue()   { return 'over budget' },
+    fundedValue()    { return 'funded' },
+    notFundedValue() { return 'not funded' },
     fundsKeys() {
       return Object.keys(this.funds)
     },
-    fundsTextSubtitle() {
+    fundsText() {
       return this.funds[this.fundsKeys[this.fundsKeys.length-1]].title.concat(" to ", this.funds[this.fundsKeys[0]].title)
     },
     proposerProposals() {
@@ -116,6 +165,9 @@ export default {
     proposerAmountSum() {
       return this.proposerProposals.map( (el) => el.amount ).reduce((partialSum, a) => partialSum + a, 0)
     },
+    proposerAmountFunded() {
+      return this.proposerProposals.filter( (el) => this.isFunded(el) === true).map( (el) => el.amount ).reduce((partialSum, a) => partialSum + a, 0)
+    },
     proposerFunds() {
       return [... new Set(this.proposerProposals.map( (el) => el.fund ))]
     },
@@ -123,6 +175,8 @@ export default {
       const data =[];
       let template = {
         proposal: '',
+        count: '',
+        challenge: '',
         reviews: 0,
         amount: 0,
         funded: 'n/a'
@@ -153,10 +207,28 @@ export default {
     openAllProposals() {
       console.log(this.proposals)
     },
+    getReviews(p) {
+      return ( Object.prototype.hasOwnProperty.call(p, 'f6_no_assessments') ) ? p.f6_no_assessments : Math.ceil(p.no_assessments / 3)
+    },
+    hasFunded(p) {
+      return Object.prototype.hasOwnProperty.call(p, 'funded');
+    },
+    isFunded(p) {
+      if (!this.hasFunded(p)) { return false}
+      return (p.funded === 2) ? true : false
+    },
+    isFundedStatus(p) {
+      if (!this.hasFunded(p))  { return '    n/a    '}
+      else if (p.funded === 2) { return this.fundedValue}
+      else if (p.funded === 1) { return this.overBudValue}
+      else                     { return this.notFundedValue}
+    },
     getProposalData (proposal, templateData) {
       /*
       templateData = {
             proposal: '',
+            count: '',
+            challenge: '',
             reviews: 0,
             amount: 0,
             funded: 'n/a'
@@ -165,21 +237,27 @@ export default {
       */
       const data = {...templateData};
       data.proposal = proposal.title;
-      data.reviews = (Object.prototype.hasOwnProperty.call(proposal, 'f6_no_assessments'))
-        ? proposal.f6_no_assessments
-        : proposal.no_assessments
+      data.count = '';
+      data.challenge = this.funds[proposal.fund].challenges.find( (el) => el.id === proposal.category ).title.split(": ").pop();
+      if (data.challenge === undefined) {
+        console.log('data.challenge === undefined')
+        console.log('proposal.id', proposal.id)
+        console.log('proposal.category', proposal.category)
+        console.log('proposal.fund', proposal.fund)
+        console.log('funds.challenges.ids', this.funds.map( (el) => el.id ) )
+      }
+      data.reviews = this.getReviews(proposal);
       data.amount = proposal.amount;
-      let hasFunded = Object.prototype.hasOwnProperty.call(proposal, 'funded');
-      ( hasFunded )
-      ? data.funded = (proposal.funded === 1) ? 'yes' : 'no'
-      : data.funded = 'n/a'
-      data.id = proposal.id
+      data.funded = this.isFundedStatus(proposal);
+      data.id = proposal.id;
       return data
     },
     getFundData(fundId, templateData) {
       /*
       templateData = {
             proposal: '',
+            count: '',
+            challenge: '',
             reviews: 0,
             amount: 0,
             funded: 'n/a'
@@ -191,24 +269,19 @@ export default {
 
       // proposal
       data.proposal = this.funds[fundId].title.concat(" ", "proposals");
+      // count
+      data.count = fundProposals.length;
+      // challenge
+      data.challenge = fundId.toUpperCase().concat(' challenges');
       // reviews
-      data.reviews = fundProposals.map( (p) => ( Object.prototype.hasOwnProperty.call(p, 'f6_no_assessments') )
-        ? p.f6_no_assessments
-        : Math.ceil(p.no_assessments / 3)
-      ).reduce((partialSum, a) => partialSum + a, 0);
+      data.reviews = fundProposals.map( (p) => this.getReviews(p) ).reduce((partialSum, a) => partialSum + a, 0);
       // amount
       data.amount = fundProposals.map( (p) => p.amount ).reduce((partialSum, a) => partialSum + a, 0);
       // funded
-      data.funded = fundProposals.map( (p) => {
-        let hasFunded = Object.prototype.hasOwnProperty.call(p, 'funded');
-        if (hasFunded) {
-          return p.funded   // considers p.funded : Funded=1, NotFunded=0
-        } else {
-          return 0          // compute 0 for n/a funded info
-        }
-      }).reduce((partialSum, a) => partialSum + a, 0);
+      data.funded = fundProposals.map( (p) => (this.isFunded(p)) ? 1 : 0 ).reduce((partialSum, a) => partialSum + a, 0);
       // items
-      data.items = fundProposals.map( (p) => this.getProposalData(p, templateData) )
+      data.items = fundProposals.map( (p) => this.getProposalData(p, templateData) );
+      data.items.sort(this.sortProposalsByChallenge);
 
       return data
     },
@@ -220,6 +293,12 @@ export default {
         id: proposal.id
       }})
       window.open(page.href, '_blank');
+    },
+    sortProposalsByChallenge(a, b) {
+      console.log('sortProposals')
+      console.log('a', a.challenge)
+      console.log('b', b.challenge)
+      return a.challenge.localeCompare(b.challenge)
     }
   },
 
