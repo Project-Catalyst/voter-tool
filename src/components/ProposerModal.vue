@@ -2,12 +2,7 @@
   <div class="card">
     <div class="card-content">
       <div class="media">
-        <!-- <div class="media-left">
-            <b-icon icon="account-details" size="is-medium"></b-icon>
-        </div> -->
         <div class="media-content">
-          <!-- <p class="title is-4">{{author}}</p> -->
-          <!-- <p class="subtitle is-6">{{proposerProposals.length}} proposals submitted from {{fundsTextSubtitle}} &bull; ${{proposerAmountSum}} total funds requested</p> -->
           <p class="subtitle is-6" v-html="$t('proposerModal.NOTE')"></p>
         </div>
       </div>
@@ -69,7 +64,6 @@
             <span v-else style="color:green;">
                 <b>{{ props.row.funded }}</b><b-icon icon="check-bold"></b-icon>
             </span>
-            <!-- <b>{{ props.row.funded }}</b><b-icon icon="check-bold"></b-icon> -->
           </b-table-column>
 
           <template slot="detail" slot-scope="props">
@@ -97,7 +91,6 @@
                 <span v-else class="tag is-danger">
                     {{ item.funded }}
                 </span>
-                <!-- <b-icon :icon="item.funded === 'funded' ? 'check-bold' : ''"></b-icon> -->
               </td>
             </tr>
           </template>
@@ -182,8 +175,8 @@ export default {
         funded: 'n/a'
         // items: []
       };
-
-      // push Fund-N templateData to const data
+      
+      // push Fund-N templateData to const < data >
       this.proposerFunds.forEach( (fId) => {
         data.push(this.getFundData(fId, template))
       })
@@ -239,13 +232,6 @@ export default {
       data.proposal = proposal.title;
       data.count = '';
       data.challenge = this.funds[proposal.fund].challenges.find( (el) => el.id === proposal.category ).title.split(": ").pop();
-      if (data.challenge === undefined) {
-        console.log('data.challenge === undefined')
-        console.log('proposal.id', proposal.id)
-        console.log('proposal.category', proposal.category)
-        console.log('proposal.fund', proposal.fund)
-        console.log('funds.challenges.ids', this.funds.map( (el) => el.id ) )
-      }
       data.reviews = this.getReviews(proposal);
       data.amount = proposal.amount;
       data.funded = this.isFundedStatus(proposal);
@@ -295,9 +281,6 @@ export default {
       window.open(page.href, '_blank');
     },
     sortProposalsByChallenge(a, b) {
-      console.log('sortProposals')
-      console.log('a', a.challenge)
-      console.log('b', b.challenge)
       return a.challenge.localeCompare(b.challenge)
     }
   },
