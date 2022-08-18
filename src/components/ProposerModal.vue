@@ -157,13 +157,27 @@ export default {
       return this.proposals.filter( (el) => el.author ===  this.author)
     },
     proposerAmountSum() {
-      return this.proposerProposals.map( (el) => el.amount ).reduce((partialSum, a) => partialSum + a, 0)
+      return this.proposerProposals.map( (p) => 
+        ( this.getChallengeTitle(p).includes(this.challengeSettingText) ) 
+        ? 0
+        : p.amount 
+      ).reduce((partialSum, a) => partialSum + a, 0)
     },
     proposerAmountFunded() {
-      return this.proposerProposals.filter( (el) => this.isFunded(el) === true).map( (el) => el.amount ).reduce((partialSum, a) => partialSum + a, 0)
+      return this.proposerProposals.filter( (el) => this.isFunded(el) === true).map( (p) => 
+      ( this.getChallengeTitle(p).includes(this.challengeSettingText) ) 
+        ? 0
+        : p.amount 
+      ).reduce((partialSum, a) => partialSum + a, 0)
     },
     proposerFunds() {
       return [... new Set(this.proposerProposals.map( (el) => el.fund ))]
+    },
+    hasChallengeSetting() {
+      return this.proposerProposals.map( (p) => this.funds[p.fund].challenges.find( (el) => el.id === p.category ).title )
+      .map(
+        (chTitle) => chTitle.includes(this.challengeSettingText)
+      ).includes(true)
     },
     tableData() {
       const data =[];
@@ -178,7 +192,7 @@ export default {
       };
       
       // push Fund-N templateData to const < data >
-      data.push(this.getChallengeSettingData(template))
+      if(this.hasChallengeSetting) { data.push(this.getChallengeSettingData(template)) }
       this.proposerFunds.forEach( (fId) => data.push(this.getFundData(fId, template)) )
       return data
     },
@@ -202,6 +216,9 @@ export default {
     },
     getReviews(p) {
       return ( Object.prototype.hasOwnProperty.call(p, 'f6_no_assessments') ) ? p.f6_no_assessments : Math.ceil(p.no_assessments / 3)
+    },
+    getChallengeTitle(proposal) {
+      return this.funds[proposal.fund].challenges.find( (el) => el.id === proposal.category ).title
     },
     hasFunded(p) {
       return Object.prototype.hasOwnProperty.call(p, 'funded');
@@ -232,9 +249,7 @@ export default {
       data.proposal = proposal.title;
       data.count = '';
       data.challenge = this.funds[proposal.fund].challenges.find( (el) => el.id === proposal.category ).title.split(": ").pop();
-      ( data.challenge.includes(this.challengeSettingText) )
-      ? data.challenge = data.challenge.replace(this.challengeSettingText, '')
-      : data.challenge = data.challenge
+      if( data.challenge.includes(this.challengeSettingText) ) {data.challenge = data.challenge.replace(this.challengeSettingText, '')}
       data.reviews = this.getReviews(proposal);
       data.amount = proposal.amount;
       data.funded = this.isFundedStatus(proposal);
