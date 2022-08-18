@@ -25,7 +25,7 @@
         -->
       </div>
       <section id="export_pdf">
-        <div class="box "
+        <div class="box"
           v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
           <p class="title is-3">
             {{ objChallenges[k].title }} <span class="subtitle is-6">({{$t('pickList.TOTAL_FUNDS')}} {{ objChallenges[k].amount | currency }})</span>
@@ -37,6 +37,14 @@
               @change="updateRationale($event, k)"
               ></b-input>
           </b-field>
+
+          <b-field grouped group-multiline>
+            <b-checkbox v-model="showFundsRemaining">
+                Funds requested
+            </b-checkbox>
+          </b-field> 
+
+
           <b-table
             v-if="(proposals.length)"
             :data="proposals"
@@ -59,7 +67,7 @@
             <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
               {{ props.row.amount | currency }}
             </b-table-column>
-            <b-table-column field="remaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
+            <b-table-column field="remaining" :visible="showFundsRemaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
               {{ props.row.remaining | currency }}
             </b-table-column>
             <b-table-column field="inBudget" label="" v-slot="props">
@@ -145,7 +153,8 @@ export default {
       challenges: [],
       draggingRow: null,
       draggingRowIndex: null,
-      shareActive: false
+      shareActive: false,
+      showFundsRemaining: true
     }
   },
   components: {
