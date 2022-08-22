@@ -7,6 +7,17 @@
     </div>
 
     <div class="proposals-list" v-if="pickList">
+      
+      <div class="box">
+        <b-field class="column is-12" label="Table settings" grouped group-multiline>
+          <b-checkbox v-model="showFundsRemaining">
+              Display "Funds remaining"
+          </b-checkbox>
+          <b-checkbox v-model="showBudgetWarning">
+              Display budget warning
+          </b-checkbox>
+        </b-field> 
+      </div>
 
       <div class="box"
         v-for="proposals, k in pickList.rationales" :key="`challenge-${k}`">
@@ -21,7 +32,7 @@
         <b-table
           v-if="(sharedProposals[proposals.challenge_id])"
           :data="sharedProposals[proposals.challenge_id]"
-          :row-class="(row, index) => row.remaining < 0 && 'is-warning'">
+          :row-class="(row, index) => showBudgetWarning && row.remaining < 0 && 'is-warning'">
           <b-table-column field="title" :label="$t('pickList.TITLE')" v-slot="props">
             <router-link :to="{ name: 'proposal', params: {
                 fund: fund,
@@ -35,10 +46,10 @@
           <b-table-column field="amount" numeric :label="$t('pickList.FUNDS_REQUESTED')" v-slot="props">
             {{ props.row.amount | currency }}
           </b-table-column>
-          <b-table-column field="remaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
+          <b-table-column field="remaining" :visible="showFundsRemaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
             {{ props.row.remaining | currency }}
           </b-table-column>
-          <b-table-column field="inBudget" label="" v-slot="props">
+          <b-table-column field="inBudget" :visible="showBudgetWarning" label="" v-slot="props">
             {{ props.row.inBudget}}
           </b-table-column>
         </b-table>
@@ -98,7 +109,9 @@ export default {
       pickList: {},
       draggingRow: null,
       draggingRowIndex: null,
-      shareActive: false
+      shareActive: false,
+      showFundsRemaining: false,
+      showBudgetWarning: false
     }
   },
   components: {

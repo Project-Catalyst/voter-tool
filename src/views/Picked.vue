@@ -9,7 +9,7 @@
 
     <div class="proposals-list" v-if="Object.keys(vChallenges).length > 0">
 
-      <div class="columns">
+      <div class="columns is-multiline">
         <div class="column is-8">
           <b-field :label="$t('pickList.SHARE_TITLE')">
             <b-input v-model="title"></b-input>
@@ -23,7 +23,16 @@
           <b-button type="is-primary is-large" @click="savePdf">{{ $t('pickList.EXPORT_PDF') }}</b-button>
         </div>
         -->
+        <b-field class="column is-12" label="Table settings" grouped group-multiline>
+          <b-checkbox v-model="showFundsRemaining">
+              Display "Funds remaining"
+          </b-checkbox>
+          <b-checkbox v-model="showBudgetWarning">
+              Display budget warning
+          </b-checkbox>
+        </b-field> 
       </div>
+
       <section id="export_pdf">
         <div class="box"
           v-for="proposals, k in vChallenges" :key="`challenge-${k}`">
@@ -38,17 +47,10 @@
               ></b-input>
           </b-field>
 
-          <b-field grouped group-multiline>
-            <b-checkbox v-model="showFundsRemaining">
-                Funds requested
-            </b-checkbox>
-          </b-field> 
-
-
           <b-table
             v-if="(proposals.length)"
             :data="proposals"
-            :row-class="(row, index) => row.remaining < 0 && 'is-warning'"
+            :row-class="(row, index) => showBudgetWarning && row.remaining < 0 && 'is-warning'"
             draggable
             @dragstart="dragstart"
             @drop="drop"
@@ -70,7 +72,7 @@
             <b-table-column field="remaining" :visible="showFundsRemaining" numeric :label="$t('pickList.FUNDS_REMAINING')" v-slot="props">
               {{ props.row.remaining | currency }}
             </b-table-column>
-            <b-table-column field="inBudget" label="" v-slot="props">
+            <b-table-column field="inBudget" :visible="showBudgetWarning" label="" v-slot="props">
               {{ props.row.inBudget}}
             </b-table-column>
             <b-table-column label="" width="40" v-slot="props" >
@@ -79,6 +81,7 @@
               </button>
             </b-table-column>
           </b-table>
+
           <div class="downvote-wrapper" v-if="downChallenges[k] && downChallenges[k].length">
             <p class="title is-6 mb-0 mt-6">
               <span class="subtitle is-4">{{$t('pickList.DOWNVOTE')}}</span>
@@ -108,6 +111,7 @@
           </div>
         </div>
       </section>
+
       <div class="columns mt-1">
         <div class="column is-6">
           <b-button type="is-primary is-large" @click="openShare">{{ $t('pickList.SHARE') }}</b-button>
@@ -118,7 +122,9 @@
         </div>
         -->
       </div>
+
     </div>
+
     <b-message type="isinfo" v-if="Object.keys(vChallenges).length === 0">
       <p class="subtitle is-4">
         {{ $t('pickList.NO_PROPOSALS_TEXT')}}
@@ -154,7 +160,8 @@ export default {
       draggingRow: null,
       draggingRowIndex: null,
       shareActive: false,
-      showFundsRemaining: true
+      showFundsRemaining: true,
+      showBudgetWarning: true
     }
   },
   components: {
@@ -249,6 +256,7 @@ export default {
       this.$store.commit("proposals/downRemoveProposal", row);
     },
     updateRationale($event, k) {
+      console.log('update rationale')
       this.$store.commit(
         "proposals/updateRationale", {
           challenge: k,
