@@ -18,8 +18,10 @@
             </div>
           </div>
           <h4>{{proposerProposals.length}} proposals submitted from {{fundsText}}</h4>
-          <h4>Total funds requested: {{proposerAmountSum | currency}}</h4>
-          <h4>Funds approved*: {{proposerAmountFunded | currency}}</h4>
+          <h5 v-if="proposerAmountSum>0">Proposal Funding requested: {{proposerAmountSum | currency}}</h5>
+          <h5 v-if="proposerAmountSum>0">Proposal Funding approved*: {{proposerAmountFunded | currency}}</h5>
+          <!-- <h5 v-if="hasChallengeSetting">Challenge Funds suggested: {{proposerCsAmountSum | currency}}</h5> -->
+          <h5 v-if="hasChallengeSetting">Challenge Funds approved*: {{proposerCsAmountFunded | currency}}</h5>
           <p><small>* Is the total funds approved by community vote. Funds are provided on conditions and therefore may not yet be fully distributed to the proposer. Funding information is not available to all Funds: check out the table below for detailed information.</small></p>
         </div>
 
@@ -156,6 +158,9 @@ export default {
     proposerProposals() {
       return this.proposals.filter( (el) => el.author ===  this.author)
     },
+    proposerCsProposals() {
+      return this.proposerProposals.filter( (p) => this.funds[p.fund].challenges.find( (el) => el.id === p.category ).title.includes(this.challengeSettingText) )
+    },
     proposerAmountSum() {
       return this.proposerProposals.map( (p) => 
         ( this.getChallengeTitle(p).includes(this.challengeSettingText) ) 
@@ -169,6 +174,12 @@ export default {
         ? 0
         : p.amount 
       ).reduce((partialSum, a) => partialSum + a, 0)
+    },
+    proposerCsAmountSum() {
+      return this.proposerCsProposals.map( (p) => p.amount ).reduce((partialSum, a) => partialSum + a, 0)
+    },
+    proposerCsAmountFunded() {
+      return this.proposerCsProposals.map( (p) => this.isFunded(p) ? p.amount : 0 ).reduce((partialSum, a) => partialSum + a, 0)
     },
     proposerFunds() {
       return [... new Set(this.proposerProposals.map( (el) => el.fund ))]
@@ -304,7 +315,7 @@ export default {
           }
       */
       const data = {...templateData};
-      let csProposals = this.proposerProposals.filter( (p) => this.funds[p.fund].challenges.find( (el) => el.id === p.category ).title.includes(this.challengeSettingText) );
+      let csProposals = this.proposerCsProposals;
 
       // proposal
       data.proposal = "Challenge Setting proposals";
