@@ -106,6 +106,7 @@ export default {
           cancelText: 'OK',
           confirmText: 'Copy to clipboard',
           onConfirm: () => this.copyText(`https://cardanocataly.st/voter-tool/#/f9/shared/${r.data.pick_list.uuid}`)
+          // onConfirm: () => this.$router.push({ name: 'shared', params: { uuid:  r.data.pick_list.uuid} })
         })
       })
     },

@@ -39,7 +39,7 @@
           <div class="column is-10" v-if="!proposal.f6_rating && !proposal.rating">
             <b-rate v-model="fakeRate" disabled />
           </div>
-          <div class="pick-list column is-2">
+          <div class="pick-list column is-2" v-if="fund === currentFund">
             <p class="mb-1 has-text-centered">{{ $t('pickList.VOTE_PICK_LIST') }}</p>
             <div class="pick-list-buttons columns">
               <div class="column is-narrow is-offset-2">
@@ -112,6 +112,7 @@ import FundedWidget from '@/components/FundedWidget';
 export default {
   data() {
     return {
+      currentFund: 'f9',
       fakeRate: 0
     }
   },
