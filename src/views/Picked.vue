@@ -256,7 +256,6 @@ export default {
       this.$store.commit("proposals/downRemoveProposal", row);
     },
     updateRationale($event, k) {
-      console.log('update rationale')
       this.$store.commit(
         "proposals/updateRationale", {
           challenge: k,
