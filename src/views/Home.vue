@@ -37,14 +37,14 @@
             <b-taginput
                 ref="fundTagSelection"
                 v-model="selectedFunds"
-                :data="filteredFunds"
+                :data="dropdownFunds"
                 autocomplete
                 field="title"
                 icon="label"
                 :open-on-focus="true"
                 placeholder="Filter by specific funds"
-                @remove="getFilteredFunds(false)"
-                @typing="getFilteredFunds"
+                @remove="getDropdownFunds(false)"
+                @typing="getDropdownFunds"
                 type="is-primary is-light"
                 close-type="is-primary is-light"
                 attached>
@@ -150,7 +150,7 @@
         :proposal="proposal"
         :key="proposal.id"
         :fund="proposal.fund"
-        v-for="proposal in filteredProposals"
+        v-for="proposal in renderedProposals"
         />
       <b-notification
         v-if="filteredProposals.length===0"
@@ -159,6 +159,13 @@
         message="<b>There are no results for the filtering selection requested.</b>
                 Be aware that <em>Funded Status</em>, <em>Number of Reviews</em> and <em>Rating</em> information is only available to some Funds.">
       </b-notification>
+      <div
+        class="button"
+        @click="incrementSlice"
+        v-if="currentSlice < filteredCount"
+      >
+        Load more...
+      </div>
     </div>
   </div>
 </template>
@@ -177,6 +184,7 @@ export default {
     return {
       challenges: [],
       proposals: [],
+      proposalsByFund : {},
       fund: 'f9',
       funds: {  // on-change: this property is also manually implemented in @/components/ProposerModal.vue >> please adjust there
         'f9': {
@@ -205,79 +213,135 @@ export default {
         }
       },
       isFilterOpen: false,
-      preFilteredData: [
-        {
-          fund: false,
-          proposals: [],
-          isActive: true
-        }
-      ],
-      filteredFunds: [],
+      fundFilters: {},
+      dropdownFunds: [],
       selectedFunds: [],
       fundsAmount: [],
       fundedStatus: '',
       reviewsRange: [0,0],
       ratingSelection: 0,
-      keyword: ''
+      keyword: '',
+      currentSlice: 50
     }
   },
 
   methods: {
     openFilters() {
-      if(this.selectedFunds.length === 0) { this.selectedFunds.push(this.preFilteredData[0].fund); }
       this.isFilterOpen = !this.isFilterOpen;
     },
-    activatePreFilters() {
-      this.preFilteredData.forEach( (filtered) => {
-        ( this.selectedFunds.map( (f) => f.title ).includes(filtered.fund.title) ) 
-        ? filtered.isActive=true 
-        : filtered.isActive=false
-      })
+    resetFilters() {
+      this.dropdownFunds = [];
+      this.selectedFunds = [ this.funds[this.fundsKeys[0]] ];
+      this.fundsAmount = [];
+      this.fundedStatus = '';
+      this.reviewsRange = [0,0];
+      this.ratingSelection = 0;
+      this.keyword = '';
+      this.currentSlice = 50
+      this.getDropdownFunds()
+      this.resetFundsFilter()
     },
-    getFilteredFunds(text) {
-      let filteredFunds;
+    getDropdownFunds(text) {
+      let dropdownFunds;
       if (text) {
-        filteredFunds = this.funds.filter((option) => {
+        dropdownFunds = this.funds.filter((option) => {
           return option.title
             .toString()
             .toLowerCase()
             .indexOf(text.toLowerCase()) >= 0
         })
       } else {
-        filteredFunds = Object.values(this.funds)
+        dropdownFunds = Object.values(this.funds)
       }
-      if (this.selectedFunds.length === 0) {this.selectedFunds.push(this.funds[this.fundsKeys[0]])}
-      this.filteredFunds = filteredFunds.filter((option) => {
+      if (this.selectedFunds.length === 0) { this.selectedFunds.push(this.funds[this.fundsKeys[0]]) }
+      this.dropdownFunds = dropdownFunds.filter((option) => {
         return this.selectedFunds.indexOf(option) === -1
       })
     },
-    resetFilters() {
-      this.filteredFunds = [];
-      this.selectedFunds = [this.preFilteredData[0].fund];  // preFilter setup
-      this.fundsAmount = [];
-      this.fundedStatus = '';
-      this.reviewsRange = [0,0];
-      this.ratingSelection = 0;
-      this.keyword = '';
-      this.getFilteredFunds()
-    }, 
-    updatePreFilter() {
-      let preFilterIds = this.preFilteredFunds.map( (f) => f.title )
-      let fundsToAdd = this.selectedFunds.filter( (f) => preFilterIds.indexOf(f.title)===-1)
-      if (fundsToAdd.length > 0) { 
-        this.preFilter = fundsToAdd 
-      }
+    resetFundsFilter() {
+      this.fundsKeys.forEach( (el) => {
+        this.fundFilters[this.funds[el].title] = {...this.fundFiltersSetup}; // populate this.fundFilters
+        this.fundFilters[this.funds[el].title].activeProposals = [...this.proposalsByFund[this.funds[el].title]]
+      })
     },
-    sortProposalsByFund(a, b) {
-      return b.fund.localeCompare(a.fund)
-    },
-    fundsAreEqual(a, b) {
-      if (a.length !== b.length) {
-        return false;
+    updateFundFilters(fund) {
+      let fundProposals = this.proposalsByFund[fund.title];
+      let activeFilters = {...this.fundFilters[fund.title].config};
+      let activeSelection = {...this.fundFilters[fund.title].activeSelection};
+      let emptyFiltering = false;
+
+      /* update activeSelection for each filter */
+      // fundedStatus filter
+      if ( this.hasFundedStatusUpdate(activeFilters.fundedStatus) ) {
+        (this.fundedStatus === 'funded')
+        ? activeSelection.fundedStatus = fundProposals.filter( (el) => el.funded === 2)
+        : activeSelection.fundedStatus = fundProposals.filter( (el) => el.funded !== 2)
+        if( activeSelection.fundedStatus.length === 0 ) { emptyFiltering = true }
       }
-      const fundA = a.map( (fund) => fund.title )
-      const fundB = new Set(b.map( (fund) => fund.title  ));
-      return fundA.every( (el) => { return fundB.has(el) } )
+      // reviewsRange filter
+      if ( this.hasReviewsRangeUpdate(activeFilters.reviewsRange) ) {
+        activeSelection.reviewsRange = fundProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'f6_no_assessments')
+          ? ( el.f6_no_assessments >= this.reviewsRange[0] ) && ( el.f6_no_assessments <= this.reviewsRange[1] )
+          : ( Math.ceil(el.no_assessments / 3) >= this.reviewsRange[0] ) && ( Math.ceil(el.no_assessments / 3) <= this.reviewsRange[1] )
+        )
+        if( activeSelection.reviewsRange.length === 0 ) { emptyFiltering = true }
+      }
+      // ratingSelection filter
+      if ( this.hasRatingSelectionUpdate(activeFilters.ratingSelection) ) {
+        activeSelection.ratingSelection = fundProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'rating')
+          ? ( el.rating > this.ratingSelection-1 ) && ( el.rating <= this.ratingSelection )
+          : ( el.f6_rating > this.ratingSelection-1 ) && ( el.f6_rating <= this.ratingSelection )
+        )
+        if( activeSelection.ratingSelection.length === 0 ) { emptyFiltering = true }
+      }
+      // fundsAmount filter
+      if ( this.hasFundsAmountUpdate(activeFilters.fundsAmount) ) {
+        activeSelection.fundsAmount = fundProposals.filter( (el) => (el.amount >= this.fundsAmount[0] && el.amount <= this.fundsAmount[1]) )
+        if( activeSelection.fundsAmount.length === 0 ) { emptyFiltering = true }
+      }
+      // keywork text search filter
+      if ( this.hasKeywordUpdate(activeFilters.keyword) ) {
+        activeSelection.keyword = fundProposals.filter( (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase()) )
+        if( activeSelection.keyword.length === 0 ) { emptyFiltering = true }
+      }
+
+      //  updates <fund> info on fundFilters
+      this.fundFilters[fund.title].config = this.fundFiltersConfig;
+      this.fundFilters[fund.title].activeSelection = activeSelection;
+
+      (emptyFiltering)
+      ? this.fundFilters[fund.title].activeProposals = []
+      : this.fundFilters[fund.title].activeProposals =  Object.values(activeSelection).filter( (fSelection) => fSelection.length > 0 )
+          .reduce((a, b) => a.filter(proposal => b.map( p => p.id).includes(proposal.id)))
+    },
+    hasFilterUpdate(fund) {
+      let activeFilters = this.fundFilters[fund.title].config
+      return this.hasFundsAmountUpdate(activeFilters.fundsAmount)
+          || this.hasFundedStatusUpdate(activeFilters.fundedStatus)
+          || this.hasReviewsRangeUpdate(activeFilters.reviewsRange)
+          || this.hasRatingSelectionUpdate(activeFilters.ratingSelection)
+          || this.hasKeywordUpdate(activeFilters.keyword)
+    },
+    hasActiveSelection(activeSelection) {
+      return Object.values(activeSelection).map( (fSelection) => fSelection.length ).reduce((partialSum, a) => partialSum + a, 0) > 0
+    },
+    hasKeywordUpdate(value) {
+      return (this.keyword.trim().length > 3)  && (value !== this.keyword)
+    },
+    hasFundedStatusUpdate(value) {
+      return (this.fundedStatus !== '') && (value !== this.fundedStatus)
+    },
+    hasReviewsRangeUpdate(value) {
+      return (this.reviewsRange[0] !== 0 || this.reviewsRange[1] !== 0) && (value[0] !== this.reviewsRange[0] || value[1] !== this.reviewsRange[1])
+    },
+    hasFundsAmountUpdate(value) {
+      return (this.fundsAmount.length > 0) && (value[0] !== this.fundsAmount[0] || value[1] !== this.fundsAmount[1])
+    },
+    hasRatingSelectionUpdate(value) {
+      return (this.ratingSelection !== 0) && (value !== this.ratingSelection)
+    },
+    incrementSlice() {
+      this.currentSlice = this.currentSlice + 50
     }
   },
 
@@ -286,8 +350,30 @@ export default {
     fundsKeys() {
       return Object.keys(this.funds)
     },
-    activeFilters() {
-      return this.fundSelectionCondition || this.keywordCondition || this.fundedStatusCondition || this.reviewsRangeCondition || this.fundsAmountCondition || this.ratingSelectionCondition
+    fundFiltersConfig() {
+      return {
+        fundsAmount: [...this.fundsAmount],
+        fundedStatus: this.fundedStatus,
+        reviewsRange: [...this.reviewsRange],
+        ratingSelection: this.ratingSelection,
+        keyword: this.keyword
+      }
+    },
+    fundFiltersActiveSelection() {
+      return {
+        fundsAmount: [],
+        fundedStatus: [],
+        reviewsRange: [],
+        ratingSelection: [],
+        keyword: []
+      }
+    },
+    fundFiltersSetup() {
+      return {
+        config: this.fundFiltersConfig,
+        activeSelection: this.fundFiltersActiveSelection,
+        activeProposals: []
+      }
     },
     reviewsMax() {
       let reviews = this.proposals.map( (fundObj) => Object.prototype.hasOwnProperty.call(fundObj, 'f6_no_assessments') ? fundObj.f6_no_assessments : Math.ceil(fundObj.no_assessments / 3) );
@@ -306,92 +392,25 @@ export default {
       }
       return false
     },
-    preFilter: {
-      get: function() {
-        let preFilterProposals = [];
-        this.preFilteredData.forEach( (f) => {
-          if(f.isActive) { preFilterProposals = preFilterProposals.concat(f.proposals) }
-        })
-        // preFilterProposals.sort(this.sortProposalsByFund)
-        return preFilterProposals
-      },
-      set: function(fundsToAdd) {
-        fundsToAdd.forEach( (f) => this.preFilteredData.push(
-          {
-            fund: f,
-            proposals: [...this.proposals.filter( (el) => f.title.toLowerCase().includes( this.funds[el.fund].title.toLowerCase() ) )],
-            isActive: true
-          })
-        )
-      }
-    },
-    preFilteredFunds() {
-      return this.preFilteredData.map( (el) => el.fund )
-    },
     filteredProposals() {
 
-      // // apply selectedFunds filter as prefilter
-      this.updatePreFilter()
-      this.activatePreFilters()
-      let filteredProposals = this.preFilter;
-      
-      // apply fundedStatus filter
-      if (this.fundedStatusCondition) {
-        (this.fundedStatus === 'funded')
-        ? filteredProposals = filteredProposals.filter( (el) => el.funded === 2)
-        : filteredProposals = filteredProposals.filter( (el) => el.funded !== 2)
-      }
-
-      // apply reviewsRange filter
-      if (this.reviewsRangeCondition) {
-        filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'f6_no_assessments')
-          ? (el.f6_no_assessments >= this.reviewsRange[0] && el.f6_no_assessments <= this.reviewsRange[1])
-          : (Math.ceil(el.no_assessments / 3) >= this.reviewsRange[0] && Math.ceil(el.no_assessments / 3) <= this.reviewsRange[1])
-        )
-      }
-
-      // apply ratingSelection filter
-      if (this.ratingSelectionCondition) {
-        filteredProposals = filteredProposals.filter( (el) => Object.prototype.hasOwnProperty.call(el, 'rating')
-          ? (el.rating > this.ratingSelection-1 && el.rating <= this.ratingSelection)
-          : (el.f6_rating > this.ratingSelection-1 && el.f6_rating <= this.ratingSelection)
-        )
-      }
-
-      // apply fundsAmount filter
-      if (this.fundsAmountCondition) {
-        filteredProposals = filteredProposals.filter( (el) => (el.amount >= this.fundsAmount[0] && el.amount <= this.fundsAmount[1]) )
-      }
-
-      // apply keywork text search filter
-      if (this.keywordCondition) {
-        let selecProps = filteredProposals.filter(
-          (el) => el.title.toLowerCase().includes(this.keyword.toLowerCase())
-        )
-        filteredProposals = selecProps;
-      }
+      let filteredProposals = [];
+      this.selectedFunds.forEach( (fund) => {   // iterates over the selectedFunds filter
+        if( this.hasFilterUpdate(fund) ) {
+          this.updateFundFilters(fund)
+        }
+        filteredProposals = filteredProposals.concat(...this.fundFilters[fund.title].activeProposals)
+      })
       return filteredProposals
     },
     pickFilterButtonMsg() {
       return (this.isFilterOpen) ? 'Close filters' : 'Open filters'
     },
-    keywordCondition() {
-      return this.keyword.trim().length > 3
+    filteredCount() {
+      return this.filteredProposals.length
     },
-    fundSelectionCondition() {
-      return this.selectedFunds.length > 0
-    },
-    fundedStatusCondition() {
-      return this.fundedStatus !== ''
-    },
-    reviewsRangeCondition() {
-      return this.reviewsRange[0] !== 0 || this.reviewsRange[1] !== 0
-    },
-    fundsAmountCondition() {
-      return this.fundsAmount.length > 0
-    },
-    ratingSelectionCondition() {
-      return this.ratingSelection !== 0
+    renderedProposals() {
+      return this.filteredProposals.slice(0, this.currentSlice)
     }
   },
 
@@ -406,18 +425,28 @@ export default {
       })
     }
     this.fundsKeys.forEach((el) => {
+      this.fundFilters[this.funds[el].title] = {...this.fundFiltersSetup}; // populate this.fundFilters
       CatalystAPI.challenges(el).then((r) => {
         this.funds[el].challenges = r.data
         this.funds[el].challenges.forEach((c) => {
           CatalystAPI.proposals(el, c.id).then((res) => {
             if (res.data.length) {
-              if(el === this.fundsKeys[0]) { // fill the first element of preFilter with latest Fund proposals
-                if(!this.preFilteredData[0].fund) { this.preFilteredData[0].fund = this.funds[el] }
-                this.preFilteredData[0].proposals = this.preFilteredData[0].proposals.concat(...res.data.map((p) => {
-                  p.fund = el
-                  return p
-                }))
-              }
+              // populate this.proposalsByFund
+              (Object.keys(this.proposalsByFund).includes(this.funds[el].title))
+              ? this.proposalsByFund[this.funds[el].title] = this.proposalsByFund[this.funds[el].title].concat(...res.data.map((p) => {
+                p.fund = el
+                return p
+              }))
+              : this.proposalsByFund[this.funds[el].title] = res.data.map((p) => {
+                p.fund = el
+                return p
+              })
+              // populate this.fundFilters[this.funds[el].title].activeProposals
+              this.fundFilters[this.funds[el].title].activeProposals = this.fundFilters[this.funds[el].title].activeProposals.concat(...res.data.map((p) => {
+                p.fund = el
+                return p
+              }))
+              // populate this.proposals
               this.proposals = this.proposals.concat(...res.data.map((p) => {
                 p.fund = el
                 return p
@@ -427,7 +456,7 @@ export default {
         })
       })
     })
-    this.getFilteredFunds()
+    this.getDropdownFunds()
     if (!this.dialogAccepted) {
       this.$buefy.dialog.alert({
         title: 'Voter Tool',
