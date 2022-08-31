@@ -150,7 +150,7 @@
         :proposal="proposal"
         :key="proposal.id"
         :fund="proposal.fund"
-        v-for="proposal in filteredProposals"
+        v-for="proposal in renderedProposals"
         />
       <b-notification
         v-if="filteredProposals.length===0"
@@ -159,6 +159,13 @@
         message="<b>There are no results for the filtering selection requested.</b>
                 Be aware that <em>Funded Status</em>, <em>Number of Reviews</em> and <em>Rating</em> information is only available to some Funds.">
       </b-notification>
+      <div
+        class="button"
+        @click="incrementSlice"
+        v-if="currentSlice < filteredCount"
+      >
+        Load more...
+      </div>
     </div>
   </div>
 </template>
@@ -213,7 +220,8 @@ export default {
       fundedStatus: '',
       reviewsRange: [0,0],
       ratingSelection: 0,
-      keyword: ''
+      keyword: '',
+      currentSlice: 50
     }
   },
 
@@ -229,9 +237,10 @@ export default {
       this.reviewsRange = [0,0];
       this.ratingSelection = 0;
       this.keyword = '';
+      this.currentSlice = 50
       this.getDropdownFunds()
       this.resetFundsFilter()
-    }, 
+    },
     getDropdownFunds(text) {
       let dropdownFunds;
       if (text) {
@@ -260,7 +269,7 @@ export default {
       let activeFilters = {...this.fundFilters[fund.title].config};
       let activeSelection = {...this.fundFilters[fund.title].activeSelection};
       let emptyFiltering = false;
-      
+
       /* update activeSelection for each filter */
       // fundedStatus filter
       if ( this.hasFundedStatusUpdate(activeFilters.fundedStatus) ) {
@@ -330,6 +339,9 @@ export default {
     },
     hasRatingSelectionUpdate(value) {
       return (this.ratingSelection !== 0) && (value !== this.ratingSelection)
+    },
+    incrementSlice() {
+      this.currentSlice = this.currentSlice + 50
     }
   },
 
@@ -384,8 +396,8 @@ export default {
 
       let filteredProposals = [];
       this.selectedFunds.forEach( (fund) => {   // iterates over the selectedFunds filter
-        if( this.hasFilterUpdate(fund) ) { 
-          this.updateFundFilters(fund) 
+        if( this.hasFilterUpdate(fund) ) {
+          this.updateFundFilters(fund)
         }
         filteredProposals = filteredProposals.concat(...this.fundFilters[fund.title].activeProposals)
       })
@@ -393,6 +405,12 @@ export default {
     },
     pickFilterButtonMsg() {
       return (this.isFilterOpen) ? 'Close filters' : 'Open filters'
+    },
+    filteredCount() {
+      return this.filteredProposals.length
+    },
+    renderedProposals() {
+      return this.filteredProposals.slice(0, this.currentSlice)
     }
   },
 
