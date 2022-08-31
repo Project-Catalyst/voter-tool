@@ -1,0 +1,74 @@
+[
+  {
+    "id": 25939,
+    "title": "F5: Developer ecosystem",
+    "description": "How can we create a positive developer experience that helps the developer focus on building successful apps?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25939",
+    "amount": 600000,
+    "nr_proposals": 45
+  },
+  {
+    "id": 25941,
+    "title": "F5: DApps & Integrations",
+    "description": "What applications will provide the most value for end users in 2021?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25941",
+    "amount": 250000,
+    "nr_proposals": 81
+  },
+  {
+    "id": 25942,
+    "title": "F5: Distributed Decision Making",
+    "description": "How can we help the Catalyst community to get better at distributed decision making within the next two Catalyst rounds?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25942",
+    "amount": 100000,
+    "nr_proposals": 13
+  },
+  {
+    "id": 25943,
+    "title": "F5: Proposer Outreach",
+    "description": "How can we encourage entrepreneurs from outside the Cardano ecosystem to submit proposals to Catalyst in the next two funds?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25943",
+    "amount": 100000,
+    "nr_proposals": 19
+  },
+  {
+    "id": 25944,
+    "title": "F5: Catalyst Value Onboarding",
+    "description": "How can we encourage more meaningful participation in Project Catalyst from community members in the next two funds?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25944",
+    "amount": 100000,
+    "nr_proposals": 19
+  },
+  {
+    "id": 25945,
+    "title": "F5: Metadata challenge",
+    "description": "How can we utilize transaction metadata to solve real world problems?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25945",
+    "amount": 50000,
+    "nr_proposals": 20
+  },
+  {
+    "id": 25946,
+    "title": "F5: Fund7 Challenge Setting",
+    "description": "What Challenges should the community prioritize to address in Fund7?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25946",
+    "amount": 800000,
+    "nr_proposals": 23
+  },
+  {
+    "id": 25947,
+    "title": "F5: Grow Africa, Grow Cardano",
+    "description": "How do we seed and grow Cardano in Africa?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25947",
+    "amount": 250000,
+    "nr_proposals": 27
+  },
+  {
+    "id": 25948,
+    "title": "F5: Scale-UP Cardano's DeFi Ecosystem",
+    "description": "How can we encourage DeFi team to build/deploy open finance solutions on Cardano in the next 6 months?",
+    "url": "https://cardano.ideascale.com/a/campaign-home/25948",
+    "amount": 250000,
+    "nr_proposals": 21
+  }
+]
