@@ -55,7 +55,11 @@
               <b>{{ $t('proposal.SUCCESS')}}</b><br />
               {{ proposal.success }}
             </p>
-            <p class="mb-3"><b>{{ $t('proposal.FUNDS_REQUEST')}}</b> {{ proposal.amount | currency }}</p>
+            <p class="mb-3"><b>{{ $t('proposal.FUNDS_REQUEST')}}</b> {{ proposal.amount | currency }} <br>
+            <small><em><b>Challenge funds:</b> {{ challengeAmount | currency }} </em></small><br>
+            <small><em><b>Total funds:</b> {{ totalAmount | currency }} </em></small></p>
+            <!-- <p class="mb-3"><small><em><b>Challenge funds</b> {{ challengeAmount | currency }} </em></small></p>
+            <p class="mb-3"><small><em><b>Total funds</b> {{ totalAmount | currency }} </em></small></p> -->
             <p class="mb-3" v-if="proposal.catalystId"><b>{{ $t('pickList.PROPOSAL_CATALYST_ID') }}:</b> {{ proposal.catalystId }}</p>
             <div class="my-progress">
               <b-progress :value="percentOfChallenge" size="is-medium" show-value>
@@ -242,6 +246,12 @@ export default {
         return +((this.proposal.amount * 100) / this.challenge.amount).toFixed(3)
       }
       return false
+    },
+    challengeAmount() {
+      return this.challenge.amount
+    },
+    totalAmount() {
+      return this.challenges.map( (ch) => ch.amount ).reduce((partialSum, a) => partialSum + a, 0)
     },
     assessmentsByQuestion() {
       if (this.proposal) {
